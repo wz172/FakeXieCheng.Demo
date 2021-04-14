@@ -31,8 +31,11 @@ namespace FakeXieCheng.Demo
             services.AddControllers();
             // services.AddTransient<ITouristRoutRepository,MockTouristRoutRespository>();
             services.AddTransient<ITouristRoutRepository, TouristRoutRespository>();
-            services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder => 
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb")));
+            services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder => {
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb"));
+               // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

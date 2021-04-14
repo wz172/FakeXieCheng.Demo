@@ -30,6 +30,11 @@ namespace FakeXieCheng.Demo.Models
         [MaxLength]
         public string Notes { get; set; }
         public ICollection<TouristRoutPicture> Pictures { get; set; }
+        public double? Rating { get; set; }
+        public byte TravlDays { get; set; }
+        public TripType? TripType { get; set; }
+        public DepartureCity? StratCity { get; set; }
+
         public TouristRout()
         {
             this.Pictures = new List<TouristRoutPicture>();

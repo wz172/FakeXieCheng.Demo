@@ -4,14 +4,16 @@ using FakeXieCheng.Demo.MyFakeContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FakeXieCheng.Demo.Migrations
 {
     [DbContext(typeof(FakeContext))]
-    partial class FakeContextModelSnapshot : ModelSnapshot
+    [Migration("20210414133609_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,22 +56,10 @@ namespace FakeXieCheng.Demo.Migrations
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<double?>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("StratCity")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<byte>("TravlDays")
-                        .HasColumnType("tinyint");
-
-                    b.Property<int?>("TripType")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -81,29 +71,27 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("780a1962-602f-46a2-9719-72f72810106e"),
-                            CreateTime = new DateTime(2021, 4, 14, 21, 57, 46, 927, DateTimeKind.Local).AddTicks(7708),
+                            ID = new Guid("49758b3e-724f-4942-9ec2-70e73f6810da"),
+                            CreateTime = new DateTime(2021, 4, 14, 21, 36, 8, 688, DateTimeKind.Local).AddTicks(5422),
                             Description = "都是水",
                             DriinalPrice = 0m,
                             Features = "吃喝玩乐",
                             Fees = "住宿费自己掏",
                             Notes = "注意安全",
                             OriginalPrice = 1300m,
-                            Title = "青天河",
-                            TravlDays = (byte)0
+                            Title = "青天河"
                         },
                         new
                         {
-                            ID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
-                            CreateTime = new DateTime(2021, 4, 13, 21, 57, 46, 929, DateTimeKind.Local).AddTicks(3806),
+                            ID = new Guid("7c88ac9d-ab92-4302-b0a8-95d9613cae8d"),
+                            CreateTime = new DateTime(2021, 4, 13, 21, 36, 8, 690, DateTimeKind.Local).AddTicks(1344),
                             Description = "都是水111",
                             DriinalPrice = 0m,
                             Features = "```吃喝玩乐",
                             Fees = "555住宿费自己掏",
                             Notes = "··注意安全",
                             OriginalPrice = 1200m,
-                            Title = "云台山",
-                            TravlDays = (byte)0
+                            Title = "云台山"
                         });
                 });
 
@@ -135,21 +123,21 @@ namespace FakeXieCheng.Demo.Migrations
                         {
                             ID = -1,
                             Destription = "太美丽了",
-                            TouristRoutID = new Guid("780a1962-602f-46a2-9719-72f72810106e"),
+                            TouristRoutID = new Guid("49758b3e-724f-4942-9ec2-70e73f6810da"),
                             Url = "../images/1.jpg"
                         },
                         new
                         {
                             ID = -2,
                             Destription = "太美丽了11111",
-                            TouristRoutID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
+                            TouristRoutID = new Guid("7c88ac9d-ab92-4302-b0a8-95d9613cae8d"),
                             Url = "../images/2.jpg"
                         },
                         new
                         {
                             ID = -3,
                             Destription = "<<<<<<太美丽了11",
-                            TouristRoutID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
+                            TouristRoutID = new Guid("7c88ac9d-ab92-4302-b0a8-95d9613cae8d"),
                             Url = "../images/3.jpg"
                         });
                 });

@@ -50,6 +50,31 @@ namespace FakeXieCheng.Demo.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "TouristRout",
+                columns: new[] { "ID", "CreateTime", "DepartureTime", "Description", "DiscountPresent", "DriinalPrice", "Features", "Fees", "Notes", "OriginalPrice", "Title", "UpdateTime" },
+                values: new object[] { new Guid("49758b3e-724f-4942-9ec2-70e73f6810da"), new DateTime(2021, 4, 14, 21, 36, 8, 688, DateTimeKind.Local).AddTicks(5422), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, "青天河", null });
+
+            migrationBuilder.InsertData(
+                table: "TouristRout",
+                columns: new[] { "ID", "CreateTime", "DepartureTime", "Description", "DiscountPresent", "DriinalPrice", "Features", "Fees", "Notes", "OriginalPrice", "Title", "UpdateTime" },
+                values: new object[] { new Guid("7c88ac9d-ab92-4302-b0a8-95d9613cae8d"), new DateTime(2021, 4, 13, 21, 36, 8, 690, DateTimeKind.Local).AddTicks(1344), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, "云台山", null });
+
+            migrationBuilder.InsertData(
+                table: "TouristRoutPictures",
+                columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
+                values: new object[] { -1, "太美丽了", new Guid("49758b3e-724f-4942-9ec2-70e73f6810da"), "../images/1.jpg" });
+
+            migrationBuilder.InsertData(
+                table: "TouristRoutPictures",
+                columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
+                values: new object[] { -2, "太美丽了11111", new Guid("7c88ac9d-ab92-4302-b0a8-95d9613cae8d"), "../images/2.jpg" });
+
+            migrationBuilder.InsertData(
+                table: "TouristRoutPictures",
+                columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
+                values: new object[] { -3, "<<<<<<太美丽了11", new Guid("7c88ac9d-ab92-4302-b0a8-95d9613cae8d"), "../images/3.jpg" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_TouristRoutPictures_TouristRoutID",
                 table: "TouristRoutPictures",

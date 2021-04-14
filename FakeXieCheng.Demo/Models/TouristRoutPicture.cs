@@ -15,7 +15,6 @@ namespace FakeXieCheng.Demo.Models
         [MaxLength(255)]
         public string Url { get; set; }
         public string Destription { get; set; }
-        [ForeignKey("TouristRoutID")]
         public Guid TouristRoutID { get; set; }
         public TouristRout TouristRout { get; set; }
     }

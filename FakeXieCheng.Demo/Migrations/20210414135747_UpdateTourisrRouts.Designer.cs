@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeXieCheng.Demo.Migrations
 {
     [DbContext(typeof(FakeContext))]
-    [Migration("20210412150316_Init")]
-    partial class Init
+    [Migration("20210414135747_UpdateTourisrRouts")]
+    partial class UpdateTourisrRouts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,10 +56,22 @@ namespace FakeXieCheng.Demo.Migrations
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("StratCity")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<byte>("TravlDays")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int?>("TripType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -67,6 +79,34 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("TouristRout");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = new Guid("780a1962-602f-46a2-9719-72f72810106e"),
+                            CreateTime = new DateTime(2021, 4, 14, 21, 57, 46, 927, DateTimeKind.Local).AddTicks(7708),
+                            Description = "都是水",
+                            DriinalPrice = 0m,
+                            Features = "吃喝玩乐",
+                            Fees = "住宿费自己掏",
+                            Notes = "注意安全",
+                            OriginalPrice = 1300m,
+                            Title = "青天河",
+                            TravlDays = (byte)0
+                        },
+                        new
+                        {
+                            ID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
+                            CreateTime = new DateTime(2021, 4, 13, 21, 57, 46, 929, DateTimeKind.Local).AddTicks(3806),
+                            Description = "都是水111",
+                            DriinalPrice = 0m,
+                            Features = "```吃喝玩乐",
+                            Fees = "555住宿费自己掏",
+                            Notes = "··注意安全",
+                            OriginalPrice = 1200m,
+                            Title = "云台山",
+                            TravlDays = (byte)0
+                        });
                 });
 
             modelBuilder.Entity("FakeXieCheng.Demo.Models.TouristRoutPicture", b =>
@@ -91,6 +131,29 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasIndex("TouristRoutID");
 
                     b.ToTable("TouristRoutPictures");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = -1,
+                            Destription = "太美丽了",
+                            TouristRoutID = new Guid("780a1962-602f-46a2-9719-72f72810106e"),
+                            Url = "../images/1.jpg"
+                        },
+                        new
+                        {
+                            ID = -2,
+                            Destription = "太美丽了11111",
+                            TouristRoutID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
+                            Url = "../images/2.jpg"
+                        },
+                        new
+                        {
+                            ID = -3,
+                            Destription = "<<<<<<太美丽了11",
+                            TouristRoutID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
+                            Url = "../images/3.jpg"
+                        });
                 });
 
             modelBuilder.Entity("FakeXieCheng.Demo.Models.TouristRoutPicture", b =>
