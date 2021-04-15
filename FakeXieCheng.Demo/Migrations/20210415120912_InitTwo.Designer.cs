@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeXieCheng.Demo.Migrations
 {
     [DbContext(typeof(FakeContext))]
-    [Migration("20210414135747_UpdateTourisrRouts")]
-    partial class UpdateTourisrRouts
+    [Migration("20210415120912_InitTwo")]
+    partial class InitTwo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("ProductVersion", "3.1.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("FakeXieCheng.Demo.Models.TouristRout", b =>
@@ -35,8 +35,8 @@ namespace FakeXieCheng.Demo.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
+                        .HasColumnType("nvarchar(1500)")
+                        .HasMaxLength(1500);
 
                     b.Property<float?>("DiscountPresent")
                         .HasColumnType("real");
@@ -64,8 +64,8 @@ namespace FakeXieCheng.Demo.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<byte>("TravlDays")
                         .HasColumnType("tinyint");
@@ -83,8 +83,8 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("780a1962-602f-46a2-9719-72f72810106e"),
-                            CreateTime = new DateTime(2021, 4, 14, 21, 57, 46, 927, DateTimeKind.Local).AddTicks(7708),
+                            ID = new Guid("19ebe51a-8924-44e4-91e3-55e0ce19e29e"),
+                            CreateTime = new DateTime(2021, 4, 15, 20, 9, 12, 128, DateTimeKind.Local).AddTicks(2144),
                             Description = "都是水",
                             DriinalPrice = 0m,
                             Features = "吃喝玩乐",
@@ -96,8 +96,8 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
-                            CreateTime = new DateTime(2021, 4, 13, 21, 57, 46, 929, DateTimeKind.Local).AddTicks(3806),
+                            ID = new Guid("be2e48b1-e45e-49df-9015-c2e6077edd9e"),
+                            CreateTime = new DateTime(2021, 4, 14, 20, 9, 12, 129, DateTimeKind.Local).AddTicks(7934),
                             Description = "都是水111",
                             DriinalPrice = 0m,
                             Features = "```吃喝玩乐",
@@ -123,8 +123,8 @@ namespace FakeXieCheng.Demo.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Url")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.HasKey("ID");
 
@@ -137,21 +137,21 @@ namespace FakeXieCheng.Demo.Migrations
                         {
                             ID = -1,
                             Destription = "太美丽了",
-                            TouristRoutID = new Guid("780a1962-602f-46a2-9719-72f72810106e"),
+                            TouristRoutID = new Guid("19ebe51a-8924-44e4-91e3-55e0ce19e29e"),
                             Url = "../images/1.jpg"
                         },
                         new
                         {
                             ID = -2,
                             Destription = "太美丽了11111",
-                            TouristRoutID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
+                            TouristRoutID = new Guid("be2e48b1-e45e-49df-9015-c2e6077edd9e"),
                             Url = "../images/2.jpg"
                         },
                         new
                         {
                             ID = -3,
                             Destription = "<<<<<<太美丽了11",
-                            TouristRoutID = new Guid("8e34dd2f-bdb6-4053-b4d5-3443f712b9c0"),
+                            TouristRoutID = new Guid("be2e48b1-e45e-49df-9015-c2e6077edd9e"),
                             Url = "../images/3.jpg"
                         });
                 });
@@ -163,13 +163,6 @@ namespace FakeXieCheng.Demo.Migrations
                         .HasForeignKey("TouristRoutID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("TouristRout");
-                });
-
-            modelBuilder.Entity("FakeXieCheng.Demo.Models.TouristRout", b =>
-                {
-                    b.Navigation("Pictures");
                 });
 #pragma warning restore 612, 618
         }

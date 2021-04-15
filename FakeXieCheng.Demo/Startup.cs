@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 
 namespace FakeXieCheng.Demo
@@ -28,14 +29,21 @@ namespace FakeXieCheng.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(mvcOptions=> {
+
+                mvcOptions.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters ();
+
+
             // services.AddTransient<ITouristRoutRepository,MockTouristRoutRespository>();
             services.AddTransient<ITouristRoutRepository, TouristRoutRespository>();
             services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder => {
                 optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb"));
                // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
             });
-            
+
+            //É¨Ãèprofile ÎÄ¼þ
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

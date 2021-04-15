@@ -34,7 +34,23 @@ namespace FakeXieCheng.Demo.MyFakeContext
                 var touristTemp = touristRoutsList[idx];
                 touristTemp.ID = Guid.NewGuid();
                 touristTemp.CreateTime = DateTime.Now.AddDays(idx * -1);
-              
+             
+                touristTemp.TravlDays = (byte)idx;
+                if (idx == 0)
+                {
+                    touristTemp.TripType = TripType.BackPackTour;
+                    touristTemp.StratCity = DepartureCity.Beijing;
+                }
+                else if (idx == 1)
+                {
+                    touristTemp.TripType = TripType.Group;
+                    touristTemp.StratCity = DepartureCity.Shanghai;
+                }
+                else if (idx > 5)
+                {
+                    touristTemp.TripType = TripType.PrivateGroup;
+                    touristTemp.StratCity = DepartureCity.Shenzhen;
+                }
             }
             for (int i = 0; i < picturesList.Count; i++)
             {
