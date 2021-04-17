@@ -65,3 +65,4 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csproj.CoreCompileInputs.cache
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.MvcApplicationPartsAssemblyInfo.cache
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csprojAssemblyReference.cache

@@ -34,7 +34,7 @@ namespace FakeXieCheng.Demo.Controllers
             }
             else
             {
-                var dataDto = _autoMapper.Map<TouristRoutDTO>(data);
+                var dataDto = _autoMapper.Map<IEnumerable< TouristRoutDTO>>(data);
                 return Ok(dataDto);
             }
         

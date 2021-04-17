@@ -10,6 +10,8 @@ namespace FakeXieCheng.Demo.Services
     {
         public IEnumerable<TouristRout> GetTourisRouts();
         public TouristRout GetTouristRout(Guid id);
-
+        public bool JudgeTouristRouteExist(Guid touristRouteId);
+        public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID);
+        public TouristRoutPicture GetTouistRoutePicture(Guid touristRouteID, int Pid);
     }
 }

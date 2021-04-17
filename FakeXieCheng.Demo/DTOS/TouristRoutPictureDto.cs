@@ -13,6 +13,6 @@ namespace FakeXieCheng.Demo.DTOS
         public string Destription { get; set; }
         public Guid TouristRoutID { get; set; }
 
-       // public TouristRout TouristRout { get; set; }
+        //public TouristRoutDTO TouristRout { get; set; }
     }
 }

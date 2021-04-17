@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FakeXieCheng.Demo.Services
 {
-    public class MockTouristRoutRespository : ITouristRoutRepository
+    public class MockTouristRoutRespository  //:ITouristRoutRepository
     {
         private List<TouristRout> mockList;
         public MockTouristRoutRespository()

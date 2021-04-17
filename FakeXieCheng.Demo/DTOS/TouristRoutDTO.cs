@@ -7,7 +7,7 @@ namespace FakeXieCheng.Demo.DTOS
 {
     public class TouristRoutDTO
     {
-      
+        public Guid ID { get; set; }
         public string Title { get; set; }
  
         public string Description { get; set; }
@@ -28,7 +28,7 @@ namespace FakeXieCheng.Demo.DTOS
         
         public string Notes { get; set; }
 
-        //public ICollection<TouristRoutPicture> Pictures { get; set; }
+        public ICollection<TouristRoutPictureDto> Pictures { get; set; }
 
         public double? Rating { get; set; }
         public string TravlDays { get; set; }
