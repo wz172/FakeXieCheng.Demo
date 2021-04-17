@@ -81,5 +81,25 @@ namespace FakeXieCheng.Demo.Services
             }
             return FakeContext.TouristRoutPictures.FirstOrDefault(p => p.ID == Pid);
         }
+
+        public void AddTouristRoute(TouristRout rout)
+        {
+            FakeContext.TouristRout.Add(rout);
+        }
+
+        public bool Save()
+        {
+            return FakeContext.SaveChanges() > 0;
+        }
+
+        public void AddTouristRoutePicture(Guid tourisrRouteId, TouristRoutPicture picture)
+        {
+            if (!JudgeTouristRouteExist(tourisrRouteId)||picture==null)
+            {
+                throw new  ArgumentNullException(nameof(tourisrRouteId));
+            }
+            picture.TouristRoutID = tourisrRouteId;
+            FakeContext.TouristRoutPictures.Add(picture);
+        }
     }
 }

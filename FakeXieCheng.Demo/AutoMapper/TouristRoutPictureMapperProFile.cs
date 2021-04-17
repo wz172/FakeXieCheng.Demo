@@ -13,7 +13,10 @@ namespace FakeXieCheng.Demo.AutoMapper
         public TouristRoutPictureMapperProFile()
         {
             CreateMap<TouristRoutPicture, TouristRoutPictureDto>();
+
+            CreateMap<TouristRoutePicturesCreateDto, TouristRoutPicture>();
         }
+
 
     }
 }

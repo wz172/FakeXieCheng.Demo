@@ -17,19 +17,19 @@ namespace FakeXieCheng.Demo.Controllers
     [ApiController]
     public class TouristRoutsController : ControllerBase
     {
-        public ITouristRoutRepository TouristRout { get; }
+        public ITouristRoutRepository TouristRoutRepo { get; }
 
         private readonly IMapper _autoMapper;
         public TouristRoutsController(ITouristRoutRepository touristRout, IMapper mapper)
         {
-            this.TouristRout = touristRout;
+            this.TouristRoutRepo = touristRout;
             this._autoMapper = mapper;
         }
         [HttpHead]
         [HttpGet]
         public IActionResult GetTousistRouts([FromQuery] TouristRouteRequestParam param)
         {
-            var data = TouristRout.GetTourisRouts(param);
+            var data = TouristRoutRepo.GetTourisRouts(param);
             if (data == null || data.Count() <= 0)
             {
                 return NotFound("没有找到旅游路线列表");
@@ -44,19 +44,38 @@ namespace FakeXieCheng.Demo.Controllers
 
 
 
-        [HttpGet("{id}")]
-        [HttpHead("{id}")]
-        public IActionResult GetTourisRout(Guid id)
+        [HttpGet("{routeId}",Name = "GetTourisRout")]
+        [HttpHead("{routeId}")]
+        public IActionResult GetTourisRout(Guid routeId)
         {
-            var touristRoutFromRepository = TouristRout.GetTouristRout(id);
+            var touristRoutFromRepository = TouristRoutRepo.GetTouristRout(routeId);
             if (touristRoutFromRepository == null)
             {
-                return NotFound($"旅游路线{id}不存在");
+                return NotFound($"旅游路线{routeId}不存在");
             }
             else
             {
                 var touristRoutDTO = _autoMapper.Map<TouristRoutDTO>(touristRoutFromRepository);
                 return Ok(touristRoutDTO);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateTouristRoute([FromBody] TouristRouteCreateDto touristRouteCreateDto )
+        {
+            TouristRout touristRoutData = _autoMapper.Map<TouristRout>(touristRouteCreateDto);
+            if (touristRoutData == null)
+            {
+                return BadRequest();
+            }
+            TouristRoutRepo.AddTouristRoute(touristRoutData);
+            if (TouristRoutRepo.Save())
+            {
+                return CreatedAtRoute("GetTourisRout", new { routeId = touristRoutData.ID },    _autoMapper.Map<TouristRoutDTO>( touristRoutData));
+            }
+            else
+            {
+                return BadRequest();
             }
         }
     }

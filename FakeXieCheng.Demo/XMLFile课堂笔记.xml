@@ -16,6 +16,16 @@
 			4.FromRoute 来自MVC下的URL
 			5. FromService  来自于注入服务依赖
 		</li>
+
+		<li name="创建资源Post 请求应用">
+			1. post是既不安全也不幂等的http操作
+			2.创建post的DTO和GetDTO不能混用
+			3.创建成功的回复代码是201 函数CreatedAtRoute 不是200
+		</li>
+		<P>
+			在创建上面的旅游路线和图片复合体时候，一定要注意在返回CreatedAtRoute 参数1：要调用的函数名，在方法签名使用Name="函数名"。 参数2：使用匿名类吧调用函数的参数传进去。参数3：（这个很重要，使用不好会发生jsonconvert发生异常，循环序列化）这个参数应当使用auotmapper 转化后的个体。
+		</P>
+		
 	</note>
 	
 </root>

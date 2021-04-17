@@ -14,5 +14,8 @@ namespace FakeXieCheng.Demo.Services
         public bool JudgeTouristRouteExist(Guid touristRouteId);
         public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID);
         public TouristRoutPicture GetTouistRoutePicture(Guid touristRouteID, int Pid);
+        public void AddTouristRoute(TouristRout rout);
+        public bool Save();
+        public void AddTouristRoutePicture(Guid tourisrRouteId, TouristRoutPicture picture);
     }
 }

@@ -26,7 +26,7 @@ namespace FakeXieCheng.Demo
             services.AddControllers(mvcOptions =>
             {
 
-                mvcOptions.ReturnHttpNotAcceptable = true;
+                //mvcOptions.ReturnHttpNotAcceptable = true;
             }).AddXmlDataContractSerializerFormatters();
 
 

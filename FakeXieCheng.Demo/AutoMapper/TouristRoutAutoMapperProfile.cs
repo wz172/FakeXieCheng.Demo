@@ -29,6 +29,18 @@ namespace FakeXieCheng.Demo.AutoMapper
                 original => original.MapFrom(src => src.StratCity.ToString())
                 );
 
+            CreateMap<TouristRouteCreateDto, TouristRout>()
+                .ForMember(
+                        dest => dest.ID,
+                        original => original.MapFrom(src => Guid.NewGuid())
+                ).ForMember(
+                            dest => dest.OriginalPrice,
+                            original => original.MapFrom(src => src.Price)
+                ).ForMember(
+                    dest => dest.TravlDays,
+                    original => original.MapFrom(src => byte.Parse(src.TravlDays))
+                );
+
         }
     }
 }

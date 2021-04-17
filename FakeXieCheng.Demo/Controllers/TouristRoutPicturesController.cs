@@ -8,6 +8,7 @@ using FakeXieCheng.Demo.Services;
 using FakeXieCheng.Demo.Models;
 using FakeXieCheng.Demo.DTOS;
 
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FakeXieCheng.Demo.Controllers
@@ -42,7 +43,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         // GET api/<TouristRoutPicturesController>/5
-        [HttpGet("{id}"),HttpHead("{id}")]
+        [HttpGet("{id}",Name ="GetPictureByID"),HttpHead("{id}")]
         public IActionResult Get(Guid touristRoutsID,int id)
         {
             TouristRoutPicture picture = _fakerepository.GetTouistRoutePicture(touristRoutsID, id);
@@ -50,13 +51,38 @@ namespace FakeXieCheng.Demo.Controllers
             {
                 return NotFound($"没有找打ID{id}的图片");
             }
-            return Ok(_mapper.Map<TouristRoutDTO>(picture));
+            return Ok(_mapper.Map<TouristRoutPictureDto>(picture));
         }
 
-        // POST api/<TouristRoutPicturesController>
+
+        //[HttpPost]
+        //public IActionResult Post([FromBody] string value)
+        //{
+        //    return Ok("这是一个图片的POST请求方法"+value );
+        //}
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromRoute]Guid touristRoutsID, [FromBody]TouristRoutePicturesCreateDto pictureCreateDto)
         {
+            TouristRoutPicture pictureData = _mapper.Map<TouristRoutPicture>(pictureCreateDto);
+            try
+            {
+                _fakerepository.AddTouristRoutePicture(touristRoutsID, pictureData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); ;
+                return BadRequest();
+            }
+            if (_fakerepository.Save())
+            {
+                return CreatedAtRoute("GetPictureByID", new { id = pictureData.ID , touristRoutsID =pictureData.TouristRoutID}, _mapper.Map<TouristRoutPictureDto>( pictureData));
+            }
+            else
+            {
+                return BadRequest();
+            }
+           
         }
 
         // PUT api/<TouristRoutPicturesController>/5
