@@ -20,6 +20,7 @@ namespace FakeXieCheng.Demo.MyFakeContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            Random random = new Random();
             string rootPathDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             string touristRoutsStr=  File.ReadAllText(Path.Combine(rootPathDir, "FakeContext/touristRouts.json"),System.Text.Encoding.UTF8);
@@ -51,6 +52,7 @@ namespace FakeXieCheng.Demo.MyFakeContext
                     touristTemp.TripType = TripType.PrivateGroup;
                     touristTemp.StratCity = DepartureCity.Shenzhen;
                 }
+                touristTemp.Rating = random.Next(100);
             }
             for (int i = 0; i < picturesList.Count; i++)
             {

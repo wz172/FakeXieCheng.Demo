@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using FakeXieCheng.Demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+using System;
 
 
 namespace FakeXieCheng.Demo
@@ -29,17 +23,19 @@ namespace FakeXieCheng.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(mvcOptions=> {
+            services.AddControllers(mvcOptions =>
+            {
 
                 mvcOptions.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters ();
+            }).AddXmlDataContractSerializerFormatters();
 
 
             // services.AddTransient<ITouristRoutRepository,MockTouristRoutRespository>();
             services.AddTransient<ITouristRoutRepository, TouristRoutRespository>();
-            services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder => {
+            services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder =>
+            {
                 optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb"));
-               // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
+                // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
             });
 
             //É¨Ãèprofile ÎÄ¼þ
@@ -54,11 +50,11 @@ namespace FakeXieCheng.Demo
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

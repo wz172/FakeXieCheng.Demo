@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using FakeXieCheng.Demo.Models;
+using FakeXieCheng.Demo.RequestParams;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -24,33 +25,37 @@ namespace FakeXieCheng.Demo.Controllers
             this.TouristRout = touristRout;
             this._autoMapper = mapper;
         }
+        [HttpHead]
         [HttpGet]
-        public IActionResult GetTousistRouts()
+        public IActionResult GetTousistRouts([FromQuery] TouristRouteRequestParam param)
         {
-            var data = TouristRout.GetTourisRouts();
-            if (data==null||data.Count()<=0)
+            var data = TouristRout.GetTourisRouts(param);
+            if (data == null || data.Count() <= 0)
             {
                 return NotFound("没有找到旅游路线列表");
             }
             else
             {
-                var dataDto = _autoMapper.Map<IEnumerable< TouristRoutDTO>>(data);
+                var dataDto = _autoMapper.Map<IEnumerable<TouristRoutDTO>>(data);
                 return Ok(dataDto);
             }
-        
+
         }
 
+
+
         [HttpGet("{id}")]
+        [HttpHead("{id}")]
         public IActionResult GetTourisRout(Guid id)
         {
             var touristRoutFromRepository = TouristRout.GetTouristRout(id);
-            if (touristRoutFromRepository==null)
+            if (touristRoutFromRepository == null)
             {
                 return NotFound($"旅游路线{id}不存在");
             }
             else
             {
-                var  touristRoutDTO = _autoMapper.Map<TouristRoutDTO>(touristRoutFromRepository);
+                var touristRoutDTO = _autoMapper.Map<TouristRoutDTO>(touristRoutFromRepository);
                 return Ok(touristRoutDTO);
             }
         }

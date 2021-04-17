@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<datetime>2021年4月17号</datetime>
+	<note>
+		<li name="第六章内容">
+			1.传递api的参数
+			2.关键词搜索
+			3.数据过滤
+			4.封装参数，统一管理
+		</li>
+
+		<li name="参数来源">
+			1. FromQurey 请求的Url
+			2.FromBody  请求体
+			3.FromForm 来自表单
+			4.FromRoute 来自MVC下的URL
+			5. FromService  来自于注入服务依赖
+		</li>
+	</note>
+	
+</root>

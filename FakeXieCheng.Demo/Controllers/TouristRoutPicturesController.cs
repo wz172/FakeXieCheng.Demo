@@ -26,7 +26,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         // GET: api/<TouristRoutPicturesController>
-        [HttpGet]
+        [HttpGet,HttpHead]
         public IActionResult Get(Guid touristRoutsID)
         {
             if (!_fakerepository.JudgeTouristRouteExist(touristRoutsID))
@@ -42,7 +42,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         // GET api/<TouristRoutPicturesController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}"),HttpHead("{id}")]
         public IActionResult Get(Guid touristRoutsID,int id)
         {
             TouristRoutPicture picture = _fakerepository.GetTouistRoutePicture(touristRoutsID, id);
