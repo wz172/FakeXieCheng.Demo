@@ -28,7 +28,10 @@ namespace FakeXieCheng.Demo
             services.AddControllers(mvcOptions =>
             {
                 mvcOptions.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters()
+            })
+                .AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver =
+                new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver())
+                .AddXmlDataContractSerializerFormatters()
             .ConfigureApiBehaviorOptions(
                 setupAction => setupAction.InvalidModelStateResponseFactory = context =>
                     {
@@ -43,7 +46,7 @@ namespace FakeXieCheng.Demo
                         problemDetail.Extensions.Add("id", context.HttpContext.TraceIdentifier);
                         return new UnprocessableEntityObjectResult(problemDetail)
                         {
-                            ContentTypes = { "application/problem+json"}
+                            ContentTypes = { "application/problem+json" }
                         };
                     }
                 );

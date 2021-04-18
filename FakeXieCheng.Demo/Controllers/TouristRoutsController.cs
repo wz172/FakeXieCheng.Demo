@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using FakeXieCheng.Demo.Models;
 using FakeXieCheng.Demo.RequestParams;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -102,6 +103,34 @@ namespace FakeXieCheng.Demo.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPatch("{routeId}")]
+        public IActionResult PartialUpdateRoute([FromRoute] Guid routeId,[FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
+        {
+            if (!TouristRoutRepo.JudgeTouristRouteExist(routeId))
+            {
+                return NotFound($"没有找到旅游路线{routeId}");
+            }
+            TouristRout originalRouteFromRepo = TouristRoutRepo.GetTouristRout(routeId);
+            TouristRouteUpdateDto orgTransFromUpdataDto = _autoMapper.Map<TouristRouteUpdateDto>(originalRouteFromRepo);
+
+            //数据补丁添加到dto中 再把打完补丁dto添加到原始数据上，因为只有原始数据才被变化追踪的
+            partialRouteDto.ApplyTo(orgTransFromUpdataDto);
+            //添加数据校验
+            //TryValidateModel()
+
+            _autoMapper.Map(orgTransFromUpdataDto, originalRouteFromRepo);
+            bool saveFlag = TouristRoutRepo.Save();
+            if (saveFlag)
+            {
+                return NoContent(); //根据实际项目需求返回 目前返回：204
+            }
+            else
+            {
+                return BadRequest();
+            }
+
         }
     }
 }

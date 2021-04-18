@@ -11,6 +11,8 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\FakeXieCheng.Demo.pdb
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\AutoMapper.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
@@ -38,6 +40,7 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\MySqlConnector.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
@@ -65,4 +68,3 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.pdb
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.genruntimeconfig.cache
-D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csprojAssemblyReference.cache

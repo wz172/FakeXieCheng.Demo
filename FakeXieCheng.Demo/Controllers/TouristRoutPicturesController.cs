@@ -56,9 +56,9 @@ namespace FakeXieCheng.Demo.Controllers
 
 
         //[HttpPost]
-        //public IActionResult Post([FromBody] string value)
+        //public IActionResult Post([FromBody] string acceptStr)
         //{
-        //    return Ok("这是一个图片的POST请求方法"+value );
+        //    return Ok("这是一个图片的POST请求方法"+ acceptStr);
         //}
 
         [HttpPost]

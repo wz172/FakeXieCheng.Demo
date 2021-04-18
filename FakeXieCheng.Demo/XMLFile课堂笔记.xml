@@ -71,7 +71,20 @@
 			3.使用Patch请求与JSON Patch Decoument 来实现局部旅游资源更新
 			4.更新数据验证
 		</li>
-	
-		
+
+		<li name="Patch 请求">
+			1. Patch 请求是对资源的的部分更新
+			2. JSON Path 六个操作 {add：添加某个字段} {remove：删除某个字段} { replace： 替换某字段信息} {move：转移} {copy：复制} {test：测试}
+			3.要使用Patch 请求需要用到一下几点
+			3.1：安装并且引用：Microsoft.AspNetCore.JsonPatch （patch请求的更新的参数列表）
+			3.2：安装并且添加服务，Microsoft.AspNetCore.Mvc.NewtonsoftJson.添加到 services.AddControllers()的后面。
+				<p name="添加服务实例（尽量可前）">
+				.AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver =
+				new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver())
+			</p>
+			4. patch 请求添加数据校验 使用ASP 数据验证：ModelState
+				
+				
+		</li>
 	</note>
 </root>

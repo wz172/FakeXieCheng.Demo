@@ -17,6 +17,8 @@ namespace FakeXieCheng.Demo.AutoMapper
             CreateMap<TouristRoutePicturesCreateDto, TouristRoutPicture>();
 
             CreateMap<TouristRoutePicturesUpdateDto, TouristRoutPicture>();
+
+            CreateMap<TouristRoutPicture, TouristRoutePicturesUpdateDto>();
         }
 
 
