@@ -82,9 +82,14 @@
 				.AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver =
 				new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver())
 			</p>
-			4. patch 请求添加数据校验 使用ASP 数据验证：ModelState
+			4. patch 请求添加数据校验 使用ASP 数据验证：ModelState (这一步非常有必要)	
 				
-				
+		</li>
+
+		<li name="delete 操作">
+			1. 对旅游资源和展示图片的删除
+			2. 批量删除，有两种方式，一种是URL中加参数，二种是通过route参数匹配
+			3. 参数转化帮助类 在Util文件中应该参悟学会
 		</li>
 	</note>
 </root>

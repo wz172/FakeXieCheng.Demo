@@ -17,5 +17,11 @@ namespace FakeXieCheng.Demo.Services
         public void AddTouristRoute(TouristRout rout);
         public bool Save();
         public void AddTouristRoutePicture(Guid tourisrRouteId, TouristRoutPicture picture);
+        public void DeleteTouristRoute(TouristRout route);
+        public void DeleteTouristRoutePicture(TouristRoutPicture picture);
+        public void DeleteTouristRoutes(IEnumerable<TouristRout> routes);
+        public void DeleteTouristRoutePictures(IEnumerable<TouristRoutPicture> pictures);
+        public IEnumerable<TouristRout> GetTourisRouts(IEnumerable<Guid> ids);
+        public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID,IEnumerable<int> ids);
     }
 }

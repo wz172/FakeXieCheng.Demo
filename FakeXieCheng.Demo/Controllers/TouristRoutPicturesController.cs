@@ -7,6 +7,7 @@ using AutoMapper;
 using FakeXieCheng.Demo.Services;
 using FakeXieCheng.Demo.Models;
 using FakeXieCheng.Demo.DTOS;
+using FakeXieCheng.Demo.Util;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -49,7 +50,7 @@ namespace FakeXieCheng.Demo.Controllers
             TouristRoutPicture picture = _fakerepository.GetTouistRoutePicture(touristRoutsID, id);
             if (picture==null)
             {
-                return NotFound($"没有找打ID{id}的图片");
+                return NotFound($"没有找到ID{id}的图片");
             }
             return Ok(_mapper.Map<TouristRoutPictureDto>(picture));
         }
@@ -93,8 +94,49 @@ namespace FakeXieCheng.Demo.Controllers
 
         // DELETE api/<TouristRoutPicturesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult DeletePicture([FromRoute]Guid touristRoutsID, [FromRoute]int id)
         {
+            if (!_fakerepository.JudgeTouristRouteExist(touristRoutsID))
+            {
+                return NotFound($"旅游路线{touristRoutsID}不存在");
+            }
+            TouristRoutPicture pictureDel = _fakerepository.GetTouistRoutePicture(touristRoutsID, id);
+            if (pictureDel==null)
+            {
+                return NotFound($"没有找到ID{id}的图片");
+            }
+            _fakerepository.DeleteTouristRoutePicture(pictureDel);
+            if (_fakerepository.Save())
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{ids}")]
+        public IActionResult DeletePicture([FromRoute]Guid touristRoutsID, [ModelBinder(BinderType =typeof(ArrayModelBinder))] [FromRoute]IEnumerable<int> ids)
+        {
+            if (!_fakerepository.JudgeTouristRouteExist(touristRoutsID))
+            {
+                return NotFound($"旅游路线{touristRoutsID}不存在");
+            }
+            var picturesDelList = _fakerepository.GetTouristRoutesPictures(touristRoutsID, ids);
+            if (picturesDelList==null||picturesDelList.Count()<=0)
+            {
+                return NotFound($"要删除旅游路线{touristRoutsID}的图片信息不存在");
+            }
+            _fakerepository.DeleteTouristRoutePictures(picturesDelList);
+            if (_fakerepository.Save())
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

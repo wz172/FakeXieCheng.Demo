@@ -11,6 +11,7 @@ using AutoMapper;
 using FakeXieCheng.Demo.Models;
 using FakeXieCheng.Demo.RequestParams;
 using Microsoft.AspNetCore.JsonPatch;
+using FakeXieCheng.Demo.Util;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -81,19 +82,59 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpPut("{routeId}")]
-        public IActionResult UpdateRote([FromRoute] Guid routeID,[FromBody] TouristRouteUpdateDto routeUpdateDto)
+        public IActionResult UpdateRote([FromRoute] Guid routeID, [FromBody] TouristRouteUpdateDto routeUpdateDto)
         {
             if (!TouristRoutRepo.JudgeTouristRouteExist(routeID))
             {
                 return NotFound($"没有找到旅游路线{routeID}");
             }
-            if (routeUpdateDto==null)
+            if (routeUpdateDto == null)
             {
                 return BadRequest();
             }
             TouristRout touristRouteFromRepo = TouristRoutRepo.GetTouristRout(routeID);
             // 这个操作完成了吧 updateDTO 到 查询出来的数据更新
             _autoMapper.Map(routeUpdateDto, touristRouteFromRepo);
+
+            return GetSaveOperationResult();
+        }
+
+        [HttpPatch("{routeId}")]
+        public IActionResult PartialUpdateRoute([FromRoute] Guid routeId, [FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
+        {
+            if (!TouristRoutRepo.JudgeTouristRouteExist(routeId))
+            {
+                return NotFound($"没有找到旅游路线{routeId}");
+            }
+            TouristRout originalRouteFromRepo = TouristRoutRepo.GetTouristRout(routeId);
+            TouristRouteUpdateDto orgTransFromUpdataDto = _autoMapper.Map<TouristRouteUpdateDto>(originalRouteFromRepo);
+
+            //数据补丁添加到dto中 再把打完补丁dto添加到原始数据上，因为只有原始数据才被变化追踪的
+            partialRouteDto.ApplyTo(orgTransFromUpdataDto, ModelState);
+            //添加数据校验
+            if (!TryValidateModel(orgTransFromUpdataDto))
+            {
+                return ValidationProblem(ModelState);
+            }
+            _autoMapper.Map(orgTransFromUpdataDto, originalRouteFromRepo);
+            return GetSaveOperationResult();
+        }
+
+        [HttpDelete("{routeID}")]
+        public IActionResult DeleteRoute([FromRoute] Guid routeID)
+        {
+            var routeDel = TouristRoutRepo.GetTouristRout(routeID);
+            if (routeDel == null)
+            {
+                return NotFound($"要删除的，旅游路线{routeID}不存在");
+            }
+            TouristRoutRepo.DeleteTouristRoute(routeDel);
+
+            return GetSaveOperationResult();
+        }
+
+        private IActionResult GetSaveOperationResult()
+        {
             bool saveFlag = TouristRoutRepo.Save();
             if (saveFlag)
             {
@@ -105,32 +146,20 @@ namespace FakeXieCheng.Demo.Controllers
             }
         }
 
-        [HttpPatch("{routeId}")]
-        public IActionResult PartialUpdateRoute([FromRoute] Guid routeId,[FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
+        [HttpDelete("({ids})")]
+        public IActionResult DeleteRoutes([ModelBinder(BinderType =typeof(ArrayModelBinder))] [FromRoute] IEnumerable<Guid> ids)
         {
-            if (!TouristRoutRepo.JudgeTouristRouteExist(routeId))
-            {
-                return NotFound($"没有找到旅游路线{routeId}");
-            }
-            TouristRout originalRouteFromRepo = TouristRoutRepo.GetTouristRout(routeId);
-            TouristRouteUpdateDto orgTransFromUpdataDto = _autoMapper.Map<TouristRouteUpdateDto>(originalRouteFromRepo);
-
-            //数据补丁添加到dto中 再把打完补丁dto添加到原始数据上，因为只有原始数据才被变化追踪的
-            partialRouteDto.ApplyTo(orgTransFromUpdataDto);
-            //添加数据校验
-            //TryValidateModel()
-
-            _autoMapper.Map(orgTransFromUpdataDto, originalRouteFromRepo);
-            bool saveFlag = TouristRoutRepo.Save();
-            if (saveFlag)
-            {
-                return NoContent(); //根据实际项目需求返回 目前返回：204
-            }
-            else
+            if (ids==null||ids.Count()<=0)
             {
                 return BadRequest();
             }
-
+            IEnumerable<TouristRout> routeDelList = TouristRoutRepo.GetTourisRouts(ids);
+            if (routeDelList==null||routeDelList.Count()<=0)
+            {
+                return NotFound($"批量删除旅游路线不存在");
+            }
+            TouristRoutRepo.DeleteTouristRoutes(routeDelList);
+            return GetSaveOperationResult();
         }
     }
 }

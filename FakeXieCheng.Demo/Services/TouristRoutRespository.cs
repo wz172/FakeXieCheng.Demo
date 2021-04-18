@@ -25,7 +25,7 @@ namespace FakeXieCheng.Demo.Services
             {
                 resultQueryable = resultQueryable.Where(xt => xt.Title.Contains(touristRouteParam.TitleKeyWord));
             }
-            if (touristRouteParam.RatingLogicType!=LogicType.Null)
+            if (touristRouteParam.RatingLogicType != LogicType.Null)
             {
                 switch (touristRouteParam.RatingLogicType)
                 {
@@ -35,7 +35,7 @@ namespace FakeXieCheng.Demo.Services
                         resultQueryable = resultQueryable.Where(xt => xt.Rating < touristRouteParam.RatingValue);
                         break;
                     case LogicType.EqualTo:
-                        resultQueryable = resultQueryable.Where(xt => xt.Rating ==touristRouteParam.RatingValue);
+                        resultQueryable = resultQueryable.Where(xt => xt.Rating == touristRouteParam.RatingValue);
                         break;
                     case LogicType.LargeThen:
                         resultQueryable = resultQueryable.Where(xt => xt.Rating > touristRouteParam.RatingValue);
@@ -59,7 +59,7 @@ namespace FakeXieCheng.Demo.Services
         {
             return FakeContext.TouristRout
                 .Where(xt => xt.ID == id)
-                .Include(xt=>xt.Pictures)
+                .Include(xt => xt.Pictures)
                 .FirstOrDefault();
         }
 
@@ -94,12 +94,46 @@ namespace FakeXieCheng.Demo.Services
 
         public void AddTouristRoutePicture(Guid tourisrRouteId, TouristRoutPicture picture)
         {
-            if (!JudgeTouristRouteExist(tourisrRouteId)||picture==null)
+            if (!JudgeTouristRouteExist(tourisrRouteId) || picture == null)
             {
-                throw new  ArgumentNullException(nameof(tourisrRouteId));
+                throw new ArgumentNullException(nameof(tourisrRouteId));
             }
             picture.TouristRoutID = tourisrRouteId;
             FakeContext.TouristRoutPictures.Add(picture);
+        }
+
+        public void DeleteTouristRoute(TouristRout route)
+        {
+            FakeContext.TouristRout.Remove(route);
+        }
+
+        public void DeleteTouristRoutePicture(TouristRoutPicture picture)
+        {
+            FakeContext.TouristRoutPictures.Remove(picture);
+        }
+
+        public void DeleteTouristRoutes(IEnumerable<TouristRout> routes)
+        {
+            FakeContext.TouristRout.RemoveRange(routes);
+        }
+
+        public void DeleteTouristRoutePictures(IEnumerable<TouristRoutPicture> pictures)
+        {
+            FakeContext.TouristRoutPictures.RemoveRange(pictures);
+        }
+
+        public IEnumerable<TouristRout> GetTourisRouts(IEnumerable<Guid> ids)
+        {
+            return FakeContext.TouristRout
+                     .Where(xt => ids.Contains(xt.ID))
+                     .ToList();
+        }
+
+        public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID, IEnumerable<int> ids)
+        {
+            return FakeContext.TouristRoutPictures
+                     .Where(xt => (ids.Contains(xt.ID) && xt.TouristRoutID == touristRouteID))
+                     .ToList();
         }
     }
 }
