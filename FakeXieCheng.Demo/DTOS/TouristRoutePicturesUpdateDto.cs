@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace FakeXieCheng.Demo.DTOS
 {
-    public class TouristRoutePicturesCreateDto: TouristRoutePicturesBaseDto
+    public class TouristRoutePicturesUpdateDto: TouristRoutePicturesBaseDto
     {
-        
+
     }
 }

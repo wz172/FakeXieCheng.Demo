@@ -44,7 +44,7 @@ namespace FakeXieCheng.Demo.Controllers
 
 
 
-        [HttpGet("{routeId}",Name = "GetTourisRout")]
+        [HttpGet("{routeId}", Name = "GetTourisRout")]
         [HttpHead("{routeId}")]
         public IActionResult GetTourisRout(Guid routeId)
         {
@@ -61,7 +61,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTouristRoute([FromBody] TouristRouteCreateDto touristRouteCreateDto )
+        public IActionResult CreateTouristRoute([FromBody] TouristRouteCreateDto touristRouteCreateDto)
         {
             TouristRout touristRoutData = _autoMapper.Map<TouristRout>(touristRouteCreateDto);
             if (touristRoutData == null)
@@ -71,7 +71,32 @@ namespace FakeXieCheng.Demo.Controllers
             TouristRoutRepo.AddTouristRoute(touristRoutData);
             if (TouristRoutRepo.Save())
             {
-                return CreatedAtRoute("GetTourisRout", new { routeId = touristRoutData.ID },    _autoMapper.Map<TouristRoutDTO>( touristRoutData));
+                return CreatedAtRoute("GetTourisRout", new { routeId = touristRoutData.ID }, _autoMapper.Map<TouristRoutDTO>(touristRoutData));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("{routeId}")]
+        public IActionResult UpdateRote([FromRoute] Guid routeID,[FromBody] TouristRouteUpdateDto routeUpdateDto)
+        {
+            if (!TouristRoutRepo.JudgeTouristRouteExist(routeID))
+            {
+                return NotFound($"没有找到旅游路线{routeID}");
+            }
+            if (routeUpdateDto==null)
+            {
+                return BadRequest();
+            }
+            TouristRout touristRouteFromRepo = TouristRoutRepo.GetTouristRout(routeID);
+            // 这个操作完成了吧 updateDTO 到 查询出来的数据更新
+            _autoMapper.Map(routeUpdateDto, touristRouteFromRepo);
+            bool saveFlag = TouristRoutRepo.Save();
+            if (saveFlag)
+            {
+                return NoContent(); //根据实际项目需求返回 目前返回：204
             }
             else
             {

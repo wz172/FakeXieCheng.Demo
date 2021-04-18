@@ -38,8 +38,17 @@ namespace FakeXieCheng.Demo.AutoMapper
                             original => original.MapFrom(src => src.Price)
                 ).ForMember(
                     dest => dest.TravlDays,
-                    original => original.MapFrom(src => byte.Parse(src.TravlDays))
+                    original => original.MapFrom(src => byte.Parse(src.TravlDays.TrimEnd('天')))
                 );
+
+            CreateMap<TouristRouteUpdateDto, TouristRout>()
+                .ForMember(
+                    dest => dest.OriginalPrice,
+                    original => original.MapFrom(src => src.Price))
+                .ForMember(
+                        dest => dest.TravlDays,
+                        original => original.MapFrom(src => src.TravlDays.TrimEnd('天'))
+                        );
 
         }
     }

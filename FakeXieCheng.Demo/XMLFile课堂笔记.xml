@@ -63,4 +63,15 @@
 			</P>
 		</li>
 	</note>
+
+	<note>
+		<li name="更新产品 Put和Post">
+			1.Put 请求和 patch 请求
+			2.使用put请求完整更新旅游路线
+			3.使用Patch请求与JSON Patch Decoument 来实现局部旅游资源更新
+			4.更新数据验证
+		</li>
+	
+		
+	</note>
 </root>

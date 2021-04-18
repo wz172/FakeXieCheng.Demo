@@ -13,7 +13,7 @@ namespace FakeXieCheng.Demo.CheckDataClassAttribute
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             //1. 获取类对象
-            var touristRouteCreateDto = validationContext.ObjectInstance as TouristRouteCreateDto;
+            var touristRouteCreateDto = validationContext.ObjectInstance as  TouristRouteBaseDto;
             if (touristRouteCreateDto != null)
             {
                 if (touristRouteCreateDto.Price > MaxPrice|| touristRouteCreateDto.Price==0)
