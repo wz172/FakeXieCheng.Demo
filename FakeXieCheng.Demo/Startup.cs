@@ -2,6 +2,8 @@ using AutoMapper;
 using FakeXieCheng.Demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,9 +27,28 @@ namespace FakeXieCheng.Demo
         {
             services.AddControllers(mvcOptions =>
             {
+                mvcOptions.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters()
+            .ConfigureApiBehaviorOptions(
+                setupAction => setupAction.InvalidModelStateResponseFactory = context =>
+                    {
+                        var problemDetail = new ValidationProblemDetails(context.ModelState)
+                        {
+                            Type = "阿莱克斯",
+                            Title = "数据验证失败",
+                            Status = StatusCodes.Status422UnprocessableEntity,
+                            Detail = "详细信息",
+                            Instance = context.HttpContext.Request.Path
+                        };
+                        problemDetail.Extensions.Add("id", context.HttpContext.TraceIdentifier);
+                        return new UnprocessableEntityObjectResult(problemDetail)
+                        {
+                            ContentTypes = { "application/problem+json"}
+                        };
+                    }
+                );
 
-                //mvcOptions.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters();
+
 
 
             // services.AddTransient<ITouristRoutRepository,MockTouristRoutRespository>();
@@ -50,7 +71,7 @@ namespace FakeXieCheng.Demo
                 app.UseDeveloperExceptionPage();
             }
 
-           // app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
