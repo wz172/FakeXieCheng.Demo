@@ -9,19 +9,19 @@ namespace FakeXieCheng.Demo.Services
 {
    public interface ITouristRoutRepository
     {
-        public IEnumerable<TouristRout> GetTourisRouts(TouristRouteRequestParam touristRouteParam);
-        public TouristRout GetTouristRout(Guid id);
-        public bool JudgeTouristRouteExist(Guid touristRouteId);
-        public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID);
-        public TouristRoutPicture GetTouistRoutePicture(Guid touristRouteID, int Pid);
+        public Task<IEnumerable<TouristRout>> GetTourisRoutsAsync(TouristRouteRequestParam touristRouteParam);
+        public Task<TouristRout> GetTouristRoutAsync(Guid id);
+        public Task <bool> JudgeTouristRouteExistAsync(Guid touristRouteId);
+        public Task<IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID);
+        public Task<TouristRoutPicture> GetTouistRoutePictureAsync(Guid touristRouteID, int Pid);
         public void AddTouristRoute(TouristRout rout);
-        public bool Save();
+        public  Task<bool> SaveAsync();
         public void AddTouristRoutePicture(Guid tourisrRouteId, TouristRoutPicture picture);
         public void DeleteTouristRoute(TouristRout route);
         public void DeleteTouristRoutePicture(TouristRoutPicture picture);
         public void DeleteTouristRoutes(IEnumerable<TouristRout> routes);
         public void DeleteTouristRoutePictures(IEnumerable<TouristRoutPicture> pictures);
-        public IEnumerable<TouristRout> GetTourisRouts(IEnumerable<Guid> ids);
-        public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID,IEnumerable<int> ids);
+        public Task<IEnumerable<TouristRout>> GetTourisRoutsAsync(IEnumerable<Guid> ids);
+        public Task< IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID,IEnumerable<int> ids);
     }
 }

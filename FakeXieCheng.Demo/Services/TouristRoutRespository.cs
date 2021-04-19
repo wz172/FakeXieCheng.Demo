@@ -17,7 +17,7 @@ namespace FakeXieCheng.Demo.Services
             FakeContext = context;
         }
 
-        public IEnumerable<TouristRout> GetTourisRouts(TouristRouteRequestParam touristRouteParam)
+        public async Task<IEnumerable<TouristRout>> GetTourisRoutsAsync(TouristRouteRequestParam touristRouteParam)
         {
             IQueryable<TouristRout> resultQueryable = FakeContext.TouristRout
                 .Include(xt => xt.Pictures);
@@ -51,35 +51,34 @@ namespace FakeXieCheng.Demo.Services
                 }
             }
 
-            return resultQueryable
-                .ToList();
+            return await resultQueryable.ToListAsync();
         }
 
-        public TouristRout GetTouristRout(Guid id)
+        public async Task<TouristRout> GetTouristRoutAsync(Guid id)
         {
-            return FakeContext.TouristRout
+            return await FakeContext.TouristRout
                 .Where(xt => xt.ID == id)
                 .Include(xt => xt.Pictures)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public bool JudgeTouristRouteExist(Guid touristRouteId)
+        public async Task<bool> JudgeTouristRouteExistAsync(Guid touristRouteId)
         {
-            return FakeContext.TouristRout.Any(x => x.ID == touristRouteId);
+            return await FakeContext.TouristRout.AnyAsync(x => x.ID == touristRouteId);
         }
 
-        public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID)
+        public async Task<IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID)
         {
-            return FakeContext.TouristRoutPictures.Where(x => x.TouristRoutID == touristRouteID).ToList();
+            return await FakeContext.TouristRoutPictures.Where(x => x.TouristRoutID == touristRouteID).ToListAsync();
         }
 
-        public TouristRoutPicture GetTouistRoutePicture(Guid touristRouteID, int Pid)
+        public async Task<TouristRoutPicture> GetTouistRoutePictureAsync(Guid touristRouteID, int Pid)
         {
-            if (!JudgeTouristRouteExist(touristRouteID))
+            if (!(await JudgeTouristRouteExistAsync(touristRouteID)))
             {
                 return null;
             }
-            return FakeContext.TouristRoutPictures.FirstOrDefault(p => p.ID == Pid);
+            return await FakeContext.TouristRoutPictures.FirstOrDefaultAsync(p => p.ID == Pid);
         }
 
         public void AddTouristRoute(TouristRout rout)
@@ -87,14 +86,14 @@ namespace FakeXieCheng.Demo.Services
             FakeContext.TouristRout.Add(rout);
         }
 
-        public bool Save()
+        public async Task<bool> SaveAsync()
         {
-            return FakeContext.SaveChanges() > 0;
+            return await FakeContext.SaveChangesAsync() > 0;
         }
 
         public void AddTouristRoutePicture(Guid tourisrRouteId, TouristRoutPicture picture)
         {
-            if (!JudgeTouristRouteExist(tourisrRouteId) || picture == null)
+            if (!FakeContext.TouristRout.Any(x => x.ID == tourisrRouteId) || picture == null)
             {
                 throw new ArgumentNullException(nameof(tourisrRouteId));
             }
@@ -122,18 +121,18 @@ namespace FakeXieCheng.Demo.Services
             FakeContext.TouristRoutPictures.RemoveRange(pictures);
         }
 
-        public IEnumerable<TouristRout> GetTourisRouts(IEnumerable<Guid> ids)
+        public async Task< IEnumerable<TouristRout>> GetTourisRoutsAsync(IEnumerable<Guid> ids)
         {
-            return FakeContext.TouristRout
+            return await FakeContext.TouristRout
                      .Where(xt => ids.Contains(xt.ID))
-                     .ToList();
+                     .ToListAsync();
         }
 
-        public IEnumerable<TouristRoutPicture> GetTouristRoutesPictures(Guid touristRouteID, IEnumerable<int> ids)
+        public async Task< IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID, IEnumerable<int> ids)
         {
-            return FakeContext.TouristRoutPictures
+            return await FakeContext.TouristRoutPictures
                      .Where(xt => (ids.Contains(xt.ID) && xt.TouristRoutID == touristRouteID))
-                     .ToList();
+                     .ToListAsync();
         }
     }
 }

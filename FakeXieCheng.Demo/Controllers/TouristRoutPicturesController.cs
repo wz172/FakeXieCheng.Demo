@@ -29,13 +29,13 @@ namespace FakeXieCheng.Demo.Controllers
 
         // GET: api/<TouristRoutPicturesController>
         [HttpGet,HttpHead]
-        public IActionResult Get(Guid touristRoutsID)
+        public async Task< IActionResult> GetPicturesAsync(Guid touristRoutsID)
         {
-            if (!_fakerepository.JudgeTouristRouteExist(touristRoutsID))
+            if (!await _fakerepository.JudgeTouristRouteExistAsync(touristRoutsID))
             {
                 return NotFound($"旅游路线{touristRoutsID}不存在");
             }
-            IEnumerable<TouristRoutPicture> picturesFromRepo = _fakerepository.GetTouristRoutesPictures(touristRoutsID);
+            IEnumerable<TouristRoutPicture> picturesFromRepo =await _fakerepository.GetTouristRoutesPicturesAsync(touristRoutsID);
             if (picturesFromRepo == null || picturesFromRepo.Count() <= 0)
             {
                 return NotFound($"没有找到关于{touristRoutsID}图片");
@@ -45,9 +45,9 @@ namespace FakeXieCheng.Demo.Controllers
 
         // GET api/<TouristRoutPicturesController>/5
         [HttpGet("{id}",Name ="GetPictureByID"),HttpHead("{id}")]
-        public IActionResult Get(Guid touristRoutsID,int id)
+        public async Task< IActionResult> GetPictureAsync(Guid touristRoutsID,int id)
         {
-            TouristRoutPicture picture = _fakerepository.GetTouistRoutePicture(touristRoutsID, id);
+            TouristRoutPicture picture =await  _fakerepository.GetTouistRoutePictureAsync(touristRoutsID, id);
             if (picture==null)
             {
                 return NotFound($"没有找到ID{id}的图片");
@@ -63,7 +63,7 @@ namespace FakeXieCheng.Demo.Controllers
         //}
 
         [HttpPost]
-        public IActionResult Post([FromRoute]Guid touristRoutsID, [FromBody]TouristRoutePicturesCreateDto pictureCreateDto)
+        public async Task< IActionResult>  PostAsync([FromRoute]Guid touristRoutsID, [FromBody]TouristRoutePicturesCreateDto pictureCreateDto)
         {
             TouristRoutPicture pictureData = _mapper.Map<TouristRoutPicture>(pictureCreateDto);
             try
@@ -75,7 +75,7 @@ namespace FakeXieCheng.Demo.Controllers
                 Console.WriteLine(ex.Message); ;
                 return BadRequest();
             }
-            if (_fakerepository.Save())
+            if (await  _fakerepository.SaveAsync())
             {
                 return CreatedAtRoute("GetPictureByID", new { id = pictureData.ID , touristRoutsID =pictureData.TouristRoutID}, _mapper.Map<TouristRoutPictureDto>( pictureData));
             }
@@ -94,19 +94,19 @@ namespace FakeXieCheng.Demo.Controllers
 
         // DELETE api/<TouristRoutPicturesController>/5
         [HttpDelete("{id}")]
-        public IActionResult DeletePicture([FromRoute]Guid touristRoutsID, [FromRoute]int id)
+        public async Task< IActionResult> DeletePictureAsync([FromRoute]Guid touristRoutsID, [FromRoute]int id)
         {
-            if (!_fakerepository.JudgeTouristRouteExist(touristRoutsID))
+            if (!await _fakerepository.JudgeTouristRouteExistAsync(touristRoutsID))
             {
                 return NotFound($"旅游路线{touristRoutsID}不存在");
             }
-            TouristRoutPicture pictureDel = _fakerepository.GetTouistRoutePicture(touristRoutsID, id);
+            TouristRoutPicture pictureDel = await _fakerepository.GetTouistRoutePictureAsync(touristRoutsID, id);
             if (pictureDel==null)
             {
                 return NotFound($"没有找到ID{id}的图片");
             }
             _fakerepository.DeleteTouristRoutePicture(pictureDel);
-            if (_fakerepository.Save())
+            if (await _fakerepository.SaveAsync())
             {
                 return NoContent();
             }
@@ -117,19 +117,19 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpDelete("{ids}")]
-        public IActionResult DeletePicture([FromRoute]Guid touristRoutsID, [ModelBinder(BinderType =typeof(ArrayModelBinder))] [FromRoute]IEnumerable<int> ids)
+        public async Task< IActionResult>  DeletePictureAsync([FromRoute]Guid touristRoutsID, [ModelBinder(BinderType =typeof(ArrayModelBinder))] [FromRoute]IEnumerable<int> ids)
         {
-            if (!_fakerepository.JudgeTouristRouteExist(touristRoutsID))
+            if (!await  _fakerepository.JudgeTouristRouteExistAsync(touristRoutsID))
             {
                 return NotFound($"旅游路线{touristRoutsID}不存在");
             }
-            var picturesDelList = _fakerepository.GetTouristRoutesPictures(touristRoutsID, ids);
+            var picturesDelList = await _fakerepository.GetTouristRoutesPicturesAsync(touristRoutsID, ids);
             if (picturesDelList==null||picturesDelList.Count()<=0)
             {
                 return NotFound($"要删除旅游路线{touristRoutsID}的图片信息不存在");
             }
             _fakerepository.DeleteTouristRoutePictures(picturesDelList);
-            if (_fakerepository.Save())
+            if (await _fakerepository.SaveAsync())
             {
                 return NoContent();
             }
