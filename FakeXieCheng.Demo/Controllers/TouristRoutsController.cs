@@ -12,6 +12,7 @@ using FakeXieCheng.Demo.Models;
 using FakeXieCheng.Demo.RequestParams;
 using Microsoft.AspNetCore.JsonPatch;
 using FakeXieCheng.Demo.Util;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -31,7 +32,7 @@ namespace FakeXieCheng.Demo.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTousistRoutsAsync([FromQuery] TouristRouteRequestParam param)
         {
-            var  data = await TouristRoutRepo.GetTourisRoutsAsync(param);
+            var data = await TouristRoutRepo.GetTourisRoutsAsync(param);
             if (data == null || data.Count() <= 0)
             {
                 return NotFound("没有找到旅游路线列表");
@@ -47,7 +48,7 @@ namespace FakeXieCheng.Demo.Controllers
 
         [HttpGet("{routeId}", Name = "GetTourisRout")]
         [HttpHead("{routeId}")]
-        public async Task< IActionResult>  GetTourisRoutAsync(Guid routeId)
+        public async Task<IActionResult> GetTourisRoutAsync(Guid routeId)
         {
             var touristRoutFromRepository = await TouristRoutRepo.GetTouristRoutAsync(routeId);
             if (touristRoutFromRepository == null)
@@ -61,8 +62,9 @@ namespace FakeXieCheng.Demo.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task< IActionResult>  CreateTouristRouteAsync([FromBody] TouristRouteCreateDto touristRouteCreateDto)
+        public async Task<IActionResult> CreateTouristRouteAsync([FromBody] TouristRouteCreateDto touristRouteCreateDto)
         {
             TouristRout touristRoutData = _autoMapper.Map<TouristRout>(touristRouteCreateDto);
             if (touristRoutData == null)
@@ -81,9 +83,9 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpPut("{routeId}")]
-        public async Task< IActionResult> UpdateRoteAsync([FromRoute] Guid routeID, [FromBody] TouristRouteUpdateDto routeUpdateDto)
+        public async Task<IActionResult> UpdateRoteAsync([FromRoute] Guid routeID, [FromBody] TouristRouteUpdateDto routeUpdateDto)
         {
-            if (! await TouristRoutRepo.JudgeTouristRouteExistAsync(routeID))
+            if (!await TouristRoutRepo.JudgeTouristRouteExistAsync(routeID))
             {
                 return NotFound($"没有找到旅游路线{routeID}");
             }
@@ -99,7 +101,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpPatch("{routeId}")]
-        public async  Task< IActionResult> PartialUpdateRouteAsync([FromRoute] Guid routeId, [FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
+        public async Task<IActionResult> PartialUpdateRouteAsync([FromRoute] Guid routeId, [FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
         {
             if (!await TouristRoutRepo.JudgeTouristRouteExistAsync(routeId))
             {
@@ -120,7 +122,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpDelete("{routeID}")]
-        public async Task< IActionResult> DeleteRouteAsync([FromRoute] Guid routeID)
+        public async Task<IActionResult> DeleteRouteAsync([FromRoute] Guid routeID)
         {
             var routeDel = await TouristRoutRepo.GetTouristRoutAsync(routeID);
             if (routeDel == null)
@@ -132,7 +134,7 @@ namespace FakeXieCheng.Demo.Controllers
             return await GetSaveOperationResultAsync();
         }
 
-        private async Task <IActionResult> GetSaveOperationResultAsync()
+        private async Task<IActionResult> GetSaveOperationResultAsync()
         {
             bool saveFlag = await TouristRoutRepo.SaveAsync();
             if (saveFlag)
@@ -146,14 +148,14 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpDelete("({ids})")]
-        public async Task< IActionResult> DeleteRoutesAsync([ModelBinder(BinderType =typeof(ArrayModelBinder))] [FromRoute] IEnumerable<Guid> ids)
+        public async Task<IActionResult> DeleteRoutesAsync([ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> ids)
         {
-            if (ids==null||ids.Count()<=0)
+            if (ids == null || ids.Count() <= 0)
             {
                 return BadRequest();
             }
             IEnumerable<TouristRout> routeDelList = await TouristRoutRepo.GetTourisRoutsAsync(ids);
-            if (routeDelList==null||routeDelList.Count()<=0)
+            if (routeDelList == null || routeDelList.Count() <= 0)
             {
                 return NotFound($"批量删除旅游路线不存在");
             }

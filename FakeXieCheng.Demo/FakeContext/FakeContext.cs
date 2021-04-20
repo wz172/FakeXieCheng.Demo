@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using FakeXieCheng.Demo.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace FakeXieCheng.Demo.MyFakeContext
 {
-    public class FakeContext:DbContext
+    public class FakeContext:IdentityDbContext<IdentityUser>  //:DbContext
     {
         public FakeContext(DbContextOptions<FakeContext> options):base(options)
         {

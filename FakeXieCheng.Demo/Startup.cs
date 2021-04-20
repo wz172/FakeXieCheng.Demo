@@ -1,5 +1,6 @@
 using AutoMapper;
 using FakeXieCheng.Demo.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,8 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using FakeXieCheng.Demo.MyFakeContext;
 
 namespace FakeXieCheng.Demo
 {
@@ -25,6 +29,27 @@ namespace FakeXieCheng.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<FakeContext>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                options =>
+                {
+                    var configKeyBytes = System.Text.Encoding.UTF8.GetBytes(Configuration["SignatureKey:loginKey"]);
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration["SignatureKey:Issuer"],
+
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["SignatureKey:Audience"],
+
+                        ValidateLifetime = true,
+
+                        IssuerSigningKey = new SymmetricSecurityKey(configKeyBytes)
+
+                    };
+                }
+                );
             services.AddControllers(mvcOptions =>
             {
                 mvcOptions.ReturnHttpNotAcceptable = true;
@@ -75,10 +100,12 @@ namespace FakeXieCheng.Demo
             }
 
             // app.UseHttpsRedirection();
-
+            //你在哪
             app.UseRouting();
-
-            //app.UseAuthorization();
+            //你是谁
+            app.UseAuthentication();
+            //你能干什么
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

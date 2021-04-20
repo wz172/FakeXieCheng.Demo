@@ -11,6 +11,7 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\FakeXieCheng.Demo.pdb
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\AutoMapper.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
@@ -59,8 +60,6 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.AssemblyInfoInputs.cache
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.AssemblyInfo.cs
-D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csproj.CoreCompileInputs.cache
-D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.MvcApplicationPartsAssemblyInfo.cache
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.RazorTargetAssemblyInfo.cache
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csproj.CopyComplete
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\staticwebassets\FakeXieCheng.Demo.StaticWebAssets.Manifest.cache
@@ -69,3 +68,10 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.pdb
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.genruntimeconfig.cache
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csprojAssemblyReference.cache
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csproj.CoreCompileInputs.cache
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.MvcApplicationPartsAssemblyInfo.cache

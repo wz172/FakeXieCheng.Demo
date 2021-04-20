@@ -15,7 +15,9 @@ namespace FakeXieCheng.Demo.Models
         public string Title { get; set; }
         [Required,MaxLength(1500)]
         public string Description { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal OriginalPrice { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal DriinalPrice { get; set; }
         [Range(0.0,1.0)]
         public float? DiscountPresent { get; set; }
