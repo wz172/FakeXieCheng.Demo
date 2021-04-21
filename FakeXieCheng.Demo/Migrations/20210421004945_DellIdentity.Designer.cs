@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeXieCheng.Demo.Migrations
 {
     [DbContext(typeof(FakeContext))]
-    [Migration("20210420153205_IdentityDbContextAndAddServerOne")]
-    partial class IdentityDbContextAndAddServerOne
+    [Migration("20210421004945_DellIdentity")]
+    partial class DellIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,15 +83,15 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("90ecc4dc-e9c4-41d1-915e-496558ed343f"),
-                            CreateTime = new DateTime(2021, 4, 20, 23, 32, 4, 420, DateTimeKind.Local).AddTicks(920),
+                            ID = new Guid("7c95d950-911b-4913-a024-c345f9c34bf1"),
+                            CreateTime = new DateTime(2021, 4, 21, 8, 49, 45, 28, DateTimeKind.Local).AddTicks(5614),
                             Description = "都是水",
                             DriinalPrice = 0m,
                             Features = "吃喝玩乐",
                             Fees = "住宿费自己掏",
                             Notes = "注意安全",
                             OriginalPrice = 1300m,
-                            Rating = 73.0,
+                            Rating = 50.0,
                             StratCity = 0,
                             Title = "青天河",
                             TravlDays = (byte)0,
@@ -99,15 +99,15 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("17cd8060-1a1f-460c-b335-13d7198bac17"),
-                            CreateTime = new DateTime(2021, 4, 19, 23, 32, 4, 421, DateTimeKind.Local).AddTicks(4995),
+                            ID = new Guid("56198f90-2341-4fb3-a4a8-a09d60da206a"),
+                            CreateTime = new DateTime(2021, 4, 20, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4102),
                             Description = "都是水111",
                             DriinalPrice = 0m,
                             Features = "```吃喝玩乐",
                             Fees = "555住宿费自己掏",
                             Notes = "··注意安全",
                             OriginalPrice = 1200m,
-                            Rating = 52.0,
+                            Rating = 96.0,
                             StratCity = 1,
                             Title = "云台山",
                             TravlDays = (byte)1,
@@ -115,29 +115,29 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("2d41ddd2-9de7-4596-997e-b69d560d8f66"),
-                            CreateTime = new DateTime(2021, 4, 18, 23, 32, 4, 421, DateTimeKind.Local).AddTicks(5183),
+                            ID = new Guid("a2516e07-cfc4-4c47-b050-c006bd81d10b"),
+                            CreateTime = new DateTime(2021, 4, 19, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4162),
                             Description = "水比较多",
                             DriinalPrice = 0m,
                             Features = "可以划船",
                             Fees = "巴拉巴拉",
                             Notes = "··注意安全。。",
                             OriginalPrice = 120m,
-                            Rating = 2.0,
+                            Rating = 37.0,
                             Title = "八里沟",
                             TravlDays = (byte)2
                         },
                         new
                         {
-                            ID = new Guid("a1b3cc6f-6d5a-4ae8-9bba-f20e502259b3"),
-                            CreateTime = new DateTime(2021, 4, 17, 23, 32, 4, 421, DateTimeKind.Local).AddTicks(5199),
+                            ID = new Guid("8ff6fae5-04be-4403-a7f0-1e2d92720b90"),
+                            CreateTime = new DateTime(2021, 4, 18, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4166),
                             Description = "山比较多",
                             DriinalPrice = 0m,
                             Features = "路比较远",
                             Fees = "玩玩赶紧回家",
                             Notes = "··注意巴拉巴拉安全。。",
                             OriginalPrice = 100m,
-                            Rating = 8.0,
+                            Rating = 21.0,
                             Title = "万仙山",
                             TravlDays = (byte)3
                         });
@@ -171,21 +171,21 @@ namespace FakeXieCheng.Demo.Migrations
                         {
                             ID = -1,
                             Destription = "太美丽了",
-                            TouristRoutID = new Guid("90ecc4dc-e9c4-41d1-915e-496558ed343f"),
+                            TouristRoutID = new Guid("7c95d950-911b-4913-a024-c345f9c34bf1"),
                             Url = "../images/1.jpg"
                         },
                         new
                         {
                             ID = -2,
                             Destription = "太美丽了11111",
-                            TouristRoutID = new Guid("17cd8060-1a1f-460c-b335-13d7198bac17"),
+                            TouristRoutID = new Guid("56198f90-2341-4fb3-a4a8-a09d60da206a"),
                             Url = "../images/2.jpg"
                         },
                         new
                         {
                             ID = -3,
                             Destription = "<<<<<<太美丽了11",
-                            TouristRoutID = new Guid("2d41ddd2-9de7-4596-997e-b69d560d8f66"),
+                            TouristRoutID = new Guid("a2516e07-cfc4-4c47-b050-c006bd81d10b"),
                             Url = "../images/3.jpg"
                         });
                 });

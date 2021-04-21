@@ -81,15 +81,15 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("b437cb5a-321d-4901-8059-17174d120ef4"),
-                            CreateTime = new DateTime(2021, 4, 20, 23, 42, 31, 567, DateTimeKind.Local).AddTicks(8349),
+                            ID = new Guid("7c95d950-911b-4913-a024-c345f9c34bf1"),
+                            CreateTime = new DateTime(2021, 4, 21, 8, 49, 45, 28, DateTimeKind.Local).AddTicks(5614),
                             Description = "都是水",
                             DriinalPrice = 0m,
                             Features = "吃喝玩乐",
                             Fees = "住宿费自己掏",
                             Notes = "注意安全",
                             OriginalPrice = 1300m,
-                            Rating = 73.0,
+                            Rating = 50.0,
                             StratCity = 0,
                             Title = "青天河",
                             TravlDays = (byte)0,
@@ -97,15 +97,15 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("e6846cfb-f4ad-4036-9122-917f683d71bd"),
-                            CreateTime = new DateTime(2021, 4, 19, 23, 42, 31, 569, DateTimeKind.Local).AddTicks(7355),
+                            ID = new Guid("56198f90-2341-4fb3-a4a8-a09d60da206a"),
+                            CreateTime = new DateTime(2021, 4, 20, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4102),
                             Description = "都是水111",
                             DriinalPrice = 0m,
                             Features = "```吃喝玩乐",
                             Fees = "555住宿费自己掏",
                             Notes = "··注意安全",
                             OriginalPrice = 1200m,
-                            Rating = 71.0,
+                            Rating = 96.0,
                             StratCity = 1,
                             Title = "云台山",
                             TravlDays = (byte)1,
@@ -113,29 +113,29 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("167addae-d869-43cf-99aa-c6bdad2fe130"),
-                            CreateTime = new DateTime(2021, 4, 18, 23, 42, 31, 569, DateTimeKind.Local).AddTicks(7492),
+                            ID = new Guid("a2516e07-cfc4-4c47-b050-c006bd81d10b"),
+                            CreateTime = new DateTime(2021, 4, 19, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4162),
                             Description = "水比较多",
                             DriinalPrice = 0m,
                             Features = "可以划船",
                             Fees = "巴拉巴拉",
                             Notes = "··注意安全。。",
                             OriginalPrice = 120m,
-                            Rating = 90.0,
+                            Rating = 37.0,
                             Title = "八里沟",
                             TravlDays = (byte)2
                         },
                         new
                         {
-                            ID = new Guid("7aa32031-dfb5-4d1d-814b-8f61a6974d8d"),
-                            CreateTime = new DateTime(2021, 4, 17, 23, 42, 31, 569, DateTimeKind.Local).AddTicks(7498),
+                            ID = new Guid("8ff6fae5-04be-4403-a7f0-1e2d92720b90"),
+                            CreateTime = new DateTime(2021, 4, 18, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4166),
                             Description = "山比较多",
                             DriinalPrice = 0m,
                             Features = "路比较远",
                             Fees = "玩玩赶紧回家",
                             Notes = "··注意巴拉巴拉安全。。",
                             OriginalPrice = 100m,
-                            Rating = 13.0,
+                            Rating = 21.0,
                             Title = "万仙山",
                             TravlDays = (byte)3
                         });
@@ -169,21 +169,21 @@ namespace FakeXieCheng.Demo.Migrations
                         {
                             ID = -1,
                             Destription = "太美丽了",
-                            TouristRoutID = new Guid("b437cb5a-321d-4901-8059-17174d120ef4"),
+                            TouristRoutID = new Guid("7c95d950-911b-4913-a024-c345f9c34bf1"),
                             Url = "../images/1.jpg"
                         },
                         new
                         {
                             ID = -2,
                             Destription = "太美丽了11111",
-                            TouristRoutID = new Guid("e6846cfb-f4ad-4036-9122-917f683d71bd"),
+                            TouristRoutID = new Guid("56198f90-2341-4fb3-a4a8-a09d60da206a"),
                             Url = "../images/2.jpg"
                         },
                         new
                         {
                             ID = -3,
                             Destription = "<<<<<<太美丽了11",
-                            TouristRoutID = new Guid("167addae-d869-43cf-99aa-c6bdad2fe130"),
+                            TouristRoutID = new Guid("a2516e07-cfc4-4c47-b050-c006bd81d10b"),
                             Url = "../images/3.jpg"
                         });
                 });

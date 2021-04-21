@@ -29,7 +29,7 @@ namespace FakeXieCheng.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<FakeContext>();
+            services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<FakeContext>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 options =>
@@ -83,7 +83,7 @@ namespace FakeXieCheng.Demo
             services.AddTransient<ITouristRoutRepository, TouristRoutRespository>();
             services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder =>
             {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb"));
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDbDell"));
                 // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
             });
 
