@@ -4,14 +4,16 @@ using FakeXieCheng.Demo.MyFakeContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FakeXieCheng.Demo.Migrations
 {
     [DbContext(typeof(FakeContext))]
-    partial class FakeContextModelSnapshot : ModelSnapshot
+    [Migration("20210421141116_MyIdentityUser")]
+    partial class MyIdentityUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,25 +87,6 @@ namespace FakeXieCheng.Demo.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "ac405777-3568-4ec8-8586-d4204c87b118",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f3fa10ad-b5f7-4961-b9c6-b6be55377511",
-                            Email = "172@qq.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "172@QQ.COM",
-                            NormalizedUserName = "172@QQ.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEzJ7u4U8zPL78jP9tA+I3IB74Bha8TlhI0C9+dh9r56oBaB8N3EsQvmbXKwUDnUZQ==",
-                            PhoneNumber = "123456",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "b674de35-1e2c-4e35-b112-6e98690602ab",
-                            TwoFactorEnabled = false,
-                            UserName = "172@qq.com"
-                        });
                 });
 
             modelBuilder.Entity("FakeXieCheng.Demo.Models.TouristRout", b =>
@@ -168,15 +151,15 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("68294560-051d-473d-956c-be77201659be"),
-                            CreateTime = new DateTime(2021, 4, 21, 22, 35, 39, 527, DateTimeKind.Local).AddTicks(8362),
+                            ID = new Guid("e15fd3cd-a22d-4dae-9f72-632029481be4"),
+                            CreateTime = new DateTime(2021, 4, 21, 22, 11, 16, 113, DateTimeKind.Local).AddTicks(4483),
                             Description = "都是水",
                             DriinalPrice = 0m,
                             Features = "吃喝玩乐",
                             Fees = "住宿费自己掏",
                             Notes = "注意安全",
                             OriginalPrice = 1300m,
-                            Rating = 6.0,
+                            Rating = 99.0,
                             StratCity = 0,
                             Title = "青天河",
                             TravlDays = (byte)0,
@@ -184,15 +167,15 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("cf34c11b-d97b-4b88-adb5-34ef211482f3"),
-                            CreateTime = new DateTime(2021, 4, 20, 22, 35, 39, 529, DateTimeKind.Local).AddTicks(2623),
+                            ID = new Guid("084a85e4-25e5-4b4d-b544-d216cdd156c2"),
+                            CreateTime = new DateTime(2021, 4, 20, 22, 11, 16, 114, DateTimeKind.Local).AddTicks(7163),
                             Description = "都是水111",
                             DriinalPrice = 0m,
                             Features = "```吃喝玩乐",
                             Fees = "555住宿费自己掏",
                             Notes = "··注意安全",
                             OriginalPrice = 1200m,
-                            Rating = 82.0,
+                            Rating = 1.0,
                             StratCity = 1,
                             Title = "云台山",
                             TravlDays = (byte)1,
@@ -200,29 +183,29 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("bf02d630-2df3-4d11-875b-ff322bafcd9e"),
-                            CreateTime = new DateTime(2021, 4, 19, 22, 35, 39, 529, DateTimeKind.Local).AddTicks(2833),
+                            ID = new Guid("e4f09d8d-70e8-4341-bc3c-afe2afd436ca"),
+                            CreateTime = new DateTime(2021, 4, 19, 22, 11, 16, 114, DateTimeKind.Local).AddTicks(7270),
                             Description = "水比较多",
                             DriinalPrice = 0m,
                             Features = "可以划船",
                             Fees = "巴拉巴拉",
                             Notes = "··注意安全。。",
                             OriginalPrice = 120m,
-                            Rating = 39.0,
+                            Rating = 51.0,
                             Title = "八里沟",
                             TravlDays = (byte)2
                         },
                         new
                         {
-                            ID = new Guid("305af930-f7cb-4f18-b777-c29cb0395d41"),
-                            CreateTime = new DateTime(2021, 4, 18, 22, 35, 39, 529, DateTimeKind.Local).AddTicks(2839),
+                            ID = new Guid("b72cabbc-5bba-4e50-bef5-86dccb58362d"),
+                            CreateTime = new DateTime(2021, 4, 18, 22, 11, 16, 114, DateTimeKind.Local).AddTicks(7275),
                             Description = "山比较多",
                             DriinalPrice = 0m,
                             Features = "路比较远",
                             Fees = "玩玩赶紧回家",
                             Notes = "··注意巴拉巴拉安全。。",
                             OriginalPrice = 100m,
-                            Rating = 36.0,
+                            Rating = 51.0,
                             Title = "万仙山",
                             TravlDays = (byte)3
                         });
@@ -256,21 +239,21 @@ namespace FakeXieCheng.Demo.Migrations
                         {
                             ID = -1,
                             Destription = "太美丽了",
-                            TouristRoutID = new Guid("68294560-051d-473d-956c-be77201659be"),
+                            TouristRoutID = new Guid("e15fd3cd-a22d-4dae-9f72-632029481be4"),
                             Url = "../images/1.jpg"
                         },
                         new
                         {
                             ID = -2,
                             Destription = "太美丽了11111",
-                            TouristRoutID = new Guid("cf34c11b-d97b-4b88-adb5-34ef211482f3"),
+                            TouristRoutID = new Guid("084a85e4-25e5-4b4d-b544-d216cdd156c2"),
                             Url = "../images/2.jpg"
                         },
                         new
                         {
                             ID = -3,
                             Destription = "<<<<<<太美丽了11",
-                            TouristRoutID = new Guid("bf02d630-2df3-4d11-875b-ff322bafcd9e"),
+                            TouristRoutID = new Guid("e4f09d8d-70e8-4341-bc3c-afe2afd436ca"),
                             Url = "../images/3.jpg"
                         });
                 });
@@ -300,15 +283,6 @@ namespace FakeXieCheng.Demo.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "63af257f-ed3e-4e6d-ab40-82fd5e200836",
-                            ConcurrencyStamp = "9e7cf76f-263c-42d9-a115-656866ef8d0c",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -409,13 +383,6 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "ac405777-3568-4ec8-8586-d4204c87b118",
-                            RoleId = "63af257f-ed3e-4e6d-ab40-82fd5e200836"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

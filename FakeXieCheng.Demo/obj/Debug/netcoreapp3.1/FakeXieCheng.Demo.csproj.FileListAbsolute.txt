@@ -67,7 +67,6 @@ D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.pdb
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.genruntimeconfig.cache
-D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csprojAssemblyReference.cache
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -151,3 +150,4 @@ F:\git项目文件夹\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.
 F:\git项目文件夹\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.dll
 F:\git项目文件夹\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.pdb
 F:\git项目文件夹\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.genruntimeconfig.cache
+D:\.net Core 练习\FakeXieCheng.Demo\FakeXieCheng.Demo\obj\Debug\netcoreapp3.1\FakeXieCheng.Demo.csprojAssemblyReference.cache

@@ -28,6 +28,8 @@ namespace FakeXieCheng.Demo.Controllers
             this.TouristRoutRepo = touristRout;
             this._autoMapper = mapper;
         }
+
+        [Authorize(AuthenticationSchemes ="Bearer")]
         [HttpHead]
         [HttpGet]
         public async Task<IActionResult> GetTousistRoutsAsync([FromQuery] TouristRouteRequestParam param)
@@ -61,8 +63,8 @@ namespace FakeXieCheng.Demo.Controllers
                 return Ok(touristRoutDTO);
             }
         }
-
-        [Authorize]
+        [Authorize(AuthenticationSchemes ="Bearer")]
+        [Authorize(Roles ="admin")]
         [HttpPost]
         public async Task<IActionResult> CreateTouristRouteAsync([FromBody] TouristRouteCreateDto touristRouteCreateDto)
         {
@@ -82,6 +84,8 @@ namespace FakeXieCheng.Demo.Controllers
             }
         }
 
+
+        [Authorize(Roles ="admin",AuthenticationSchemes ="Bearer")]
         [HttpPut("{routeId}")]
         public async Task<IActionResult> UpdateRoteAsync([FromRoute] Guid routeID, [FromBody] TouristRouteUpdateDto routeUpdateDto)
         {
@@ -101,6 +105,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpPatch("{routeId}")]
+        [Authorize(Roles ="admin",AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PartialUpdateRouteAsync([FromRoute] Guid routeId, [FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
         {
             if (!await TouristRoutRepo.JudgeTouristRouteExistAsync(routeId))
@@ -122,6 +127,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpDelete("{routeID}")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles ="admin")]
         public async Task<IActionResult> DeleteRouteAsync([FromRoute] Guid routeID)
         {
             var routeDel = await TouristRoutRepo.GetTouristRoutAsync(routeID);
@@ -147,6 +153,7 @@ namespace FakeXieCheng.Demo.Controllers
             }
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer", Roles ="admin")]
         [HttpDelete("({ids})")]
         public async Task<IActionResult> DeleteRoutesAsync([ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> ids)
         {

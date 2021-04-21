@@ -151,4 +151,12 @@
 		</li>
 	</note>
 
+	<datetime>2021年4月21号</datetime>
+	<li>
+		完成用户验证登录：需要注入  SignInManager【IdentityUser】 signInManager;
+		详情你看登录验证api
+
+		如果在获取JWT请求创建资源api没有找到，请在方法上打上标识 [Authorize(AuthenticationSchemes ="Bearer")]  注意 Bearer 是区分大小写的
+
+	</li>
 </root>

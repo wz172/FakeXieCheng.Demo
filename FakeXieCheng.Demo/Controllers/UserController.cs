@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using FakeXieCheng.Demo.Models;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -22,30 +23,39 @@ namespace FakeXieCheng.Demo.Controllers
     public class UserController : ControllerBase
     {
         private readonly IConfiguration configration;
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<MyApplicationIdentity> userManager;
+        private readonly SignInManager<MyApplicationIdentity> signInManager;
 
-        public UserController(IConfiguration configration, UserManager<IdentityUser> userManager)
+        public UserController(IConfiguration configration, UserManager<MyApplicationIdentity> userManager, SignInManager<MyApplicationIdentity> signInManager)
         {
             this.configration = configration;
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [HttpPost("login")]
-        public IActionResult LoginPost([FromBody] LogInDto logInfo)
+        public async Task<IActionResult> LoginPostAsync([FromBody] LogInDto logInfo)
         {
             //1.验证用户名和密码
-            bool isVaildFlag = true;
-            if (!isVaildFlag)
+
+            var isVaildFlag = await signInManager.PasswordSignInAsync(logInfo.Email, logInfo.Password, false, false);
+            if (!isVaildFlag.Succeeded)
             {
-                return NotFound("账户密码错误！");
+                return BadRequest();
             }
+            var user = await userManager.FindByEmailAsync(logInfo.Email);
             //2.生成JWT
             //2.1 确定头部加密算法
             var head = SecurityAlgorithms.HmacSha256;
             //2.2 要加密数据
-            var dataClaims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub,"123")
+            var dataClaims = new List<Claim> {
+                new Claim(JwtRegisteredClaimNames.Sub,user.Id)
             };
+            var roleNames = await userManager.GetRolesAsync(user);
+            foreach (string roleName in roleNames)
+            {
+                dataClaims.Add(new Claim(ClaimTypes.Role, roleName));
+            }
             //2.3 数字签名部分
             var configkeyBytes = Encoding.UTF8.GetBytes(configration["SignatureKey:loginKey"]);
             var signingKey = new SymmetricSecurityKey(configkeyBytes);
@@ -73,7 +83,7 @@ namespace FakeXieCheng.Demo.Controllers
             {
                 return BadRequest();
             }
-            IdentityUser user = new IdentityUser() { Email = userInfo.Email, UserName = userInfo.Email };
+            MyApplicationIdentity user = new MyApplicationIdentity() { Email = userInfo.Email, UserName = userInfo.Email };
             //使用userManger 对密码进行加密 和保存数据 先注入对象
             var result = await userManager.CreateAsync(user, userInfo.Password);
             if (!result.Succeeded)
