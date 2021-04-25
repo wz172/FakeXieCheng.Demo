@@ -159,4 +159,10 @@
 		如果在获取JWT请求创建资源api没有找到，请在方法上打上标识 [Authorize(AuthenticationSchemes ="Bearer")]  注意 Bearer 是区分大小写的
 
 	</li>
+
+	<datetime>2021年4月25号</datetime>
+	<li>
+		1. 增加购物车的查询功能
+	</li>
+	
 </root>

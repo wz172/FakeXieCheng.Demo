@@ -13,7 +13,7 @@ namespace FakeXieCheng.Demo.Services
         public Task<TouristRout> GetTouristRoutAsync(Guid id);
         public Task <bool> JudgeTouristRouteExistAsync(Guid touristRouteId);
         public Task<IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID);
-        public Task<TouristRoutPicture> GetTouistRoutePictureAsync(Guid touristRouteID, int Pid);
+        public  Task<TouristRoutPicture> GetTouistRoutePictureAsync(Guid touristRouteID, int Pid);
         public void AddTouristRoute(TouristRout rout);
         public  Task<bool> SaveAsync();
         public void AddTouristRoutePicture(Guid tourisrRouteId, TouristRoutPicture picture);
@@ -23,5 +23,7 @@ namespace FakeXieCheng.Demo.Services
         public void DeleteTouristRoutePictures(IEnumerable<TouristRoutPicture> pictures);
         public Task<IEnumerable<TouristRout>> GetTourisRoutsAsync(IEnumerable<Guid> ids);
         public Task< IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID,IEnumerable<int> ids);
+        public Task<ShoppingCart> GetShoopingCartByUserIdAsync(string userId);
+        public Task AddShoppingCartAsync(ShoppingCart cart);
     }
 }

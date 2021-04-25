@@ -37,6 +37,8 @@ namespace FakeXieCheng.Demo.Models
         public TripType? TripType { get; set; }
         public DepartureCity? StratCity { get; set; }
 
+       
+
         public TouristRout()
         {
             this.Pictures = new List<TouristRoutPicture>();

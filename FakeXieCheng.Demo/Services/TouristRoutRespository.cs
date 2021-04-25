@@ -134,5 +134,19 @@ namespace FakeXieCheng.Demo.Services
                      .Where(xt => (ids.Contains(xt.ID) && xt.TouristRoutID == touristRouteID))
                      .ToListAsync();
         }
+
+        public async Task<ShoppingCart> GetShoopingCartByUserIdAsync(string userId)
+        {
+            return await FakeContext.ShoppingCarts
+                         .Include(s => s.User)
+                         .Include(s => s.ShoppingCartItems)
+                             .ThenInclude(li => li.TouristRout)
+                          .FirstOrDefaultAsync();
+        }
+
+        public async Task AddShoppingCartAsync(ShoppingCart cart)
+        {
+             await FakeContext.ShoppingCarts.AddAsync(cart);
+        }
     }
 }

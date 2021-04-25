@@ -19,6 +19,37 @@ namespace FakeXieCheng.Demo.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("FakeXieCheng.Demo.Models.CartLineItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float?>("DiscountPresent")
+                        .HasColumnType("real");
+
+                    b.Property<decimal>("OriginalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid?>("ShoppingCartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TouristID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TouristRoutID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.HasIndex("TouristRoutID");
+
+                    b.ToTable("CartLineItems");
+                });
+
             modelBuilder.Entity("FakeXieCheng.Demo.Models.MyApplicationIdentity", b =>
                 {
                     b.Property<string>("Id")
@@ -89,21 +120,39 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ac405777-3568-4ec8-8586-d4204c87b118",
+                            Id = "95b3a42f-49eb-419a-8893-b4b224fc972d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f3fa10ad-b5f7-4961-b9c6-b6be55377511",
+                            ConcurrencyStamp = "39506e32-2175-4b9d-bac6-83a7f01c884d",
                             Email = "172@qq.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "172@QQ.COM",
                             NormalizedUserName = "172@QQ.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEzJ7u4U8zPL78jP9tA+I3IB74Bha8TlhI0C9+dh9r56oBaB8N3EsQvmbXKwUDnUZQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOKrKAIdRjQb7dvWHEPubaBXZ67DmLhhxB+7TdnCF2cwT4xnY+K3a8IOepBPD7bO/A==",
                             PhoneNumber = "123456",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b674de35-1e2c-4e35-b112-6e98690602ab",
+                            SecurityStamp = "ee27ab0f-d8ce-4b4c-bc84-efeeb222ff5e",
                             TwoFactorEnabled = false,
                             UserName = "172@qq.com"
                         });
+                });
+
+            modelBuilder.Entity("FakeXieCheng.Demo.Models.ShoppingCart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserID")
+                        .IsUnique()
+                        .HasFilter("[UserID] IS NOT NULL");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("FakeXieCheng.Demo.Models.TouristRout", b =>
@@ -168,15 +217,15 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("68294560-051d-473d-956c-be77201659be"),
-                            CreateTime = new DateTime(2021, 4, 21, 22, 35, 39, 527, DateTimeKind.Local).AddTicks(8362),
+                            ID = new Guid("b7ae717b-693b-418d-b939-df3fa0533d31"),
+                            CreateTime = new DateTime(2021, 4, 25, 20, 33, 52, 728, DateTimeKind.Local).AddTicks(4068),
                             Description = "都是水",
                             DriinalPrice = 0m,
                             Features = "吃喝玩乐",
                             Fees = "住宿费自己掏",
                             Notes = "注意安全",
                             OriginalPrice = 1300m,
-                            Rating = 6.0,
+                            Rating = 92.0,
                             StratCity = 0,
                             Title = "青天河",
                             TravlDays = (byte)0,
@@ -184,15 +233,15 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("cf34c11b-d97b-4b88-adb5-34ef211482f3"),
-                            CreateTime = new DateTime(2021, 4, 20, 22, 35, 39, 529, DateTimeKind.Local).AddTicks(2623),
+                            ID = new Guid("261884ef-2e71-4dcb-b076-59e1f8aea075"),
+                            CreateTime = new DateTime(2021, 4, 24, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4732),
                             Description = "都是水111",
                             DriinalPrice = 0m,
                             Features = "```吃喝玩乐",
                             Fees = "555住宿费自己掏",
                             Notes = "··注意安全",
                             OriginalPrice = 1200m,
-                            Rating = 82.0,
+                            Rating = 24.0,
                             StratCity = 1,
                             Title = "云台山",
                             TravlDays = (byte)1,
@@ -200,29 +249,29 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("bf02d630-2df3-4d11-875b-ff322bafcd9e"),
-                            CreateTime = new DateTime(2021, 4, 19, 22, 35, 39, 529, DateTimeKind.Local).AddTicks(2833),
+                            ID = new Guid("fd29fd2e-a14f-412b-8bc7-134d9bc93828"),
+                            CreateTime = new DateTime(2021, 4, 23, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4918),
                             Description = "水比较多",
                             DriinalPrice = 0m,
                             Features = "可以划船",
                             Fees = "巴拉巴拉",
                             Notes = "··注意安全。。",
                             OriginalPrice = 120m,
-                            Rating = 39.0,
+                            Rating = 53.0,
                             Title = "八里沟",
                             TravlDays = (byte)2
                         },
                         new
                         {
-                            ID = new Guid("305af930-f7cb-4f18-b777-c29cb0395d41"),
-                            CreateTime = new DateTime(2021, 4, 18, 22, 35, 39, 529, DateTimeKind.Local).AddTicks(2839),
+                            ID = new Guid("c9ec2330-d6ef-4bd6-b970-d7546fd0c88b"),
+                            CreateTime = new DateTime(2021, 4, 22, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4928),
                             Description = "山比较多",
                             DriinalPrice = 0m,
                             Features = "路比较远",
                             Fees = "玩玩赶紧回家",
                             Notes = "··注意巴拉巴拉安全。。",
                             OriginalPrice = 100m,
-                            Rating = 36.0,
+                            Rating = 40.0,
                             Title = "万仙山",
                             TravlDays = (byte)3
                         });
@@ -256,21 +305,21 @@ namespace FakeXieCheng.Demo.Migrations
                         {
                             ID = -1,
                             Destription = "太美丽了",
-                            TouristRoutID = new Guid("68294560-051d-473d-956c-be77201659be"),
+                            TouristRoutID = new Guid("b7ae717b-693b-418d-b939-df3fa0533d31"),
                             Url = "../images/1.jpg"
                         },
                         new
                         {
                             ID = -2,
                             Destription = "太美丽了11111",
-                            TouristRoutID = new Guid("cf34c11b-d97b-4b88-adb5-34ef211482f3"),
+                            TouristRoutID = new Guid("261884ef-2e71-4dcb-b076-59e1f8aea075"),
                             Url = "../images/2.jpg"
                         },
                         new
                         {
                             ID = -3,
                             Destription = "<<<<<<太美丽了11",
-                            TouristRoutID = new Guid("bf02d630-2df3-4d11-875b-ff322bafcd9e"),
+                            TouristRoutID = new Guid("fd29fd2e-a14f-412b-8bc7-134d9bc93828"),
                             Url = "../images/3.jpg"
                         });
                 });
@@ -304,8 +353,8 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "63af257f-ed3e-4e6d-ab40-82fd5e200836",
-                            ConcurrencyStamp = "9e7cf76f-263c-42d9-a115-656866ef8d0c",
+                            Id = "a3a9986f-a23e-4635-983c-752a8bc632c1",
+                            ConcurrencyStamp = "0c641ad0-c232-40ac-a01a-2e2aee5a0c10",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -413,8 +462,8 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "ac405777-3568-4ec8-8586-d4204c87b118",
-                            RoleId = "63af257f-ed3e-4e6d-ab40-82fd5e200836"
+                            UserId = "95b3a42f-49eb-419a-8893-b4b224fc972d",
+                            RoleId = "a3a9986f-a23e-4635-983c-752a8bc632c1"
                         });
                 });
 
@@ -440,6 +489,24 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasIndex("MyApplicationIdentityId");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FakeXieCheng.Demo.Models.CartLineItem", b =>
+                {
+                    b.HasOne("FakeXieCheng.Demo.Models.ShoppingCart", null)
+                        .WithMany("ShoppingCartItems")
+                        .HasForeignKey("ShoppingCartId");
+
+                    b.HasOne("FakeXieCheng.Demo.Models.TouristRout", "TouristRout")
+                        .WithMany()
+                        .HasForeignKey("TouristRoutID");
+                });
+
+            modelBuilder.Entity("FakeXieCheng.Demo.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("FakeXieCheng.Demo.Models.MyApplicationIdentity", "User")
+                        .WithOne("ShoppingCart")
+                        .HasForeignKey("FakeXieCheng.Demo.Models.ShoppingCart", "UserID");
                 });
 
             modelBuilder.Entity("FakeXieCheng.Demo.Models.TouristRoutPicture", b =>

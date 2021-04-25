@@ -9,6 +9,7 @@ namespace FakeXieCheng.Demo.Models
     public class MyApplicationIdentity: IdentityUser
     {
         public string Address { get; set; }
+        public ShoppingCart ShoppingCart { get; set; }
         //shopRecordf
         //orderForm
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }

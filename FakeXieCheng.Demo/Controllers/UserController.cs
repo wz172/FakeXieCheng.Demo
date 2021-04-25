@@ -15,6 +15,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using FakeXieCheng.Demo.Models;
+using FakeXieCheng.Demo.Services;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -25,12 +26,14 @@ namespace FakeXieCheng.Demo.Controllers
         private readonly IConfiguration configration;
         private readonly UserManager<MyApplicationIdentity> userManager;
         private readonly SignInManager<MyApplicationIdentity> signInManager;
+        private readonly ITouristRoutRepository routeRepository;
 
-        public UserController(IConfiguration configration, UserManager<MyApplicationIdentity> userManager, SignInManager<MyApplicationIdentity> signInManager)
+        public UserController(IConfiguration configration, UserManager<MyApplicationIdentity> userManager, SignInManager<MyApplicationIdentity> signInManager, ITouristRoutRepository routeRepository)
         {
             this.configration = configration;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.routeRepository = routeRepository;
         }
 
         [HttpPost("login")]
@@ -90,6 +93,15 @@ namespace FakeXieCheng.Demo.Controllers
             {
                 return BadRequest();
             }
+            //创建用户购物车
+            var cart = new ShoppingCart()
+            {
+                Id = Guid.NewGuid(),
+                User = user,
+                UserID = user.Id,
+            };
+            await routeRepository.AddShoppingCartAsync(cart);
+            await routeRepository.SaveAsync();
             return Ok();
         }
     }

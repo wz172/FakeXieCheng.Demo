@@ -20,6 +20,9 @@ namespace FakeXieCheng.Demo.MyFakeContext
         public DbSet<TouristRout> TouristRout { get; set; }
         public DbSet<TouristRoutPicture> TouristRoutPictures { get; set; }
 
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<CartLineItem> CartLineItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Random random = new Random();

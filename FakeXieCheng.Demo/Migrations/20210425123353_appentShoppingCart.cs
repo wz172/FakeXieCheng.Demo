@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FakeXieCheng.Demo.Migrations
 {
-    public partial class DellIdentity : Migration
+    public partial class appentShoppingCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,8 @@ namespace FakeXieCheng.Demo.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Address = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,11 +102,18 @@ namespace FakeXieCheng.Demo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
+                    MyApplicationIdentityId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_MyApplicationIdentityId",
+                        column: x => x.MyApplicationIdentityId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -121,11 +129,18 @@ namespace FakeXieCheng.Demo.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
+                    MyApplicationIdentityId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_MyApplicationIdentityId",
+                        column: x => x.MyApplicationIdentityId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -139,11 +154,18 @@ namespace FakeXieCheng.Demo.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
+                    MyApplicationIdentityId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_MyApplicationIdentityId",
+                        column: x => x.MyApplicationIdentityId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
@@ -165,17 +187,42 @@ namespace FakeXieCheng.Demo.Migrations
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
+                    MyApplicationIdentityId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_MyApplicationIdentityId",
+                        column: x => x.MyApplicationIdentityId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCarts_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,31 +246,70 @@ namespace FakeXieCheng.Demo.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CartLineItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TouristID = table.Column<Guid>(nullable: false),
+                    TouristRoutID = table.Column<Guid>(nullable: true),
+                    ShoppingCartId = table.Column<Guid>(nullable: true),
+                    DiscountPresent = table.Column<float>(nullable: true),
+                    OriginalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartLineItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartLineItems_ShoppingCarts_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "ShoppingCarts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CartLineItems_TouristRout_TouristRoutID",
+                        column: x => x.TouristRoutID,
+                        principalTable: "TouristRout",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "a3a9986f-a23e-4635-983c-752a8bc632c1", "0c641ad0-c232-40ac-a01a-2e2aee5a0c10", "admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "95b3a42f-49eb-419a-8893-b4b224fc972d", 0, null, "39506e32-2175-4b9d-bac6-83a7f01c884d", "172@qq.com", true, false, null, "172@QQ.COM", "172@QQ.COM", "AQAAAAEAACcQAAAAEOKrKAIdRjQb7dvWHEPubaBXZ67DmLhhxB+7TdnCF2cwT4xnY+K3a8IOepBPD7bO/A==", "123456", false, "ee27ab0f-d8ce-4b4c-bc84-efeeb222ff5e", false, "172@qq.com" });
+
             migrationBuilder.InsertData(
                 table: "TouristRout",
                 columns: new[] { "ID", "CreateTime", "DepartureTime", "Description", "DiscountPresent", "DriinalPrice", "Features", "Fees", "Notes", "OriginalPrice", "Rating", "StratCity", "Title", "TravlDays", "TripType", "UpdateTime" },
                 values: new object[,]
                 {
-                    { new Guid("7c95d950-911b-4913-a024-c345f9c34bf1"), new DateTime(2021, 4, 21, 8, 49, 45, 28, DateTimeKind.Local).AddTicks(5614), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 50.0, 0, "青天河", (byte)0, 3, null },
-                    { new Guid("56198f90-2341-4fb3-a4a8-a09d60da206a"), new DateTime(2021, 4, 20, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4102), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 96.0, 1, "云台山", (byte)1, 1, null },
-                    { new Guid("a2516e07-cfc4-4c47-b050-c006bd81d10b"), new DateTime(2021, 4, 19, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4162), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 37.0, null, "八里沟", (byte)2, null, null },
-                    { new Guid("8ff6fae5-04be-4403-a7f0-1e2d92720b90"), new DateTime(2021, 4, 18, 8, 49, 45, 29, DateTimeKind.Local).AddTicks(4166), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 21.0, null, "万仙山", (byte)3, null, null }
+                    { new Guid("b7ae717b-693b-418d-b939-df3fa0533d31"), new DateTime(2021, 4, 25, 20, 33, 52, 728, DateTimeKind.Local).AddTicks(4068), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 92.0, 0, "青天河", (byte)0, 3, null },
+                    { new Guid("261884ef-2e71-4dcb-b076-59e1f8aea075"), new DateTime(2021, 4, 24, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4732), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 24.0, 1, "云台山", (byte)1, 1, null },
+                    { new Guid("fd29fd2e-a14f-412b-8bc7-134d9bc93828"), new DateTime(2021, 4, 23, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4918), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 53.0, null, "八里沟", (byte)2, null, null },
+                    { new Guid("c9ec2330-d6ef-4bd6-b970-d7546fd0c88b"), new DateTime(2021, 4, 22, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4928), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 40.0, null, "万仙山", (byte)3, null, null }
                 });
 
             migrationBuilder.InsertData(
-                table: "TouristRoutPictures",
-                columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
-                values: new object[] { -1, "太美丽了", new Guid("7c95d950-911b-4913-a024-c345f9c34bf1"), "../images/1.jpg" });
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId", "MyApplicationIdentityId" },
+                values: new object[] { "95b3a42f-49eb-419a-8893-b4b224fc972d", "a3a9986f-a23e-4635-983c-752a8bc632c1", null });
 
             migrationBuilder.InsertData(
                 table: "TouristRoutPictures",
                 columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
-                values: new object[] { -2, "太美丽了11111", new Guid("56198f90-2341-4fb3-a4a8-a09d60da206a"), "../images/2.jpg" });
-
-            migrationBuilder.InsertData(
-                table: "TouristRoutPictures",
-                columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
-                values: new object[] { -3, "<<<<<<太美丽了11", new Guid("a2516e07-cfc4-4c47-b050-c006bd81d10b"), "../images/3.jpg" });
+                values: new object[,]
+                {
+                    { -1, "太美丽了", new Guid("b7ae717b-693b-418d-b939-df3fa0533d31"), "../images/1.jpg" },
+                    { -2, "太美丽了11111", new Guid("261884ef-2e71-4dcb-b076-59e1f8aea075"), "../images/2.jpg" },
+                    { -3, "<<<<<<太美丽了11", new Guid("fd29fd2e-a14f-412b-8bc7-134d9bc93828"), "../images/3.jpg" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -238,14 +324,29 @@ namespace FakeXieCheng.Demo.Migrations
                 filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_MyApplicationIdentityId",
+                table: "AspNetUserClaims",
+                column: "MyApplicationIdentityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_MyApplicationIdentityId",
+                table: "AspNetUserLogins",
+                column: "MyApplicationIdentityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
                 table: "AspNetUserLogins",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_MyApplicationIdentityId",
+                table: "AspNetUserRoles",
+                column: "MyApplicationIdentityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
@@ -263,6 +364,28 @@ namespace FakeXieCheng.Demo.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserTokens_MyApplicationIdentityId",
+                table: "AspNetUserTokens",
+                column: "MyApplicationIdentityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartLineItems_ShoppingCartId",
+                table: "CartLineItems",
+                column: "ShoppingCartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartLineItems_TouristRoutID",
+                table: "CartLineItems",
+                column: "TouristRoutID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCarts_UserID",
+                table: "ShoppingCarts",
+                column: "UserID",
+                unique: true,
+                filter: "[UserID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TouristRoutPictures_TouristRoutID",
@@ -288,16 +411,22 @@ namespace FakeXieCheng.Demo.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CartLineItems");
+
+            migrationBuilder.DropTable(
                 name: "TouristRoutPictures");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
                 name: "TouristRout");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }
