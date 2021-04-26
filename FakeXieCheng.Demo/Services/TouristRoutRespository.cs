@@ -121,14 +121,14 @@ namespace FakeXieCheng.Demo.Services
             FakeContext.TouristRoutPictures.RemoveRange(pictures);
         }
 
-        public async Task< IEnumerable<TouristRout>> GetTourisRoutsAsync(IEnumerable<Guid> ids)
+        public async Task<IEnumerable<TouristRout>> GetTourisRoutsAsync(IEnumerable<Guid> ids)
         {
             return await FakeContext.TouristRout
                      .Where(xt => ids.Contains(xt.ID))
                      .ToListAsync();
         }
 
-        public async Task< IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID, IEnumerable<int> ids)
+        public async Task<IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID, IEnumerable<int> ids)
         {
             return await FakeContext.TouristRoutPictures
                      .Where(xt => (ids.Contains(xt.ID) && xt.TouristRoutID == touristRouteID))
@@ -146,7 +146,35 @@ namespace FakeXieCheng.Demo.Services
 
         public async Task AddShoppingCartAsync(ShoppingCart cart)
         {
-             await FakeContext.ShoppingCarts.AddAsync(cart);
+            await FakeContext.ShoppingCarts.AddAsync(cart);
+        }
+
+        public async Task AddCartLineItemAsync(CartLineItem cartLineItem)
+        {
+            await FakeContext.CartLineItems.AddAsync(cartLineItem);
+        }
+
+        public async Task<CartLineItem> GetCartLineItemByIDAsync(int id)
+        {
+            return await FakeContext.CartLineItems
+                           .FindAsync(id);
+        }
+
+        public void DeleteLineItem(CartLineItem item)
+        {
+            FakeContext.CartLineItems.Remove(item);
+        }
+
+        public async Task<IEnumerable<CartLineItem>> GetCartLineItemByIDsAsync(IEnumerable<int> idlList)
+        {
+            return await FakeContext.CartLineItems
+                           .Where(xt => idlList.Contains(xt.Id))
+                           .ToListAsync();
+        }
+
+        public void DeleteLineItems(IEnumerable<CartLineItem> lineItems)
+        {
+            FakeContext.CartLineItems.RemoveRange(lineItems);
         }
     }
 }
