@@ -15,7 +15,7 @@ namespace FakeXieCheng.Demo.Models
         public Guid TouristID { get; set; }
         public TouristRout TouristRout { get; set; }
         public Guid? ShoppingCartId { get; set; }
-        //public Guid? OrederId { get; set; }
+        public Guid? OrederId { get; set; }
 
         [Range(0.0, 1.0)]
         public float? DiscountPresent { get; set; }

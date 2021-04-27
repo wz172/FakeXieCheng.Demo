@@ -30,5 +30,8 @@ namespace FakeXieCheng.Demo.Services
         public void DeleteLineItem(CartLineItem item);
         public Task<IEnumerable<CartLineItem>> GetCartLineItemByIDsAsync(IEnumerable<int> idlList);
         public void DeleteLineItems(IEnumerable<CartLineItem> lineItems);
+        public Task AddOrderAsync(UserOrder userOrder);
+        public Task<IEnumerable<UserOrder>> GetUserOrdersByUidAsync(string uid);
+        public Task<UserOrder> GetUserOrderDetailsByIdAsync(Guid id);
     }
 }

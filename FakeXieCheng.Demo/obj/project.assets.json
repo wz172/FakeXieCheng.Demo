@@ -642,6 +642,15 @@
           }
         }
       },
+      "Stateless/5.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Stateless.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Stateless.dll": {}
+        }
+      },
       "System.Collections/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -2584,6 +2593,27 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Stateless/5.1.1": {
+      "sha512": "4VYIzMASwiOsBcIUu96gjDVO5q02d0u/F8eew5nHeNEokCAycjSe4QiqzUJi2i+oRoBQVndxQABPTe+a5iqn+A==",
+      "type": "package",
+      "path": "stateless/5.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Stateless.dll",
+        "lib/net40/Stateless.xml",
+        "lib/net45/Stateless.dll",
+        "lib/net45/Stateless.xml",
+        "lib/net472/Stateless.dll",
+        "lib/net472/Stateless.xml",
+        "lib/netstandard1.0/Stateless.dll",
+        "lib/netstandard1.0/Stateless.xml",
+        "lib/netstandard2.0/Stateless.dll",
+        "lib/netstandard2.0/Stateless.xml",
+        "stateless.5.1.1.nupkg.sha512",
+        "stateless.nuspec"
       ]
     },
     "System.Collections/4.3.0": {
@@ -5751,7 +5781,8 @@
       "Microsoft.EntityFrameworkCore.Relational >= 3.1.14",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.14",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.14",
-      "Pomelo.EntityFrameworkCore.MySql >= 3.2.4"
+      "Pomelo.EntityFrameworkCore.MySql >= 3.2.4",
+      "stateless >= 5.1.1"
     ]
   },
   "packageFolders": {
@@ -5832,6 +5863,10 @@
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
             "version": "[3.2.4, )"
+          },
+          "stateless": {
+            "target": "Package",
+            "version": "[5.1.1, )"
           }
         },
         "imports": [

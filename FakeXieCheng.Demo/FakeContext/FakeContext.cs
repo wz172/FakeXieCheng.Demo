@@ -23,6 +23,8 @@ namespace FakeXieCheng.Demo.MyFakeContext
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<CartLineItem> CartLineItems { get; set; }
 
+        public DbSet<UserOrder> userOrders { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Random random = new Random();

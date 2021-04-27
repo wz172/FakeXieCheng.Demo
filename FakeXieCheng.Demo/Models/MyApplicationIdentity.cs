@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace FakeXieCheng.Demo.Models
 {
-    public class MyApplicationIdentity: IdentityUser
+    public class MyApplicationIdentity : IdentityUser
     {
         public string Address { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
         //shopRecordf
+        public IEnumerable<UserOrder> UserOrders { get; set; }
         //orderForm
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
-        public virtual ICollection<IdentityUserLogin <string>> Logins { get; set; }
+        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
         public virtual ICollection<IdentityUserToken<string>> Tokens { get; set; }
-        public ICollection <IdentityUserRole<string>> UserRoles { get; set; }
+        public ICollection<IdentityUserRole<string>> UserRoles { get; set; }
     }
 }

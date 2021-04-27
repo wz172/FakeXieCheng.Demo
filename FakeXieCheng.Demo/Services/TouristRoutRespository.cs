@@ -176,5 +176,25 @@ namespace FakeXieCheng.Demo.Services
         {
             FakeContext.CartLineItems.RemoveRange(lineItems);
         }
+
+        public async Task AddOrderAsync(UserOrder userOrder)
+        {
+            await FakeContext.userOrders.AddAsync(userOrder);
+        }
+
+        public async Task<IEnumerable<UserOrder>> GetUserOrdersByUidAsync(string uid)
+        {
+            return await FakeContext.userOrders
+                            .Where(xt => xt.UserID == uid)
+                            .ToListAsync();
+        }
+
+        public async Task<UserOrder> GetUserOrderDetailsByIdAsync(Guid id)
+        {
+            return await FakeContext.userOrders
+                            .Include(xt=>xt.UserOrderCartItems)
+                                .ThenInclude(oci=>oci.TouristRout)
+                           .FirstOrDefaultAsync(xt => xt.Id == id);
+        }
     }
 }

@@ -34,6 +34,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.14",
           "Microsoft.EntityFrameworkCore.Tools": "3.1.14",
           "Pomelo.EntityFrameworkCore.MySql": "3.2.4",
+          "Stateless": "5.1.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -950,6 +951,17 @@
             "assetType": "native",
             "fileVersion": "4.6.25512.1"
           }
+        }
+      },
+      "Stateless/5.1.1": {
+        "runtime": {
+          "lib/netstandard2.0/Stateless.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "5.1.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Stateless.dll": {}
         }
       },
       "System.Collections/4.3.0": {
@@ -3476,6 +3488,13 @@
       "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "Stateless/5.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4VYIzMASwiOsBcIUu96gjDVO5q02d0u/F8eew5nHeNEokCAycjSe4QiqzUJi2i+oRoBQVndxQABPTe+a5iqn+A==",
+      "path": "stateless/5.1.1",
+      "hashPath": "stateless.5.1.1.nupkg.sha512"
     },
     "System.Collections/4.3.0": {
       "type": "package",

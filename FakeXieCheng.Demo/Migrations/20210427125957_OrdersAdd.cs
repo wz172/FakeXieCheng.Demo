@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FakeXieCheng.Demo.Migrations
 {
-    public partial class appentShoppingCart : Migration
+    public partial class OrdersAdd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -226,6 +226,27 @@ namespace FakeXieCheng.Demo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "userOrders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    CreateTimeUtc = table.Column<DateTime>(nullable: false),
+                    OrderState = table.Column<int>(nullable: false),
+                    ThirdPartyPayMent = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userOrders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_userOrders_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TouristRoutPictures",
                 columns: table => new
                 {
@@ -255,8 +276,10 @@ namespace FakeXieCheng.Demo.Migrations
                     TouristID = table.Column<Guid>(nullable: false),
                     TouristRoutID = table.Column<Guid>(nullable: true),
                     ShoppingCartId = table.Column<Guid>(nullable: true),
+                    OrederId = table.Column<Guid>(nullable: true),
                     DiscountPresent = table.Column<float>(nullable: true),
-                    OriginalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    OriginalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserOrderId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -273,42 +296,48 @@ namespace FakeXieCheng.Demo.Migrations
                         principalTable: "TouristRout",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CartLineItems_userOrders_UserOrderId",
+                        column: x => x.UserOrderId,
+                        principalTable: "userOrders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a3a9986f-a23e-4635-983c-752a8bc632c1", "0c641ad0-c232-40ac-a01a-2e2aee5a0c10", "admin", "ADMIN" });
+                values: new object[] { "9b0a02ca-3d06-4e9c-8555-8c4b3ae1365e", "c6c201fd-834b-4e5c-9de3-76ce50229d98", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "95b3a42f-49eb-419a-8893-b4b224fc972d", 0, null, "39506e32-2175-4b9d-bac6-83a7f01c884d", "172@qq.com", true, false, null, "172@QQ.COM", "172@QQ.COM", "AQAAAAEAACcQAAAAEOKrKAIdRjQb7dvWHEPubaBXZ67DmLhhxB+7TdnCF2cwT4xnY+K3a8IOepBPD7bO/A==", "123456", false, "ee27ab0f-d8ce-4b4c-bc84-efeeb222ff5e", false, "172@qq.com" });
+                values: new object[] { "09020e03-e20a-4fa4-8d52-0a9f5c05857c", 0, null, "e94d0135-cdd6-4956-beb0-4d14c2259555", "172@qq.com", true, false, null, "172@QQ.COM", "172@QQ.COM", "AQAAAAEAACcQAAAAEAJTWj82Z4kDrGwQlFLl6TQYPdCJR4GxQTyc3717UGKib2dTVSWhrZqUdZFBioociw==", "123456", false, "a64f190c-cfb0-4220-bcdd-b2efe406f1f7", false, "172@qq.com" });
 
             migrationBuilder.InsertData(
                 table: "TouristRout",
                 columns: new[] { "ID", "CreateTime", "DepartureTime", "Description", "DiscountPresent", "DriinalPrice", "Features", "Fees", "Notes", "OriginalPrice", "Rating", "StratCity", "Title", "TravlDays", "TripType", "UpdateTime" },
                 values: new object[,]
                 {
-                    { new Guid("b7ae717b-693b-418d-b939-df3fa0533d31"), new DateTime(2021, 4, 25, 20, 33, 52, 728, DateTimeKind.Local).AddTicks(4068), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 92.0, 0, "青天河", (byte)0, 3, null },
-                    { new Guid("261884ef-2e71-4dcb-b076-59e1f8aea075"), new DateTime(2021, 4, 24, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4732), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 24.0, 1, "云台山", (byte)1, 1, null },
-                    { new Guid("fd29fd2e-a14f-412b-8bc7-134d9bc93828"), new DateTime(2021, 4, 23, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4918), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 53.0, null, "八里沟", (byte)2, null, null },
-                    { new Guid("c9ec2330-d6ef-4bd6-b970-d7546fd0c88b"), new DateTime(2021, 4, 22, 20, 33, 52, 730, DateTimeKind.Local).AddTicks(4928), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 40.0, null, "万仙山", (byte)3, null, null }
+                    { new Guid("66720147-67a2-4c58-b953-bb490da90821"), new DateTime(2021, 4, 27, 20, 59, 57, 101, DateTimeKind.Local).AddTicks(774), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 91.0, 0, "青天河", (byte)0, 3, null },
+                    { new Guid("11b09031-66f2-47a6-9642-0f2719c6928e"), new DateTime(2021, 4, 26, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(948), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 49.0, 1, "云台山", (byte)1, 1, null },
+                    { new Guid("581400ce-49b1-48e5-a38a-addb39694964"), new DateTime(2021, 4, 25, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(1118), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 59.0, null, "八里沟", (byte)2, null, null },
+                    { new Guid("80dc89d9-f835-4d05-a712-36b60a0ce95f"), new DateTime(2021, 4, 24, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(1129), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 90.0, null, "万仙山", (byte)3, null, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId", "MyApplicationIdentityId" },
-                values: new object[] { "95b3a42f-49eb-419a-8893-b4b224fc972d", "a3a9986f-a23e-4635-983c-752a8bc632c1", null });
+                values: new object[] { "09020e03-e20a-4fa4-8d52-0a9f5c05857c", "9b0a02ca-3d06-4e9c-8555-8c4b3ae1365e", null });
 
             migrationBuilder.InsertData(
                 table: "TouristRoutPictures",
                 columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
                 values: new object[,]
                 {
-                    { -1, "太美丽了", new Guid("b7ae717b-693b-418d-b939-df3fa0533d31"), "../images/1.jpg" },
-                    { -2, "太美丽了11111", new Guid("261884ef-2e71-4dcb-b076-59e1f8aea075"), "../images/2.jpg" },
-                    { -3, "<<<<<<太美丽了11", new Guid("fd29fd2e-a14f-412b-8bc7-134d9bc93828"), "../images/3.jpg" }
+                    { -1, "太美丽了", new Guid("66720147-67a2-4c58-b953-bb490da90821"), "../images/1.jpg" },
+                    { -2, "太美丽了11111", new Guid("11b09031-66f2-47a6-9642-0f2719c6928e"), "../images/2.jpg" },
+                    { -3, "<<<<<<太美丽了11", new Guid("581400ce-49b1-48e5-a38a-addb39694964"), "../images/3.jpg" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -381,6 +410,11 @@ namespace FakeXieCheng.Demo.Migrations
                 column: "TouristRoutID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CartLineItems_UserOrderId",
+                table: "CartLineItems",
+                column: "UserOrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCarts_UserID",
                 table: "ShoppingCarts",
                 column: "UserID",
@@ -391,6 +425,11 @@ namespace FakeXieCheng.Demo.Migrations
                 name: "IX_TouristRoutPictures_TouristRoutID",
                 table: "TouristRoutPictures",
                 column: "TouristRoutID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_userOrders_UserID",
+                table: "userOrders",
+                column: "UserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -421,6 +460,9 @@ namespace FakeXieCheng.Demo.Migrations
 
             migrationBuilder.DropTable(
                 name: "ShoppingCarts");
+
+            migrationBuilder.DropTable(
+                name: "userOrders");
 
             migrationBuilder.DropTable(
                 name: "TouristRout");

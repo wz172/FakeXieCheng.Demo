@@ -49,7 +49,8 @@ namespace FakeXieCheng.Demo.Controllers
 
         // GET api/<ShoppingCartsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Authorize(AuthenticationSchemes ="Bearer")]
+        public string GetOrderBy(int id)
         {
             return "value";
         }
@@ -82,7 +83,7 @@ namespace FakeXieCheng.Demo.Controllers
                 TouristID = tourist.ID,
                 TouristRout = tourist,
             };
-            //5. 异步调用上下文天剑
+            //5. 异步调用上下文添加
             await repository.AddCartLineItemAsync(lineItems);
             //6.保存
             await repository.SaveAsync();
@@ -122,6 +123,37 @@ namespace FakeXieCheng.Demo.Controllers
             repository.DeleteLineItems(lineItems);
             await repository.SaveAsync();
             return NoContent();
+        }
+        [HttpPost("checkout")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> CreateOrderCheckout()
+        {
+            //1. 获取当前用户ID
+            var uid = httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //2. 获取用户购物车
+            var userShopping = await repository.GetShoopingCartByUserIdAsync(uid);
+            if (userShopping == null)
+            {
+                return NotFound($"用户{uid}的购物车不存在");
+            }
+            else if (userShopping.ShoppingCartItems == null)
+            {
+                return NotFound($"用户{uid}的购物车没有商品");
+            }
+            //3.创建订单
+            var userOrder = new UserOrder()
+            {
+                Id = Guid.NewGuid(),
+                UserID = uid,
+                UserOrderCartItems = userShopping.ShoppingCartItems,
+                CreateTimeUtc = DateTime.UtcNow,
+                OrderState = OrderStateEnum.Generateing,
+                ThirdPartyPayMent = "阿里巴巴",
+            };
+            userShopping.ShoppingCartItems = null;
+           await repository.AddOrderAsync(userOrder);
+            await repository.SaveAsync();
+            return Ok(mapper.Map<UserOrderDto>(userOrder));
         }
     }
 }
