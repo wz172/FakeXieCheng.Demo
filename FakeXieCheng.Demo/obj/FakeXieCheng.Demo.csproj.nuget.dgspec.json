@@ -1,39 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "F:\\git项目文件夹\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj": {}
+    "D:\\.net Core 练习\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj": {}
   },
   "projects": {
-    "F:\\git项目文件夹\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj": {
+    "D:\\.net Core 练习\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\git项目文件夹\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj",
+        "projectUniqueName": "D:\\.net Core 练习\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj",
         "projectName": "FakeXieCheng.Demo",
-        "projectPath": "F:\\git项目文件夹\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj",
-        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "F:\\git项目文件夹\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\obj\\",
+        "projectPath": "D:\\.net Core 练习\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\FakeXieCheng.Demo.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "D:\\.net Core 练习\\FakeXieCheng.Demo\\FakeXieCheng.Demo\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.nuget.org/api/v2/": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -45,7 +37,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
@@ -89,6 +80,10 @@
               "target": "Package",
               "version": "[3.2.4, )"
             },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.1.8, )"
+            },
             "stateless": {
               "target": "Package",
               "version": "[5.1.1, )"
@@ -112,7 +107,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

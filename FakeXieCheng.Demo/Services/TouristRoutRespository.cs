@@ -7,15 +7,21 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FakeXieCheng.Demo.RequestParams;
 using FakeXieCheng.Demo.Util;
+using FakeXieCheng.Demo.DTOS;
 
 namespace FakeXieCheng.Demo.Services
 {
     public class TouristRoutRespository : ITouristRoutRepository
     {
         public FakeContext FakeContext { get; }
-        public TouristRoutRespository(FakeContext context)
+        private readonly IPropertyMappingServer propertyMappingServer;
+        public TouristRoutRespository(
+            FakeContext context,
+             IPropertyMappingServer propertyMappingServer
+            )
         {
             FakeContext = context;
+            this.propertyMappingServer = propertyMappingServer;
         }
 
         public async Task<PagingList<TouristRout>> GetTourisRoutsAsync(TouristRouteRequestParam touristRouteParam, PagingRequestParam pagingRequestParam)
@@ -50,6 +56,16 @@ namespace FakeXieCheng.Demo.Services
                     default:
                         break;
                 }
+            }
+            if (!string.IsNullOrEmpty(pagingRequestParam.OrderBy))
+            {
+                //if (pagingRequestParam.OrderBy.ToLowerInvariant()== "OriginalPrice".ToLowerInvariant())
+                //{
+                //    resultQueryable=resultQueryable.OrderBy(xt => xt.OriginalPrice);
+                //}
+                var touristRouteDic = propertyMappingServer.GetPropertyMapping<TouristRoutDTO, TouristRout>();
+                resultQueryable = resultQueryable.ApplySort(pagingRequestParam.OrderBy, touristRouteDic);
+                
             }
             return await PagingList<TouristRout>.CreatePagelistAsync(pagingRequestParam.PageNumber, pagingRequestParam.PageSize, resultQueryable);
         }

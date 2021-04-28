@@ -10,6 +10,7 @@ namespace FakeXieCheng.Demo.RequestParams
         private int pageNumber = 1;
         private int pageSize = 5;
 
+
         public int PageNumber
         {
             get { return pageNumber; }
@@ -34,5 +35,6 @@ namespace FakeXieCheng.Demo.RequestParams
             }
         }
 
+        public string OrderBy { get; set; }
     }
 }

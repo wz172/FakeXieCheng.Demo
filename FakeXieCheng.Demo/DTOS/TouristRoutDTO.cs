@@ -13,7 +13,7 @@ namespace FakeXieCheng.Demo.DTOS
         public string Description { get; set; }
         public decimal Price { get; set; }
 
-        //public decimal OriginalPrice { get; set; }
+        public decimal OriginalPrice { get; set; }
        // public decimal DriinalPrice { get; set; }
     
         public float? DiscountPresent { get; set; }

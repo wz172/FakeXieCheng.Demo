@@ -88,7 +88,7 @@ namespace FakeXieCheng.Demo.Controllers
 
         // PUT api/<TouristRoutPicturesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id)
         {
         }
 

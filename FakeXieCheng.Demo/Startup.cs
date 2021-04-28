@@ -86,7 +86,7 @@ namespace FakeXieCheng.Demo
             services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder =>
             {
                 // 被弃用的方法,b=>b.UseRowNumberForPaging()
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDbDell"));   
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb"));   
                 // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
             });
 
@@ -95,6 +95,9 @@ namespace FakeXieCheng.Demo
 
             //注入urlHelp 服务 管理api的url生成
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+            //注入字符串转化成model属性
+            services.AddTransient<IPropertyMappingServer, PropertyMappingServer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

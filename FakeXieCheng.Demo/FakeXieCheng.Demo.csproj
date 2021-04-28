@@ -19,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
     <PackageReference Include="stateless" Version="5.1.1" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.1.8" />
   </ItemGroup>
 
 
