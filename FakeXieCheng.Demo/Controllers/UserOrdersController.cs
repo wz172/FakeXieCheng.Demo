@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using FakeXieCheng.Demo.DTOS;
+using FakeXieCheng.Demo.RequestParams;
 using FakeXieCheng.Demo.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -34,10 +35,10 @@ namespace FakeXieCheng.Demo.Controllers
         // GET: api/<UserOrdersController>
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetOrders([FromQuery] PagingRequestParam pagingRequestParam)
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var orders = await routeRepository.GetUserOrdersByUidAsync(userId);
+            var orders = await routeRepository.GetUserOrdersByUidAsync(userId,pagingRequestParam);
             if (orders == null)
             {
                 return NotFound($"用户{userId}的订单信息不存在");

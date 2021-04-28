@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FakeXieCheng.Demo.Migrations
 {
-    public partial class OrdersAdd : Migration
+    public partial class removedatabase2008To2012 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -307,37 +307,45 @@ namespace FakeXieCheng.Demo.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9b0a02ca-3d06-4e9c-8555-8c4b3ae1365e", "c6c201fd-834b-4e5c-9de3-76ce50229d98", "admin", "ADMIN" });
+                values: new object[] { "3faa1348-c9a0-49aa-912b-0d5007f806a7", "b0eb9187-1004-4771-8965-d16461b9e26c", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "09020e03-e20a-4fa4-8d52-0a9f5c05857c", 0, null, "e94d0135-cdd6-4956-beb0-4d14c2259555", "172@qq.com", true, false, null, "172@QQ.COM", "172@QQ.COM", "AQAAAAEAACcQAAAAEAJTWj82Z4kDrGwQlFLl6TQYPdCJR4GxQTyc3717UGKib2dTVSWhrZqUdZFBioociw==", "123456", false, "a64f190c-cfb0-4220-bcdd-b2efe406f1f7", false, "172@qq.com" });
+                values: new object[] { "bb28d4b9-bb87-4e9f-8157-8710337d21ab", 0, null, "3466eb42-745b-461a-b9a9-a1048621d4d4", "172@qq.com", true, false, null, "172@QQ.COM", "172@QQ.COM", "AQAAAAEAACcQAAAAEKKz/H8hm7L24PIRM8OvIoLyEfPUApIaNOo4iSGsIgkVqsSpjuKmWGcIUL4al5bCkQ==", "123456", false, "ef1afb21-3529-4029-8286-f81448fe52ab", false, "172@qq.com" });
 
             migrationBuilder.InsertData(
                 table: "TouristRout",
                 columns: new[] { "ID", "CreateTime", "DepartureTime", "Description", "DiscountPresent", "DriinalPrice", "Features", "Fees", "Notes", "OriginalPrice", "Rating", "StratCity", "Title", "TravlDays", "TripType", "UpdateTime" },
                 values: new object[,]
                 {
-                    { new Guid("66720147-67a2-4c58-b953-bb490da90821"), new DateTime(2021, 4, 27, 20, 59, 57, 101, DateTimeKind.Local).AddTicks(774), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 91.0, 0, "青天河", (byte)0, 3, null },
-                    { new Guid("11b09031-66f2-47a6-9642-0f2719c6928e"), new DateTime(2021, 4, 26, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(948), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 49.0, 1, "云台山", (byte)1, 1, null },
-                    { new Guid("581400ce-49b1-48e5-a38a-addb39694964"), new DateTime(2021, 4, 25, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(1118), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 59.0, null, "八里沟", (byte)2, null, null },
-                    { new Guid("80dc89d9-f835-4d05-a712-36b60a0ce95f"), new DateTime(2021, 4, 24, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(1129), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 90.0, null, "万仙山", (byte)3, null, null }
+                    { new Guid("6c15d8b3-1788-4db0-a13e-64b1a2c566c9"), new DateTime(2021, 4, 28, 14, 4, 9, 181, DateTimeKind.Local).AddTicks(8636), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 36.0, 0, "青天河", (byte)0, 3, null },
+                    { new Guid("82f53116-dd3b-4ecd-8abc-df2c62ec9d66"), new DateTime(2021, 4, 27, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2734), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 12.0, 1, "云台山", (byte)1, 1, null },
+                    { new Guid("dfb22b7c-4206-45e2-9590-7cc09ddec02c"), new DateTime(2021, 4, 26, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2911), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 69.0, null, "八里沟", (byte)2, null, null },
+                    { new Guid("22640ece-9092-471e-ac60-e50adb80bd58"), new DateTime(2021, 4, 25, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2923), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 2.0, null, "万仙山", (byte)3, null, null },
+                    { new Guid("3c0ed37e-6836-4ef3-ad82-7cc49121ea4e"), new DateTime(2021, 4, 24, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2927), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 91.0, null, "青天河", (byte)4, null, null },
+                    { new Guid("64190267-b924-4a82-a711-88793a5d63e4"), new DateTime(2021, 4, 23, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2931), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 8.0, null, "云台山", (byte)5, null, null },
+                    { new Guid("0bb13ad9-fce9-42fe-a4ea-4a580ad15543"), new DateTime(2021, 4, 22, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2933), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 88.0, 3, "八里沟", (byte)6, 2, null },
+                    { new Guid("d3685074-5bac-421b-9232-001a35e0f3be"), new DateTime(2021, 4, 21, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2945), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 55.0, 3, "万仙山", (byte)7, 2, null },
+                    { new Guid("e7aac598-86c7-411c-b028-92cf02e65708"), new DateTime(2021, 4, 20, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2949), null, "都是水", null, 0m, "吃喝玩乐", "住宿费自己掏", "注意安全", 1300m, 24.0, 3, "青天河", (byte)8, 2, null },
+                    { new Guid("25ef0fbe-805c-4051-9cba-1303006c8184"), new DateTime(2021, 4, 19, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2951), null, "都是水111", null, 0m, "```吃喝玩乐", "555住宿费自己掏", "··注意安全", 1200m, 54.0, 3, "云台山", (byte)9, 2, null },
+                    { new Guid("838d30e2-163b-440e-878a-e3aa6a1ea69f"), new DateTime(2021, 4, 18, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2955), null, "水比较多", null, 0m, "可以划船", "巴拉巴拉", "··注意安全。。", 120m, 97.0, 3, "八里沟", (byte)10, 2, null },
+                    { new Guid("530a830f-dbf9-45c2-b8a2-a436bfeb2197"), new DateTime(2021, 4, 17, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2958), null, "山比较多", null, 0m, "路比较远", "玩玩赶紧回家", "··注意巴拉巴拉安全。。", 100m, 86.0, 3, "万仙山", (byte)11, 2, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId", "MyApplicationIdentityId" },
-                values: new object[] { "09020e03-e20a-4fa4-8d52-0a9f5c05857c", "9b0a02ca-3d06-4e9c-8555-8c4b3ae1365e", null });
+                values: new object[] { "bb28d4b9-bb87-4e9f-8157-8710337d21ab", "3faa1348-c9a0-49aa-912b-0d5007f806a7", null });
 
             migrationBuilder.InsertData(
                 table: "TouristRoutPictures",
                 columns: new[] { "ID", "Destription", "TouristRoutID", "Url" },
                 values: new object[,]
                 {
-                    { -1, "太美丽了", new Guid("66720147-67a2-4c58-b953-bb490da90821"), "../images/1.jpg" },
-                    { -2, "太美丽了11111", new Guid("11b09031-66f2-47a6-9642-0f2719c6928e"), "../images/2.jpg" },
-                    { -3, "<<<<<<太美丽了11", new Guid("581400ce-49b1-48e5-a38a-addb39694964"), "../images/3.jpg" }
+                    { -1, "太美丽了", new Guid("6c15d8b3-1788-4db0-a13e-64b1a2c566c9"), "../images/1.jpg" },
+                    { -2, "太美丽了11111", new Guid("82f53116-dd3b-4ecd-8abc-df2c62ec9d66"), "../images/2.jpg" },
+                    { -3, "<<<<<<太美丽了11", new Guid("dfb22b7c-4206-45e2-9590-7cc09ddec02c"), "../images/3.jpg" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -1,186 +1,208 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-	<datetime>2021年4月17号</datetime>
-	<note>
-		<li name="第六章内容">
-			1.传递api的参数
-			2.关键词搜索
-			3.数据过滤
-			4.封装参数，统一管理
-		</li>
+  <datetime>2021年4月17号</datetime>
+  <note>
+    <li name="第六章内容">
+      1.传递api的参数
+      2.关键词搜索
+      3.数据过滤
+      4.封装参数，统一管理
+    </li>
 
-		<li name="参数来源">
-			1. FromQurey 请求的Url
-			2.FromBody  请求体
-			3.FromForm 来自表单
-			4.FromRoute 来自MVC下的URL
-			5. FromService  来自于注入服务依赖
-		</li>
+    <li name="参数来源">
+      1. FromQurey 请求的Url
+      2.FromBody  请求体
+      3.FromForm 来自表单
+      4.FromRoute 来自MVC下的URL
+      5. FromService  来自于注入服务依赖
+    </li>
 
-		<li name="创建资源Post 请求应用">
-			1. post是既不安全也不幂等的http操作
-			2.创建post的DTO和GetDTO不能混用
-			3.创建成功的回复代码是201 函数CreatedAtRoute 不是200
-		</li>
-		<P>
-			在创建上面的旅游路线和图片复合体时候，一定要注意在返回CreatedAtRoute 参数1：要调用的函数名，在方法签名使用Name="函数名"。 参数2：使用匿名类吧调用函数的参数传进去。参数3：（这个很重要，使用不好会发生jsonconvert发生异常，循环序列化）这个参数应当使用auotmapper 转化后的个体。
-		</P>
+    <li name="创建资源Post 请求应用">
+      1. post是既不安全也不幂等的http操作
+      2.创建post的DTO和GetDTO不能混用
+      3.创建成功的回复代码是201 函数CreatedAtRoute 不是200
+    </li>
+    <P>
+      在创建上面的旅游路线和图片复合体时候，一定要注意在返回CreatedAtRoute 参数1：要调用的函数名，在方法签名使用Name="函数名"。 参数2：使用匿名类吧调用函数的参数传进去。参数3：（这个很重要，使用不好会发生jsonconvert发生异常，循环序列化）这个参数应当使用auotmapper 转化后的个体。
+    </P>
 
-	</note>
+  </note>
 
-	<datetime>2021年4月18号</datetime>
-	<note>
-		<li name="旅游资源的创建是校验数据">
-			1. 使用和Model中的Attribute 约束条件
-			2.实现 IValidatableObject 接口 ，返回值用  yield return 迭代器返回。
-			3.类级别数据校验Attribute 新建一个类去继承ValidationAttribute 并且重写 IsValid 方法
-		</li>
+  <datetime>2021年4月18号</datetime>
+  <note>
+    <li name="旅游资源的创建是校验数据">
+      1. 使用和Model中的Attribute 约束条件
+      2.实现 IValidatableObject 接口 ，返回值用  yield return 迭代器返回。
+      3.类级别数据校验Attribute 新建一个类去继承ValidationAttribute 并且重写 IsValid 方法
+    </li>
 
-		<li name="状态码400 badRequest 重写写成422 （个人认为没有特殊需求可以不用实现）">
-			1. 在服务注入时候调用 services.AddControllers 方法时候添加规则
-			2.后面追加调用 ConfigureApiBehaviorOptions 非法模型请求工厂。
-			<P tag="实例代码">
+    <li name="状态码400 badRequest 重写写成422 （个人认为没有特殊需求可以不用实现）">
+      1. 在服务注入时候调用 services.AddControllers 方法时候添加规则
+      2.后面追加调用 ConfigureApiBehaviorOptions 非法模型请求工厂。
+      <P tag="实例代码">
 
-				.ConfigureApiBehaviorOptions(
-				setupAction => setupAction.InvalidModelStateResponseFactory = context =>
-				{
-				var problemDetail = new ValidationProblemDetails(context.ModelState)
-				{
-				Type = "阿莱克斯",
-				Title = "数据验证失败",
-				Status = StatusCodes.Status422UnprocessableEntity,
-				Detail = "详细信息",
-				Instance = context.HttpContext.Request.Path
-				};
-				problemDetail.Extensions.Add("id", context.HttpContext.TraceIdentifier);
-				return new UnprocessableEntityObjectResult(problemDetail)
-				{
-				ContentTypes = { "application/problem+json"}
-				};
-				}
-				);
+        .ConfigureApiBehaviorOptions(
+        setupAction => setupAction.InvalidModelStateResponseFactory = context =>
+        {
+        var problemDetail = new ValidationProblemDetails(context.ModelState)
+        {
+        Type = "阿莱克斯",
+        Title = "数据验证失败",
+        Status = StatusCodes.Status422UnprocessableEntity,
+        Detail = "详细信息",
+        Instance = context.HttpContext.Request.Path
+        };
+        problemDetail.Extensions.Add("id", context.HttpContext.TraceIdentifier);
+        return new UnprocessableEntityObjectResult(problemDetail)
+        {
+        ContentTypes = { "application/problem+json"}
+        };
+        }
+        );
 
-			</P>
-		</li>
-	</note>
+      </P>
+    </li>
+  </note>
 
-	<datetime>2021年4月19号</datetime>
-	<note>
-		<li name="更新产品 Put和Post">
-			1.Put 请求和 patch 请求
-			2.使用put请求完整更新旅游路线
-			3.使用Patch请求与JSON Patch Decoument 来实现局部旅游资源更新
-			4.更新数据验证
-		</li>
+  <datetime>2021年4月19号</datetime>
+  <note>
+    <li name="更新产品 Put和Post">
+      1.Put 请求和 patch 请求
+      2.使用put请求完整更新旅游路线
+      3.使用Patch请求与JSON Patch Decoument 来实现局部旅游资源更新
+      4.更新数据验证
+    </li>
 
-		<li name="Patch 请求">
-			1. Patch 请求是对资源的的部分更新
-			2. JSON Path 六个操作 {add：添加某个字段} {remove：删除某个字段} { replace： 替换某字段信息} {move：转移} {copy：复制} {test：测试}
-			3.要使用Patch 请求需要用到一下几点
-			3.1：安装并且引用：Microsoft.AspNetCore.JsonPatch （patch请求的更新的参数列表）
-			3.2：安装并且添加服务，Microsoft.AspNetCore.Mvc.NewtonsoftJson.添加到 services.AddControllers()的后面。
-			<p name="添加服务实例（尽量可前）">
-				.AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver =
-				new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver())
-			</p>
-			4. patch 请求添加数据校验 使用ASP 数据验证：ModelState (这一步非常有必要)
+    <li name="Patch 请求">
+      1. Patch 请求是对资源的的部分更新
+      2. JSON Path 六个操作 {add：添加某个字段} {remove：删除某个字段} { replace： 替换某字段信息} {move：转移} {copy：复制} {test：测试}
+      3.要使用Patch 请求需要用到一下几点
+      3.1：安装并且引用：Microsoft.AspNetCore.JsonPatch （patch请求的更新的参数列表）
+      3.2：安装并且添加服务，Microsoft.AspNetCore.Mvc.NewtonsoftJson.添加到 services.AddControllers()的后面。
+      <p name="添加服务实例（尽量可前）">
+        .AddNewtonsoftJson(setupAction => setupAction.SerializerSettings.ContractResolver =
+        new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver())
+      </p>
+      4. patch 请求添加数据校验 使用ASP 数据验证：ModelState (这一步非常有必要)
 
-		</li>
+    </li>
 
-		<li name="delete 操作">
-			1. 对旅游资源和展示图片的删除
-			2. 批量删除，有两种方式，一种是URL中加参数，二种是通过route参数匹配
-			3. 参数转化帮助类 在Util文件中应该参悟学会
-		</li>
+    <li name="delete 操作">
+      1. 对旅游资源和展示图片的删除
+      2. 批量删除，有两种方式，一种是URL中加参数，二种是通过route参数匹配
+      3. 参数转化帮助类 在Util文件中应该参悟学会
+    </li>
 
-	</note>
+  </note>
 
-	<datetime>2021年4月20日</datetime>
-	<note>
-		<li>
-			单点登录和JWT
-			1.授权和认证
-			用户认证就是用户用密码和账号登录（401），授权则是只用户有没有权利访问某些资源（403）
-			传统Session登录，用户信息保存到服务器中。有状态登录。
+  <datetime>2021年4月20日</datetime>
+  <note>
+    <li>
+      单点登录和JWT
+      1.授权和认证
+      用户认证就是用户用密码和账号登录（401），授权则是只用户有没有权利访问某些资源（403）
+      传统Session登录，用户信息保存到服务器中。有状态登录。
 
-			JWT 是吧用户信息保存到客户端。这样减少服务器的压力。分布式部署。但是存在安全问题。
-			token 一经发布就无法取消。 明文传递Token 安全性比较低。
+      JWT 是吧用户信息保存到客户端。这样减少服务器的压力。分布式部署。但是存在安全问题。
+      token 一经发布就无法取消。 明文传递Token 安全性比较低。
 
-			.net core 怎么使用JWT完整用户认证：
-			怎么注入服务.
-			<p name="示例代码">
-				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
-				options =>
-				{
-				var configKeyBytes = System.Text.Encoding.UTF8.GetBytes(Configuration["SignatureKey:loginKey"]);
-				options.TokenValidationParameters = new TokenValidationParameters()
-				{
-				ValidateIssuer = true,
-				ValidIssuer = Configuration["SignatureKey:Issuer"],
+      .net core 怎么使用JWT完整用户认证：
+      怎么注入服务.
+      <p name="示例代码">
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+        options =>
+        {
+        var configKeyBytes = System.Text.Encoding.UTF8.GetBytes(Configuration["SignatureKey:loginKey"]);
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+        ValidateIssuer = true,
+        ValidIssuer = Configuration["SignatureKey:Issuer"],
 
-				ValidateAudience = true,
-				ValidAudience = Configuration["SignatureKey:Audience"],
+        ValidateAudience = true,
+        ValidAudience = Configuration["SignatureKey:Audience"],
 
-				ValidateLifetime=true,
+        ValidateLifetime=true,
 
-				IssuerSigningKey=new SymmetricSecurityKey(configKeyBytes)
+        IssuerSigningKey=new SymmetricSecurityKey(configKeyBytes)
 
-				};
-				}
-				);
+        };
+        }
+        );
 
 
-				//你在哪
-				app.UseRouting();
-				//你是谁
-				app.UseAuthentication();
-				//你能干什么
-				app.UseAuthorization();
-			</p>
+        //你在哪
+        app.UseRouting();
+        //你是谁
+        app.UseAuthentication();
+        //你能干什么
+        app.UseAuthorization();
+      </p>
 
-		</li>
+    </li>
 
-		<li>
-			FakeContext直接继承 IdentityDbContext【IdentityUser】  可以实现框架帮你生成登录表格
+    <li>
+      FakeContext直接继承 IdentityDbContext【IdentityUser】  可以实现框架帮你生成登录表格
 
-			服务注入：
-			<P name="服务刚开始" >
-				ervices.AddIdentity【IdentityUser, IdentityRole】().AddEntityFrameworkStores【FakeContext（自己写的上下文对象）】();
-			</P>
+      服务注入：
+      <P name="服务刚开始" >
+        ervices.AddIdentity【IdentityUser, IdentityRole】().AddEntityFrameworkStores【FakeContext（自己写的上下文对象）】();
+      </P>
 
-		</li>
-	</note>
+    </li>
+  </note>
 
-	<datetime>2021年4月21号</datetime>
-	<li>
-		完成用户验证登录：需要注入  SignInManager【IdentityUser】 signInManager;
-		详情你看登录验证api
+  <datetime>2021年4月21号</datetime>
+  <li>
+    完成用户验证登录：需要注入  SignInManager【IdentityUser】 signInManager;
+    详情你看登录验证api
 
-		如果在获取JWT请求创建资源api没有找到，请在方法上打上标识 [Authorize(AuthenticationSchemes ="Bearer")]  注意 Bearer 是区分大小写的
+    如果在获取JWT请求创建资源api没有找到，请在方法上打上标识 [Authorize(AuthenticationSchemes ="Bearer")]  注意 Bearer 是区分大小写的
 
-	</li>
+  </li>
 
-	<datetime>2021年4月25号</datetime>
-	<li>
-		1. 增加购物车的查询功能
-	</li>
-	<li>
-		2.添加往购物车添加商品，删除商品 ，批量删除商品的api
-	</li>
+  <datetime>2021年4月25号</datetime>
+  <li>
+    1. 增加购物车的查询功能
+  </li>
+  <li>
+    2.添加往购物车添加商品，删除商品 ，批量删除商品的api
+  </li>
 
-	<datetime>2021年4月27号</datetime>
-	<li>
-		1.添加Order数据模型
-		2.有限状态机，一种用来进行对象行为建模的工具
-		3.描述对象在他的生命周期内所经历的状态序列，及其如何相应外来是各种事件
-	</li>
-	<li>
-		状态机的4个要素
-		现态：当前所处状态
-		条件：触发一个动作，执行一次状态的迁移
-		动作：条件满足后执行
-		次态：条件满足后要迁往的新状态
-		
-	使用第三方框架实现，状态的流转stateless框架
-	</li>
+  <datetime>2021年4月27号</datetime>
+  <li>
+    1.添加Order数据模型
+    2.有限状态机，一种用来进行对象行为建模的工具
+    3.描述对象在他的生命周期内所经历的状态序列，及其如何相应外来是各种事件
+  </li>
+  <li>
+    状态机的4个要素
+    现态：当前所处状态
+    条件：触发一个动作，执行一次状态的迁移
+    动作：条件满足后执行
+    次态：条件满足后要迁往的新状态
+
+    使用第三方框架实现，状态的流转stateless框架
+  </li>
+
+  <datetime>2021年4月28日</datetime>
+  <notes>
+
+    <li>
+      1. 如何接受分页参数
+      2. 如何返回分页信息
+      3. 进行模块化分页处理
+    </li>
+    <li>
+      X-pagination
+      分页导航（api的自我发现）
+      响应中包含哪些分页数据呢
+      1.数据列表将会出现在响应主体中
+      2.而分页的信息与数据列表彻底分开
+      3.metadata元数据的形式在header中输出
+
+    </li>
+
+  </notes>
+
+
 </root>

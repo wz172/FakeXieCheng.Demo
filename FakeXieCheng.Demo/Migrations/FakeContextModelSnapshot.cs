@@ -128,18 +128,18 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "09020e03-e20a-4fa4-8d52-0a9f5c05857c",
+                            Id = "bb28d4b9-bb87-4e9f-8157-8710337d21ab",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e94d0135-cdd6-4956-beb0-4d14c2259555",
+                            ConcurrencyStamp = "3466eb42-745b-461a-b9a9-a1048621d4d4",
                             Email = "172@qq.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "172@QQ.COM",
                             NormalizedUserName = "172@QQ.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAJTWj82Z4kDrGwQlFLl6TQYPdCJR4GxQTyc3717UGKib2dTVSWhrZqUdZFBioociw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKKz/H8hm7L24PIRM8OvIoLyEfPUApIaNOo4iSGsIgkVqsSpjuKmWGcIUL4al5bCkQ==",
                             PhoneNumber = "123456",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a64f190c-cfb0-4220-bcdd-b2efe406f1f7",
+                            SecurityStamp = "ef1afb21-3529-4029-8286-f81448fe52ab",
                             TwoFactorEnabled = false,
                             UserName = "172@qq.com"
                         });
@@ -225,15 +225,15 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            ID = new Guid("66720147-67a2-4c58-b953-bb490da90821"),
-                            CreateTime = new DateTime(2021, 4, 27, 20, 59, 57, 101, DateTimeKind.Local).AddTicks(774),
+                            ID = new Guid("6c15d8b3-1788-4db0-a13e-64b1a2c566c9"),
+                            CreateTime = new DateTime(2021, 4, 28, 14, 4, 9, 181, DateTimeKind.Local).AddTicks(8636),
                             Description = "都是水",
                             DriinalPrice = 0m,
                             Features = "吃喝玩乐",
                             Fees = "住宿费自己掏",
                             Notes = "注意安全",
                             OriginalPrice = 1300m,
-                            Rating = 91.0,
+                            Rating = 36.0,
                             StratCity = 0,
                             Title = "青天河",
                             TravlDays = (byte)0,
@@ -241,15 +241,15 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("11b09031-66f2-47a6-9642-0f2719c6928e"),
-                            CreateTime = new DateTime(2021, 4, 26, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(948),
+                            ID = new Guid("82f53116-dd3b-4ecd-8abc-df2c62ec9d66"),
+                            CreateTime = new DateTime(2021, 4, 27, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2734),
                             Description = "都是水111",
                             DriinalPrice = 0m,
                             Features = "```吃喝玩乐",
                             Fees = "555住宿费自己掏",
                             Notes = "··注意安全",
                             OriginalPrice = 1200m,
-                            Rating = 49.0,
+                            Rating = 12.0,
                             StratCity = 1,
                             Title = "云台山",
                             TravlDays = (byte)1,
@@ -257,31 +257,155 @@ namespace FakeXieCheng.Demo.Migrations
                         },
                         new
                         {
-                            ID = new Guid("581400ce-49b1-48e5-a38a-addb39694964"),
-                            CreateTime = new DateTime(2021, 4, 25, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(1118),
+                            ID = new Guid("dfb22b7c-4206-45e2-9590-7cc09ddec02c"),
+                            CreateTime = new DateTime(2021, 4, 26, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2911),
                             Description = "水比较多",
                             DriinalPrice = 0m,
                             Features = "可以划船",
                             Fees = "巴拉巴拉",
                             Notes = "··注意安全。。",
                             OriginalPrice = 120m,
-                            Rating = 59.0,
+                            Rating = 69.0,
                             Title = "八里沟",
                             TravlDays = (byte)2
                         },
                         new
                         {
-                            ID = new Guid("80dc89d9-f835-4d05-a712-36b60a0ce95f"),
-                            CreateTime = new DateTime(2021, 4, 24, 20, 59, 57, 103, DateTimeKind.Local).AddTicks(1129),
+                            ID = new Guid("22640ece-9092-471e-ac60-e50adb80bd58"),
+                            CreateTime = new DateTime(2021, 4, 25, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2923),
                             Description = "山比较多",
                             DriinalPrice = 0m,
                             Features = "路比较远",
                             Fees = "玩玩赶紧回家",
                             Notes = "··注意巴拉巴拉安全。。",
                             OriginalPrice = 100m,
-                            Rating = 90.0,
+                            Rating = 2.0,
                             Title = "万仙山",
                             TravlDays = (byte)3
+                        },
+                        new
+                        {
+                            ID = new Guid("3c0ed37e-6836-4ef3-ad82-7cc49121ea4e"),
+                            CreateTime = new DateTime(2021, 4, 24, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2927),
+                            Description = "都是水",
+                            DriinalPrice = 0m,
+                            Features = "吃喝玩乐",
+                            Fees = "住宿费自己掏",
+                            Notes = "注意安全",
+                            OriginalPrice = 1300m,
+                            Rating = 91.0,
+                            Title = "青天河",
+                            TravlDays = (byte)4
+                        },
+                        new
+                        {
+                            ID = new Guid("64190267-b924-4a82-a711-88793a5d63e4"),
+                            CreateTime = new DateTime(2021, 4, 23, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2931),
+                            Description = "都是水111",
+                            DriinalPrice = 0m,
+                            Features = "```吃喝玩乐",
+                            Fees = "555住宿费自己掏",
+                            Notes = "··注意安全",
+                            OriginalPrice = 1200m,
+                            Rating = 8.0,
+                            Title = "云台山",
+                            TravlDays = (byte)5
+                        },
+                        new
+                        {
+                            ID = new Guid("0bb13ad9-fce9-42fe-a4ea-4a580ad15543"),
+                            CreateTime = new DateTime(2021, 4, 22, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2933),
+                            Description = "水比较多",
+                            DriinalPrice = 0m,
+                            Features = "可以划船",
+                            Fees = "巴拉巴拉",
+                            Notes = "··注意安全。。",
+                            OriginalPrice = 120m,
+                            Rating = 88.0,
+                            StratCity = 3,
+                            Title = "八里沟",
+                            TravlDays = (byte)6,
+                            TripType = 2
+                        },
+                        new
+                        {
+                            ID = new Guid("d3685074-5bac-421b-9232-001a35e0f3be"),
+                            CreateTime = new DateTime(2021, 4, 21, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2945),
+                            Description = "山比较多",
+                            DriinalPrice = 0m,
+                            Features = "路比较远",
+                            Fees = "玩玩赶紧回家",
+                            Notes = "··注意巴拉巴拉安全。。",
+                            OriginalPrice = 100m,
+                            Rating = 55.0,
+                            StratCity = 3,
+                            Title = "万仙山",
+                            TravlDays = (byte)7,
+                            TripType = 2
+                        },
+                        new
+                        {
+                            ID = new Guid("e7aac598-86c7-411c-b028-92cf02e65708"),
+                            CreateTime = new DateTime(2021, 4, 20, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2949),
+                            Description = "都是水",
+                            DriinalPrice = 0m,
+                            Features = "吃喝玩乐",
+                            Fees = "住宿费自己掏",
+                            Notes = "注意安全",
+                            OriginalPrice = 1300m,
+                            Rating = 24.0,
+                            StratCity = 3,
+                            Title = "青天河",
+                            TravlDays = (byte)8,
+                            TripType = 2
+                        },
+                        new
+                        {
+                            ID = new Guid("25ef0fbe-805c-4051-9cba-1303006c8184"),
+                            CreateTime = new DateTime(2021, 4, 19, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2951),
+                            Description = "都是水111",
+                            DriinalPrice = 0m,
+                            Features = "```吃喝玩乐",
+                            Fees = "555住宿费自己掏",
+                            Notes = "··注意安全",
+                            OriginalPrice = 1200m,
+                            Rating = 54.0,
+                            StratCity = 3,
+                            Title = "云台山",
+                            TravlDays = (byte)9,
+                            TripType = 2
+                        },
+                        new
+                        {
+                            ID = new Guid("838d30e2-163b-440e-878a-e3aa6a1ea69f"),
+                            CreateTime = new DateTime(2021, 4, 18, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2955),
+                            Description = "水比较多",
+                            DriinalPrice = 0m,
+                            Features = "可以划船",
+                            Fees = "巴拉巴拉",
+                            Notes = "··注意安全。。",
+                            OriginalPrice = 120m,
+                            Rating = 97.0,
+                            StratCity = 3,
+                            Title = "八里沟",
+                            TravlDays = (byte)10,
+                            TripType = 2
+                        },
+                        new
+                        {
+                            ID = new Guid("530a830f-dbf9-45c2-b8a2-a436bfeb2197"),
+                            CreateTime = new DateTime(2021, 4, 17, 14, 4, 9, 183, DateTimeKind.Local).AddTicks(2958),
+                            Description = "山比较多",
+                            DriinalPrice = 0m,
+                            Features = "路比较远",
+                            Fees = "玩玩赶紧回家",
+                            Notes = "··注意巴拉巴拉安全。。",
+                            OriginalPrice = 100m,
+                            Rating = 86.0,
+                            StratCity = 3,
+                            Title = "万仙山",
+                            TravlDays = (byte)11,
+                            TripType = 2
                         });
                 });
 
@@ -313,21 +437,21 @@ namespace FakeXieCheng.Demo.Migrations
                         {
                             ID = -1,
                             Destription = "太美丽了",
-                            TouristRoutID = new Guid("66720147-67a2-4c58-b953-bb490da90821"),
+                            TouristRoutID = new Guid("6c15d8b3-1788-4db0-a13e-64b1a2c566c9"),
                             Url = "../images/1.jpg"
                         },
                         new
                         {
                             ID = -2,
                             Destription = "太美丽了11111",
-                            TouristRoutID = new Guid("11b09031-66f2-47a6-9642-0f2719c6928e"),
+                            TouristRoutID = new Guid("82f53116-dd3b-4ecd-8abc-df2c62ec9d66"),
                             Url = "../images/2.jpg"
                         },
                         new
                         {
                             ID = -3,
                             Destription = "<<<<<<太美丽了11",
-                            TouristRoutID = new Guid("581400ce-49b1-48e5-a38a-addb39694964"),
+                            TouristRoutID = new Guid("dfb22b7c-4206-45e2-9590-7cc09ddec02c"),
                             Url = "../images/3.jpg"
                         });
                 });
@@ -386,8 +510,8 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9b0a02ca-3d06-4e9c-8555-8c4b3ae1365e",
-                            ConcurrencyStamp = "c6c201fd-834b-4e5c-9de3-76ce50229d98",
+                            Id = "3faa1348-c9a0-49aa-912b-0d5007f806a7",
+                            ConcurrencyStamp = "b0eb9187-1004-4771-8965-d16461b9e26c",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -495,8 +619,8 @@ namespace FakeXieCheng.Demo.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "09020e03-e20a-4fa4-8d52-0a9f5c05857c",
-                            RoleId = "9b0a02ca-3d06-4e9c-8555-8c4b3ae1365e"
+                            UserId = "bb28d4b9-bb87-4e9f-8157-8710337d21ab",
+                            RoleId = "3faa1348-c9a0-49aa-912b-0d5007f806a7"
                         });
                 });
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FakeXieCheng.Demo.RequestParams;
+using FakeXieCheng.Demo.Util;
 
 namespace FakeXieCheng.Demo.Services
 {
@@ -17,7 +18,7 @@ namespace FakeXieCheng.Demo.Services
             FakeContext = context;
         }
 
-        public async Task<IEnumerable<TouristRout>> GetTourisRoutsAsync(TouristRouteRequestParam touristRouteParam)
+        public async Task<PagingList<TouristRout>> GetTourisRoutsAsync(TouristRouteRequestParam touristRouteParam, PagingRequestParam pagingRequestParam)
         {
             IQueryable<TouristRout> resultQueryable = FakeContext.TouristRout
                 .Include(xt => xt.Pictures);
@@ -50,8 +51,7 @@ namespace FakeXieCheng.Demo.Services
                         break;
                 }
             }
-
-            return await resultQueryable.ToListAsync();
+            return await PagingList<TouristRout>.CreatePagelistAsync(pagingRequestParam.PageNumber, pagingRequestParam.PageSize, resultQueryable);
         }
 
         public async Task<TouristRout> GetTouristRoutAsync(Guid id)
@@ -69,6 +69,7 @@ namespace FakeXieCheng.Demo.Services
 
         public async Task<IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID)
         {
+           
             return await FakeContext.TouristRoutPictures.Where(x => x.TouristRoutID == touristRouteID).ToListAsync();
         }
 
@@ -182,18 +183,18 @@ namespace FakeXieCheng.Demo.Services
             await FakeContext.userOrders.AddAsync(userOrder);
         }
 
-        public async Task<IEnumerable<UserOrder>> GetUserOrdersByUidAsync(string uid)
+        public async Task<PagingList<UserOrder>> GetUserOrdersByUidAsync(string uid, PagingRequestParam pagingRequestParam)
         {
-            return await FakeContext.userOrders
-                            .Where(xt => xt.UserID == uid)
-                            .ToListAsync();
+            var  queryable = FakeContext.userOrders
+                            .Where(xt => xt.UserID == uid);
+            return await PagingList<UserOrder>.CreatePagelistAsync(pagingRequestParam.PageNumber, pagingRequestParam.PageSize, queryable);
         }
 
         public async Task<UserOrder> GetUserOrderDetailsByIdAsync(Guid id)
         {
             return await FakeContext.userOrders
-                            .Include(xt=>xt.UserOrderCartItems)
-                                .ThenInclude(oci=>oci.TouristRout)
+                            .Include(xt => xt.UserOrderCartItems)
+                                .ThenInclude(oci => oci.TouristRout)
                            .FirstOrDefaultAsync(xt => xt.Id == id);
         }
     }

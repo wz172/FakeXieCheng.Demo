@@ -1,5 +1,6 @@
 ﻿using FakeXieCheng.Demo.Models;
 using FakeXieCheng.Demo.RequestParams;
+using FakeXieCheng.Demo.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FakeXieCheng.Demo.Services
 {
     public interface ITouristRoutRepository
     {
-        public Task<IEnumerable<TouristRout>> GetTourisRoutsAsync(TouristRouteRequestParam touristRouteParam);
+        public Task<PagingList<TouristRout>> GetTourisRoutsAsync(TouristRouteRequestParam touristRouteParam, PagingRequestParam pagingRequestParam);
         public Task<TouristRout> GetTouristRoutAsync(Guid id);
         public Task<bool> JudgeTouristRouteExistAsync(Guid touristRouteId);
         public Task<IEnumerable<TouristRoutPicture>> GetTouristRoutesPicturesAsync(Guid touristRouteID);
@@ -31,7 +32,7 @@ namespace FakeXieCheng.Demo.Services
         public Task<IEnumerable<CartLineItem>> GetCartLineItemByIDsAsync(IEnumerable<int> idlList);
         public void DeleteLineItems(IEnumerable<CartLineItem> lineItems);
         public Task AddOrderAsync(UserOrder userOrder);
-        public Task<IEnumerable<UserOrder>> GetUserOrdersByUidAsync(string uid);
+        public Task<PagingList<UserOrder>> GetUserOrdersByUidAsync(string uid, PagingRequestParam pagingRequestParam);
         public Task<UserOrder> GetUserOrderDetailsByIdAsync(Guid id);
     }
 }

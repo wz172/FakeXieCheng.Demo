@@ -13,6 +13,9 @@ using FakeXieCheng.Demo.RequestParams;
 using Microsoft.AspNetCore.JsonPatch;
 using FakeXieCheng.Demo.Util;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Newtonsoft.Json;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -21,26 +24,76 @@ namespace FakeXieCheng.Demo.Controllers
     public class TouristRoutsController : ControllerBase
     {
         public ITouristRoutRepository TouristRoutRepo { get; }
-
+        private readonly IUrlHelper urlHelper;
         private readonly IMapper _autoMapper;
-        public TouristRoutsController(ITouristRoutRepository touristRout, IMapper mapper)
+        public TouristRoutsController(ITouristRoutRepository touristRout, IMapper mapper, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccessor)
         {
             this.TouristRoutRepo = touristRout;
             this._autoMapper = mapper;
+            //URLhellper 注入
+            this.urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
         }
 
-        [Authorize(AuthenticationSchemes ="Bearer")]
-        [HttpHead]
-        [HttpGet]
-        public async Task<IActionResult> GetTousistRoutsAsync([FromQuery] TouristRouteRequestParam param)
+        string CreateTousitRouteUrl(
+            TouristRouteRequestParam param,
+            PagingRequestParam pagingRequestParam,
+            ResourceUrlEnum urlEnum
+            )
         {
-            var data = await TouristRoutRepo.GetTourisRoutsAsync(param);
+            string url = string.Empty;
+            switch (urlEnum)
+            {
+                case ResourceUrlEnum.PreviousPage:
+                    url = urlHelper.Link("GetTousistRoutsAsync", new
+                    {
+                        keyWord = param.TitleKeyWord,
+                        rating = param.Rating,
+                        pageNumber = pagingRequestParam.PageNumber - 1,
+                        pageSize = pagingRequestParam.PageSize,
+                    });
+                    break;
+                case ResourceUrlEnum.NextPage:
+                    url = urlHelper.Link("GetTousistRoutsAsync", new
+                    {
+                        keyWord = param.TitleKeyWord,
+                        rating = param.Rating,
+                        pageNumber = pagingRequestParam.PageNumber + 1,
+                        pageSize = pagingRequestParam.PageSize,
+                    });
+                    break;
+                default:
+                    break;
+            }
+            return url;
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpHead]
+        [HttpGet(Name = "GetTousistRoutsAsync")]
+        public async Task<IActionResult> GetTousistRoutsAsync(
+            [FromQuery] TouristRouteRequestParam param,
+            [FromQuery] PagingRequestParam pagingRequestParam
+            )
+        {
+            var data = await TouristRoutRepo.GetTourisRoutsAsync(param, pagingRequestParam);
             if (data == null || data.Count() <= 0)
             {
                 return NotFound("没有找到旅游路线列表");
             }
             else
             {
+                var previousPageLink = data.HasPrevious ? CreateTousitRouteUrl(param, pagingRequestParam, ResourceUrlEnum.PreviousPage) : null;
+                var nextPageLink = data.HasNextPage ? CreateTousitRouteUrl(param, pagingRequestParam, ResourceUrlEnum.NextPage) : null;
+                //添加自定义分页导航信息（返回的头部信息）
+                Response.Headers.Add("x-pagination", JsonConvert.SerializeObject(new
+                {
+                    previousPageLink,
+                    nextPageLink,
+                    totalCount=data.TotalCount,
+                    pageSize=data.PageSize,
+                    pageNumber=data.CurrentPageNu,
+                    totalPages=data.TotalPage,
+                }));
                 var dataDto = _autoMapper.Map<IEnumerable<TouristRoutDTO>>(data);
                 return Ok(dataDto);
             }
@@ -63,8 +116,9 @@ namespace FakeXieCheng.Demo.Controllers
                 return Ok(touristRoutDTO);
             }
         }
-        [Authorize(AuthenticationSchemes ="Bearer")]
-        [Authorize(Roles ="admin")]
+
+        //[Authorize(AuthenticationSchemes ="Bearer")]
+        //[Authorize(Roles ="admin")]
         [HttpPost]
         public async Task<IActionResult> CreateTouristRouteAsync([FromBody] TouristRouteCreateDto touristRouteCreateDto)
         {
@@ -85,7 +139,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
 
-        [Authorize(Roles ="admin",AuthenticationSchemes ="Bearer")]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         [HttpPut("{routeId}")]
         public async Task<IActionResult> UpdateRoteAsync([FromRoute] Guid routeID, [FromBody] TouristRouteUpdateDto routeUpdateDto)
         {
@@ -105,7 +159,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpPatch("{routeId}")]
-        [Authorize(Roles ="admin",AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PartialUpdateRouteAsync([FromRoute] Guid routeId, [FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
         {
             if (!await TouristRoutRepo.JudgeTouristRouteExistAsync(routeId))
@@ -127,7 +181,7 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         [HttpDelete("{routeID}")]
-        [Authorize(AuthenticationSchemes = "Bearer", Roles ="admin")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "admin")]
         public async Task<IActionResult> DeleteRouteAsync([FromRoute] Guid routeID)
         {
             var routeDel = await TouristRoutRepo.GetTouristRoutAsync(routeID);
@@ -153,7 +207,7 @@ namespace FakeXieCheng.Demo.Controllers
             }
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles ="admin")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "admin")]
         [HttpDelete("({ids})")]
         public async Task<IActionResult> DeleteRoutesAsync([ModelBinder(BinderType = typeof(ArrayModelBinder))][FromRoute] IEnumerable<Guid> ids)
         {

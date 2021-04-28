@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FakeXieCheng.Demo.MyFakeContext;
 using FakeXieCheng.Demo.Models;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace FakeXieCheng.Demo
 {
@@ -84,12 +85,16 @@ namespace FakeXieCheng.Demo
             services.AddTransient<ITouristRoutRepository, TouristRoutRespository>();
             services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder =>
             {
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb"));
+                // 被弃用的方法,b=>b.UseRowNumberForPaging()
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDbDell"));   
                 // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
             });
 
             //扫描profile 文件
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //注入urlHelp 服务 管理api的url生成
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

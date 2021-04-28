@@ -27,7 +27,7 @@ namespace FakeXieCheng.Demo.RequestParams
                     float ratingFVal = float.MinValue;
                     foreach (FieldInfo field in logicAssemblyType.GetFields())
                     {
-                        if (field.Name.ToLower()== groups[0].Groups[1].Value.ToLower())
+                        if (field.Name.ToLower() == groups[0].Groups[1].Value.ToLower())
                         {
                             RatingLogicType = (LogicType)field.GetValue(null);
                             float.TryParse(groups[0].Groups[2].Value, out ratingFVal);
@@ -56,4 +56,6 @@ namespace FakeXieCheng.Demo.RequestParams
         LessAndEqual,
         LargeAndEqual,
     }
+
+ 
 }
