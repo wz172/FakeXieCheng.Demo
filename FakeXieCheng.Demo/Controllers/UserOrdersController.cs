@@ -33,9 +33,9 @@ namespace FakeXieCheng.Demo.Controllers
             this.mapper = mapper;
         }
         // GET: api/<UserOrdersController>
-        [HttpGet]
+        [HttpGet(Name = "GetFakeXiechenOrders")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetOrders([FromQuery] PagingRequestParam pagingRequestParam)
+        public async Task<IActionResult> GetFakeXiechenOrders([FromQuery] PagingRequestParam pagingRequestParam)
         {
             var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var orders = await routeRepository.GetUserOrdersByUidAsync(userId,pagingRequestParam);

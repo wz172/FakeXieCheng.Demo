@@ -35,7 +35,7 @@ namespace FakeXieCheng.Demo.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetShoppingByUserIdAsync")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetShoppingByUserIdAsync()
         {

@@ -112,7 +112,8 @@ namespace FakeXieCheng.Demo
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
+
             //ÄãÔÚÄÄ
             app.UseRouting();
             //ÄãÊÇË­

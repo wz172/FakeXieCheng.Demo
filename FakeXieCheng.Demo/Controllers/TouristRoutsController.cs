@@ -16,11 +16,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
+using System.Dynamic;
 
 namespace FakeXieCheng.Demo.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/touristRouts")]
     [ApiController]
+
     public class TouristRoutsController : ControllerBase
     {
         public ITouristRoutRepository TouristRoutRepo { get; }
@@ -43,11 +45,10 @@ namespace FakeXieCheng.Demo.Controllers
             this.propertyMappingServer = propertyMappingServer;
         }
 
-        string CreateTousitRouteUrl(
+       private string CreateTousitRouteUrl(
             TouristRouteRequestParam param,
             PagingRequestParam pagingRequestParam,
             ResourceUrlEnum urlEnum
-
             )
         {
             string url = string.Empty;
@@ -72,6 +73,17 @@ namespace FakeXieCheng.Demo.Controllers
                         keyWord = param.TitleKeyWord,
                         rating = param.Rating,
                         pageNumber = pagingRequestParam.PageNumber + 1,
+                        pageSize = pagingRequestParam.PageSize,
+                    });
+                    break;
+                case ResourceUrlEnum.CurrentPage:
+                    url = urlHelper.Link("GetTousistRoutsAsync", new
+                    {
+                        fields = param.Fields,
+                        orderBy = pagingRequestParam.OrderBy,
+                        keyWord = param.TitleKeyWord,
+                        rating = param.Rating,
+                        pageNumber = pagingRequestParam.PageNumber,
                         pageSize = pagingRequestParam.PageSize,
                     });
                     break;
@@ -117,15 +129,110 @@ namespace FakeXieCheng.Demo.Controllers
                     totalPages = data.TotalPage,
                 }));
                 var dataDto = _autoMapper.Map<IEnumerable<TouristRoutDTO>>(data);
-                return Ok(dataDto.ShapeData(param.Fields));
+                var shapeDataDtoList = dataDto.ShapeData(param.Fields);
+                var touristLinks = CreateLinkDtosForGetTourisRouts(param, pagingRequestParam);
+                //函数式写法
+                int idx = 0;
+                var shapeDataDtoListToList = shapeDataDtoList.ToList();
+                var shapeDataDtoLinqList = dataDto.Select(xt =>
+                {
+                    var toursitDic = shapeDataDtoListToList[idx] as IDictionary<string, object>;
+                    var links = CreateTouristRouteLinks(xt.ID, null);
+                    toursitDic.Add("links", links);
+                    idx++;
+                    return toursitDic;
+                });
+                var result = new
+                {
+                    value = shapeDataDtoLinqList,
+                    links=touristLinks,
+                };
+                return Ok(result);
             }
         }
 
+        private IEnumerable<LinkDto> CreateTouristRouteLinks(Guid routeId, string fields)
+        {
+            List<LinkDto> links = new List<LinkDto>();
+            //自己
+            links.Add(new LinkDto(
+                Url.Link("GetTourisRout", new { routeId, fields }),
+                "self",
+                "Get"
+                ));
 
+            //增加
+            links.Add(new LinkDto(
+                Url.Link("CreateTouristRouteAsync", null),
+                "Create",
+                "Post"
+                ));
+
+            //更新
+            links.Add(new LinkDto(
+                    Url.Link("UpdateRoteAsync", new { routeId }),
+                    "Updata",
+                    "Put"
+                ));
+
+            //局部更新
+            links.Add(new LinkDto(
+                    Url.Link("PartialUpdateRouteAsync", new { routeId }),
+                    "PartialUpdata",
+                    "Patch"
+                ));
+
+            //删除
+            links.Add(new LinkDto(
+                     Url.Link("DeleteRouteAsync", new { routeId }),
+                    "DeleteRoute",
+                    "Delete"
+                ));
+
+            //获取图片链接信息
+            links.Add(new LinkDto(
+                    Url.Link("GetTouristRoutetPicturesAsync", new { routeId }),
+                    "GetPicturs",
+                    "Get"
+                ));
+            //创建图片链接
+            links.Add(new LinkDto(
+                    Url.Link("CreateTouristRoutePictureAsync", new { routeId }),
+                    "CreatePicture",
+                    "Post"
+                ));
+
+            return links;
+
+        }
+
+        //为多个类创建Linkdto资源
+        private IEnumerable<LinkDto> CreateLinkDtosForGetTourisRouts(
+              TouristRouteRequestParam param,
+             PagingRequestParam pagingRequestParam
+            )
+        {
+            List<LinkDto> touristLinkDtos = new List<LinkDto>();
+
+            touristLinkDtos.Add(new LinkDto(
+                    CreateTousitRouteUrl(param, pagingRequestParam, ResourceUrlEnum.CurrentPage),
+                    "self",
+                    "Get"
+                ));
+
+            //创建旅游资源链接
+            touristLinkDtos.Add(new LinkDto(
+                    Url.Link("CreateTouristRouteAsync", null),
+                    "Create_touristRoute",
+                    "Post"
+                ));
+
+            return touristLinkDtos;
+        }
 
         [HttpGet("{routeId}", Name = "GetTourisRout")]
         [HttpHead("{routeId}")]
-        public async Task<IActionResult> GetTourisRoutAsync([FromRoute]Guid routeId,[FromQuery] string fields)
+        public async Task<IActionResult> GetTourisRoutAsync([FromRoute] Guid routeId, [FromQuery] string fields)
         {
             var touristRoutFromRepository = await TouristRoutRepo.GetTouristRoutAsync(routeId);
             if (touristRoutFromRepository == null)
@@ -135,13 +242,19 @@ namespace FakeXieCheng.Demo.Controllers
             else
             {
                 var touristRoutDTO = _autoMapper.Map<TouristRoutDTO>(touristRoutFromRepository);
-                return Ok(touristRoutDTO.ShapeData<TouristRoutDTO>(fields));
+
+                //创建连接信息
+                var links = CreateTouristRouteLinks(routeId, fields);
+                var shapeData = touristRoutDTO.ShapeData<TouristRoutDTO>(fields);
+                ((IDictionary<string, object>)shapeData).Add("links", links);
+
+                return Ok(shapeData);
             }
         }
 
         //[Authorize(AuthenticationSchemes ="Bearer")]
         //[Authorize(Roles ="admin")]
-        [HttpPost]
+        [HttpPost(Name = "CreateTouristRouteAsync")]
         public async Task<IActionResult> CreateTouristRouteAsync([FromBody] TouristRouteCreateDto touristRouteCreateDto)
         {
             TouristRout touristRoutData = _autoMapper.Map<TouristRout>(touristRouteCreateDto);
@@ -152,7 +265,11 @@ namespace FakeXieCheng.Demo.Controllers
             TouristRoutRepo.AddTouristRoute(touristRoutData);
             if (await TouristRoutRepo.SaveAsync())
             {
-                return CreatedAtRoute("GetTourisRout", new { routeId = touristRoutData.ID }, _autoMapper.Map<TouristRoutDTO>(touristRoutData));
+                var links = CreateTouristRouteLinks(touristRoutData.ID, null);
+                var dataDato = _autoMapper.Map<TouristRoutDTO>(touristRoutData);
+                var shapeDataDtoDic = dataDato.ShapeData<TouristRoutDTO>(null) as IDictionary<string, object>;
+                shapeDataDtoDic.Add("links", links);
+                return CreatedAtRoute("GetTousistRoutsAsync", new { routeId = touristRoutData.ID }, shapeDataDtoDic);
             }
             else
             {
@@ -162,7 +279,7 @@ namespace FakeXieCheng.Demo.Controllers
 
 
         [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
-        [HttpPut("{routeId}")]
+        [HttpPut("{routeId}", Name = "UpdateRoteAsync")]
         public async Task<IActionResult> UpdateRoteAsync([FromRoute] Guid routeID, [FromBody] TouristRouteUpdateDto routeUpdateDto)
         {
             if (!await TouristRoutRepo.JudgeTouristRouteExistAsync(routeID))
@@ -180,7 +297,7 @@ namespace FakeXieCheng.Demo.Controllers
             return await GetSaveOperationResultAsync();
         }
 
-        [HttpPatch("{routeId}")]
+        [HttpPatch("{routeId}", Name = "PartialUpdateRouteAsync")]
         [Authorize(Roles = "admin", AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> PartialUpdateRouteAsync([FromRoute] Guid routeId, [FromBody] JsonPatchDocument<TouristRouteUpdateDto> partialRouteDto)
         {
@@ -202,7 +319,7 @@ namespace FakeXieCheng.Demo.Controllers
             return await GetSaveOperationResultAsync();
         }
 
-        [HttpDelete("{routeID}")]
+        [HttpDelete("{routeID}", Name = "DeleteRouteAsync")]
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "admin")]
         public async Task<IActionResult> DeleteRouteAsync([FromRoute] Guid routeID)
         {

@@ -9,5 +9,6 @@ namespace FakeXieCheng.Demo.Util
     {
         PreviousPage,
         NextPage,
+        CurrentPage
     }
 }

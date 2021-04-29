@@ -28,8 +28,8 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         // GET: api/<TouristRoutPicturesController>
-        [HttpGet,HttpHead]
-        public async Task< IActionResult> GetPicturesAsync(Guid touristRoutsID)
+        [HttpGet(Name = "GetTouristRoutetPicturesAsync")]
+        public async Task< IActionResult> GetTouristRoutetPicturesAsync(Guid touristRoutsID)
         {
             if (!await _fakerepository.JudgeTouristRouteExistAsync(touristRoutsID))
             {
@@ -44,8 +44,8 @@ namespace FakeXieCheng.Demo.Controllers
         }
 
         // GET api/<TouristRoutPicturesController>/5
-        [HttpGet("{id}",Name ="GetPictureByID"),HttpHead("{id}")]
-        public async Task< IActionResult> GetPictureAsync(Guid touristRoutsID,int id)
+        [HttpGet("{id}",Name ="GetPictureByTouristIDAsync"),HttpHead("{id}")]
+        public async Task< IActionResult> GetPictureByTouristIDAsync(Guid touristRoutsID,int id)
         {
             TouristRoutPicture picture =await  _fakerepository.GetTouistRoutePictureAsync(touristRoutsID, id);
             if (picture==null)
@@ -62,8 +62,8 @@ namespace FakeXieCheng.Demo.Controllers
         //    return Ok("这是一个图片的POST请求方法"+ acceptStr);
         //}
 
-        [HttpPost]
-        public async Task< IActionResult>  PostAsync([FromRoute]Guid touristRoutsID, [FromBody]TouristRoutePicturesCreateDto pictureCreateDto)
+        [HttpPost(Name = "CreateTouristRoutePictureAsync")]
+        public async Task< IActionResult> CreateTouristRoutePictureAsync([FromRoute]Guid touristRoutsID, [FromBody]TouristRoutePicturesCreateDto pictureCreateDto)
         {
             TouristRoutPicture pictureData = _mapper.Map<TouristRoutPicture>(pictureCreateDto);
             try
@@ -77,7 +77,7 @@ namespace FakeXieCheng.Demo.Controllers
             }
             if (await  _fakerepository.SaveAsync())
             {
-                return CreatedAtRoute("GetPictureByID", new { id = pictureData.ID , touristRoutsID =pictureData.TouristRoutID}, _mapper.Map<TouristRoutPictureDto>( pictureData));
+                return CreatedAtRoute("GetPictureByTouristIDAsync", new { id = pictureData.ID , touristRoutsID =pictureData.TouristRoutID}, _mapper.Map<TouristRoutPictureDto>( pictureData));
             }
             else
             {
