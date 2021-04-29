@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 using System.Dynamic;
+using Microsoft.Extensions.Configuration;
 
 namespace FakeXieCheng.Demo.Controllers
 {
@@ -29,12 +30,15 @@ namespace FakeXieCheng.Demo.Controllers
         private readonly IUrlHelper urlHelper;
         private readonly IMapper _autoMapper;
         private readonly IPropertyMappingServer propertyMappingServer;
+        private readonly string localConfigMedia;
+
         public TouristRoutsController(
             ITouristRoutRepository touristRout,
             IMapper mapper,
             IUrlHelperFactory urlHelperFactory,
             IActionContextAccessor actionContextAccessor,
-                IPropertyMappingServer propertyMappingServer
+            IPropertyMappingServer propertyMappingServer,
+            IConfiguration configuration
             )
         {
             this.TouristRoutRepo = touristRout;
@@ -43,6 +47,7 @@ namespace FakeXieCheng.Demo.Controllers
             this.urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
 
             this.propertyMappingServer = propertyMappingServer;
+            this.localConfigMedia = configuration["CostomApplicationType:hateoas"].Trim().ToLowerInvariant();
         }
 
        private string CreateTousitRouteUrl(
@@ -98,7 +103,8 @@ namespace FakeXieCheng.Demo.Controllers
         [HttpGet(Name = "GetTousistRoutsAsync")]
         public async Task<IActionResult> GetTousistRoutsAsync(
             [FromQuery] TouristRouteRequestParam param,
-            [FromQuery] PagingRequestParam pagingRequestParam
+            [FromQuery] PagingRequestParam pagingRequestParam,
+            [FromHeader(Name ="Accept")] string mediaTypeStr 
             )
         {
             if (!propertyMappingServer.ExistPropertys<TouristRoutDTO, TouristRout>(pagingRequestParam.OrderBy))
@@ -130,24 +136,28 @@ namespace FakeXieCheng.Demo.Controllers
                 }));
                 var dataDto = _autoMapper.Map<IEnumerable<TouristRoutDTO>>(data);
                 var shapeDataDtoList = dataDto.ShapeData(param.Fields);
-                var touristLinks = CreateLinkDtosForGetTourisRouts(param, pagingRequestParam);
-                //函数式写法
-                int idx = 0;
-                var shapeDataDtoListToList = shapeDataDtoList.ToList();
-                var shapeDataDtoLinqList = dataDto.Select(xt =>
+                if (this.localConfigMedia==mediaTypeStr.Trim().ToLowerInvariant())
                 {
-                    var toursitDic = shapeDataDtoListToList[idx] as IDictionary<string, object>;
-                    var links = CreateTouristRouteLinks(xt.ID, null);
-                    toursitDic.Add("links", links);
-                    idx++;
-                    return toursitDic;
-                });
-                var result = new
-                {
-                    value = shapeDataDtoLinqList,
-                    links=touristLinks,
-                };
-                return Ok(result);
+                    var touristLinks = CreateLinkDtosForGetTourisRouts(param, pagingRequestParam);
+                    //函数式写法
+                    int idx = 0;
+                    var shapeDataDtoListToList = shapeDataDtoList.ToList();
+                    var shapeDataDtoLinqList = dataDto.Select(xt =>
+                    {
+                        var toursitDic = shapeDataDtoListToList[idx] as IDictionary<string, object>;
+                        var links = CreateTouristRouteLinks(xt.ID, null);
+                        toursitDic.Add("links", links);
+                        idx++;
+                        return toursitDic;
+                    });
+                    var result = new
+                    {
+                        value = shapeDataDtoLinqList,
+                        links = touristLinks,
+                    };
+                    return Ok(result);
+                }
+                return Ok(shapeDataDtoList);
             }
         }
 
@@ -191,13 +201,13 @@ namespace FakeXieCheng.Demo.Controllers
 
             //获取图片链接信息
             links.Add(new LinkDto(
-                    Url.Link("GetTouristRoutetPicturesAsync", new { routeId }),
+                    Url.Link("GetTouristRoutetPicturesAsync", new { touristRoutsID=routeId }),
                     "GetPicturs",
                     "Get"
                 ));
             //创建图片链接
             links.Add(new LinkDto(
-                    Url.Link("CreateTouristRoutePictureAsync", new { routeId }),
+                    Url.Link("CreateTouristRoutePictureAsync", new { touristRoutsID=routeId }),
                     "CreatePicture",
                     "Post"
                 ));

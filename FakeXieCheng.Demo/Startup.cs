@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Identity;
 using FakeXieCheng.Demo.MyFakeContext;
 using FakeXieCheng.Demo.Models;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace FakeXieCheng.Demo
 {
@@ -102,6 +104,16 @@ namespace FakeXieCheng.Demo
 
             //注入字符串转化成model属性
             services.AddTransient<IPropertyMappingServer, PropertyMappingServer>();
+
+            //加入自定义的协议格式
+            services.Configure<MvcOptions>(options =>
+            {
+                var outPutFormatter = options.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
+                if (outPutFormatter != null)
+                {
+                    outPutFormatter.SupportedMediaTypes.Add(Configuration["CostomApplicationType:hateoas"].Trim().ToLowerInvariant());
+                }
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

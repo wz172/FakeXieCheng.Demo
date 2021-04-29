@@ -29,7 +29,7 @@ namespace FakeXieCheng.Demo.Controllers
 
         // GET: api/<TouristRoutPicturesController>
         [HttpGet(Name = "GetTouristRoutetPicturesAsync")]
-        public async Task< IActionResult> GetTouristRoutetPicturesAsync(Guid touristRoutsID)
+        public async Task< IActionResult> GetTouristRoutetPicturesAsync([FromRoute]Guid touristRoutsID)
         {
             if (!await _fakerepository.JudgeTouristRouteExistAsync(touristRoutsID))
             {
@@ -45,7 +45,7 @@ namespace FakeXieCheng.Demo.Controllers
 
         // GET api/<TouristRoutPicturesController>/5
         [HttpGet("{id}",Name ="GetPictureByTouristIDAsync"),HttpHead("{id}")]
-        public async Task< IActionResult> GetPictureByTouristIDAsync(Guid touristRoutsID,int id)
+        public async Task< IActionResult> GetPictureByTouristIDAsync([FromRoute]Guid touristRoutsID,[FromRoute]int id)
         {
             TouristRoutPicture picture =await  _fakerepository.GetTouistRoutePictureAsync(touristRoutsID, id);
             if (picture==null)

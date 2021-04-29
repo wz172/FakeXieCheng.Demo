@@ -245,13 +245,28 @@
       hateoas 超媒体引擎
     
       问题：在获取旅游图片信息连接 url.link 老是为空 不能理解。和视屏写法一致。但是为null
+	    问题已经解决：办法图片的参数类型要传入正确否则就会出现上述为题。
     </li>
 
     <li>
       	目前问题
-  1.  link 成为了响应数据的一部分，但是他们并不属于资源
-  2. 响应掺杂着资源以及操作，违反了Resultful的定义
-  3. 解决方法：内容协商
+     1.  link 成为了响应数据的一部分，但是他们并不属于资源
+     2. 响应掺杂着资源以及操作，违反了Resultful的定义
+     3. 解决方法：内容协商
+	 
+	 在control 接收到http请求时候先判断是不是超媒体 application  [application/vnd.FakeXieCheng.hateoas+json]
+	 如果是则返回，如果不是则返回纯数据
+	    <p name="服务注入自定义数据协议格式类型">
+			services.Configure【MvcOptions】
+				(options =>
+				{
+				var outPutFormatter = options.OutputFormatters.OfType【NewtonsoftJsonOutputFormatter】()?.FirstOrDefault();
+                if (outPutFormatter != null)
+                {
+                    outPutFormatter.SupportedMediaTypes.Add(Configuration["CostomApplicationType:hateoas"].Trim().ToLowerInvariant());
+                }
+            });
+		</p>
     </li>
     
   </notes>

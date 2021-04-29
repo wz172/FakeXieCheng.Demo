@@ -11,4 +11,5 @@ namespace FakeXieCheng.Demo.Util
         NextPage,
         CurrentPage
     }
+   
 }
