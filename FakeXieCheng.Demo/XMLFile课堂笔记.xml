@@ -210,10 +210,32 @@
 		  2.自由组合实现升序和降序的排列功能
 		  3.实现排序组件的重复性使用
 		  PropertyMappingServer服务实现
-		  
 	  </li>
 
   </notes>
 
+
+  <datetiem>2021年4月29日</datetiem>
+  <notes>
+    <li>
+      16章 数据塑性
+      
+       Restful api的一大缺点是：颗粒度太粗
+       使用数据塑性的方法来解决数据颗粒度太粗的问题
+       
+    </li>
+
+    <li>
+      获取旅游路线列表API为例
+      通过Expando Object 来创建动态型的对象
+      结合数据塑性VS单一资源塑性
+    </li>
+
+    <li>
+      什么是数据塑性：定制化选择性后端输出数据技术。（指定特定字段）
+    </li>
+    
+  
+  </notes>
 
 </root>

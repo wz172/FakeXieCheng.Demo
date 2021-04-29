@@ -38,7 +38,7 @@ namespace FakeXieCheng.Demo.Util
                 }
                 else
                 {
-                    propertyName = itemStr.Substring(0, blankIndexOfstr + 1);
+                    propertyName = itemStr.Substring(0, blankIndexOfstr );
                 }
                 if (!mappingDic.ContainsKey(propertyName))
                 {

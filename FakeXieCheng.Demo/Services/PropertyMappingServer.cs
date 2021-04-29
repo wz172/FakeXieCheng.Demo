@@ -3,6 +3,7 @@ using FakeXieCheng.Demo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FakeXieCheng.Demo.Services
@@ -21,7 +22,7 @@ namespace FakeXieCheng.Demo.Services
 
         public PropertyMappingServer()
         {
-            propertyMappings.Add(new PropertyMapping<TouristRout, TouristRoutDTO>(touristRouteProperMapping));
+            propertyMappings.Add(new PropertyMapping<TouristRoutDTO, TouristRout>(touristRouteProperMapping));
         }
         public Dictionary<string, PropertyMappingValue> GetPropertyMapping<Tsource, Tdest>()
         {
@@ -33,7 +34,58 @@ namespace FakeXieCheng.Demo.Services
             }
             throw new Exception($"没办法找到属性映射字典<{typeof(Tsource)},{typeof(Tdest)}>");
         }
+
+        public bool ExistPropertys<TSource, Tdest>(string fields)
+        {
+            if (string.IsNullOrEmpty(fields))
+            {
+                return true;
+            }
+            var mappingDic = GetPropertyMapping<TSource, Tdest>();
+            if (mappingDic == null)
+            {
+                return false;
+            }
+            string[] propertysInputArray = fields.Split(',');
+            foreach (string itemPropInput in propertysInputArray)
+            {
+                string tirmProperty = itemPropInput.Trim();
+                //获取用户输的的字段名称
+                int blankIndex = itemPropInput.IndexOf(" ");
+                string orderByPropertyName = string.Empty;
+                if (blankIndex == -1)
+                {
+                    orderByPropertyName = itemPropInput;
+                }
+                else
+                {
+                    orderByPropertyName = itemPropInput.Substring(0, blankIndex);
+                }
+                if (!mappingDic.ContainsKey(orderByPropertyName))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public  bool ExistShapeFields<Tsource>(string fields)
+        {
+            if (string.IsNullOrEmpty(fields))
+            {
+                return true;
+            }
+            //获取类型所有属性字段
+            PropertyInfo[] propertyinfoArrayOfAllPublic = typeof(Tsource).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+            string[] propertysStrArrayOfInput = fields.Split(',');
+            foreach (string itemPropertyStr in propertysStrArrayOfInput)
+            {
+                if (!propertyinfoArrayOfAllPublic.Any(xt => xt.Name.ToLowerInvariant() == itemPropertyStr.Trim().ToLowerInvariant()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
-
-
 }

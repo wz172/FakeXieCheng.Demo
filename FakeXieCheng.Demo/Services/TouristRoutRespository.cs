@@ -65,7 +65,7 @@ namespace FakeXieCheng.Demo.Services
                 //}
                 var touristRouteDic = propertyMappingServer.GetPropertyMapping<TouristRoutDTO, TouristRout>();
                 resultQueryable = resultQueryable.ApplySort(pagingRequestParam.OrderBy, touristRouteDic);
-                
+
             }
             return await PagingList<TouristRout>.CreatePagelistAsync(pagingRequestParam.PageNumber, pagingRequestParam.PageSize, resultQueryable);
         }

@@ -78,15 +78,19 @@ namespace FakeXieCheng.Demo
                     }
                 );
 
-
-
+            var linkSqlServer = "linkDb";
+            string computerName = Environment.GetEnvironmentVariable("computername");
+            if (computerName == "DESKTOP-DU03A7R")
+            {
+                linkSqlServer = "linkDbDell";
+            }
 
             // services.AddTransient<ITouristRoutRepository,MockTouristRoutRespository>();
             services.AddTransient<ITouristRoutRepository, TouristRoutRespository>();
             services.AddDbContext<MyFakeContext.FakeContext>(optionsBuilder =>
             {
                 // 被弃用的方法,b=>b.UseRowNumberForPaging()
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("linkDb"));   
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString(linkSqlServer));
                 // optionsBuilder.UseMySql(Configuration.GetConnectionString("mysqlDb"));
             });
 

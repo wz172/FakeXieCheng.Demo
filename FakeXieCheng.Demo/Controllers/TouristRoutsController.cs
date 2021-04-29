@@ -26,18 +26,28 @@ namespace FakeXieCheng.Demo.Controllers
         public ITouristRoutRepository TouristRoutRepo { get; }
         private readonly IUrlHelper urlHelper;
         private readonly IMapper _autoMapper;
-        public TouristRoutsController(ITouristRoutRepository touristRout, IMapper mapper, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccessor)
+        private readonly IPropertyMappingServer propertyMappingServer;
+        public TouristRoutsController(
+            ITouristRoutRepository touristRout,
+            IMapper mapper,
+            IUrlHelperFactory urlHelperFactory,
+            IActionContextAccessor actionContextAccessor,
+                IPropertyMappingServer propertyMappingServer
+            )
         {
             this.TouristRoutRepo = touristRout;
             this._autoMapper = mapper;
             //URLhellper 注入
             this.urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
+
+            this.propertyMappingServer = propertyMappingServer;
         }
 
         string CreateTousitRouteUrl(
             TouristRouteRequestParam param,
             PagingRequestParam pagingRequestParam,
             ResourceUrlEnum urlEnum
+
             )
         {
             string url = string.Empty;
@@ -46,6 +56,8 @@ namespace FakeXieCheng.Demo.Controllers
                 case ResourceUrlEnum.PreviousPage:
                     url = urlHelper.Link("GetTousistRoutsAsync", new
                     {
+                        fields = param.Fields,
+                        orderBy = pagingRequestParam.OrderBy,
                         keyWord = param.TitleKeyWord,
                         rating = param.Rating,
                         pageNumber = pagingRequestParam.PageNumber - 1,
@@ -55,6 +67,8 @@ namespace FakeXieCheng.Demo.Controllers
                 case ResourceUrlEnum.NextPage:
                     url = urlHelper.Link("GetTousistRoutsAsync", new
                     {
+                        fields = param.Fields,
+                        orderBy = pagingRequestParam.OrderBy,
                         keyWord = param.TitleKeyWord,
                         rating = param.Rating,
                         pageNumber = pagingRequestParam.PageNumber + 1,
@@ -75,6 +89,14 @@ namespace FakeXieCheng.Demo.Controllers
             [FromQuery] PagingRequestParam pagingRequestParam
             )
         {
+            if (!propertyMappingServer.ExistPropertys<TouristRoutDTO, TouristRout>(pagingRequestParam.OrderBy))
+            {
+                return BadRequest("排序参数设置错误！");
+            }
+            if (!propertyMappingServer.ExistShapeFields<TouristRoutDTO>(param.Fields))
+            {
+                return BadRequest($"指定字段查询参数错误：{param.Fields}");
+            }
             var data = await TouristRoutRepo.GetTourisRoutsAsync(param, pagingRequestParam);
             if (data == null || data.Count() <= 0)
             {
@@ -89,13 +111,13 @@ namespace FakeXieCheng.Demo.Controllers
                 {
                     previousPageLink,
                     nextPageLink,
-                    totalCount=data.TotalCount,
-                    pageSize=data.PageSize,
-                    pageNumber=data.CurrentPageNu,
-                    totalPages=data.TotalPage,
+                    totalCount = data.TotalCount,
+                    pageSize = data.PageSize,
+                    pageNumber = data.CurrentPageNu,
+                    totalPages = data.TotalPage,
                 }));
                 var dataDto = _autoMapper.Map<IEnumerable<TouristRoutDTO>>(data);
-                return Ok(dataDto);
+                return Ok(dataDto.ShapeData(param.Fields));
             }
         }
 
@@ -103,7 +125,7 @@ namespace FakeXieCheng.Demo.Controllers
 
         [HttpGet("{routeId}", Name = "GetTourisRout")]
         [HttpHead("{routeId}")]
-        public async Task<IActionResult> GetTourisRoutAsync(Guid routeId)
+        public async Task<IActionResult> GetTourisRoutAsync([FromRoute]Guid routeId,[FromQuery] string fields)
         {
             var touristRoutFromRepository = await TouristRoutRepo.GetTouristRoutAsync(routeId);
             if (touristRoutFromRepository == null)
@@ -113,7 +135,7 @@ namespace FakeXieCheng.Demo.Controllers
             else
             {
                 var touristRoutDTO = _autoMapper.Map<TouristRoutDTO>(touristRoutFromRepository);
-                return Ok(touristRoutDTO);
+                return Ok(touristRoutDTO.ShapeData<TouristRoutDTO>(fields));
             }
         }
 

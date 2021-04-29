@@ -45,6 +45,8 @@ namespace FakeXieCheng.Demo.RequestParams
                 }
             }
         }
+
+        public string Fields { get; set; }
     }
 
     public enum LogicType
